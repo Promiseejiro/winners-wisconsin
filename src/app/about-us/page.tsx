@@ -123,7 +123,7 @@ export default function AboutUsPage() {
               variants={fadeInUp}
               className="text-[#555] leading-relaxed text-base mb-8"
             >
-{content.history}
+              {content.history}
             </motion.p>
             <motion.div variants={fadeInUp}>
               <Button variant="primary" size="md" href="/contact">
@@ -183,7 +183,7 @@ export default function AboutUsPage() {
                     }`}
                   >
                     <div className="px-6 py-4 border-t border-gray-200 text-[#555] text-sm leading-relaxed italic">
-                      "{pillar.description}"
+                      {/* "{pillar.description}" */}
                     </div>
                   </div>
                 </div>

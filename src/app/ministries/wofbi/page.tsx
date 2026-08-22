@@ -1,5 +1,5 @@
 "use client";
-import content from "@/content/ministries/wofbi";
+import content from "@/content/ministries/wofbi.json";
 import { motion, Variants } from "framer-motion";
 import Button from "@/components/common/Button";
 import { useRouter } from "next/navigation";

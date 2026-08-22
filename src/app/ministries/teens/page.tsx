@@ -1,5 +1,5 @@
 "use client";
-import content from "@/content/ministries/teens";
+import content from "@/content/ministries/teens.json";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import Button from "@/components/common/Button";
