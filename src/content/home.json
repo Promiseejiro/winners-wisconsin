@@ -1,10 +1,79 @@
 {
-  "hero": {"slides":[{"id":1,"image":"/assets/images/slide-1.webp","tagline":"Wisconsin","title":"Building Lives","subtitle":"Through Faith","description":"Join us as we grow together in Christ through worship, prayer, and community.","buttonText":"Attend Service","buttonHref":"/plan-your-visit"},{"id":2,"image":"/assets/images/slide-2.webp","badge":"Monthly Theme","title":"FINANCIAL","subtitle":"FORTUNE IS MY HERITAGE","verse":"Job 22:21–25","description":"JULY 2026 PROPHETIC THEME","buttonText":"Attend Service","buttonHref":"/plan-your-visit"}],"backgroundImage":"https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/04/Test_Background_4.png"},
-  "about":{"eyebrow":"Where God Lives...","title":"Welcome to Winners Chapel International Milwaukee Wisconsin","description":"Welcome to the home of victory! At Winners Chapel International Milwaukee Wisconsin, we are committed to providing a place of spiritual growth, empowerment, and community. We believe in a life of abundance, guided by the Word of God. Whether you are visiting for the first time or looking for a place to call home, we are here to support you on your faith journey.","image":"https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop","buttonText":"More About Us","buttonHref":"/about-us"},
-  "serviceTimes":[{"day":"Sunday","service":"First Service","time":"9:00 AM"},{"day":"Wednesday","service":"Midweek Communion Service","time":"6:00 PM"}],
-  "weekOfEmphasis":"1st Wednesday, Thursday & Friday of each month – 6:00pm",
-  "pastor":{"label":"Resident Pastor","name":"Pastor Ayodeji Ajibulu","description":"Pastor Ayodeji Ajibulu is a Full-time Missionary Pastor in Mission to Europe on the Liberation Mission. He is the current serving Resident and District Pastor, WCI Manchester, United Kingdom. He is committed to passionately carrying out, and pursuing his God-given assignment and the delivery of the Liberation Mandate.","buttonText":"Book Appointment with Pastor"},
-  "churchUpdates":{"label":"Church Updates","title":"Stay informed with our special services and programs","description":"We provide weekly updates about all our recent special services, events and programs to ensure that you are current with the latest faith news."},
-  "csr":{"label":"Making a Positive Difference in Society","title":"Corporate Social Responsibility","description":"The Corporate Social Responsibility (CSR) was formed over 10 years ago as a community development arm of Winners Chapel International UK, to impact our local community as a way of giving back to the communities where our churches are situated in the UK.","buttonText":"Learn More"},
-  "footer":{"address":"8159 W Brown Deer Rd, Milwaukee, WI 53223, United States","emails":["winnerschapelwisconsin@gmail.com","info@winnerschapelwi.org"],"phones":["414-368-7753","708-769-7141","414-255-4387"],"copyright":"© 2026 Winners Chapel International Milwaukee Wisconsin. All Rights Reserved."}
+  "hero": {
+    "slides": [
+      {
+        "id": 1,
+        "image": "/assets/images/slide-1.webp",
+        "tagline": "Wisconsin",
+        "title": "Building Lives",
+        "subtitle": "Through Faith",
+        "description": "Join us as we grow together in Christ through worship, prayer, and community.",
+        "buttonText": "Attend Service",
+        "buttonHref": "/plan-your-visit"
+      },
+      {
+        "id": 2,
+        "image": "/assets/images/slide-2.webp",
+        "badge": "Monthly Theme",
+        "title": "FINANCIAL",
+        "subtitle": "FORTUNE IS MY HERITAGE",
+        "verse": "Job 22:21–25",
+        "description": "JULY 2026 PROPHETIC THEME",
+        "buttonText": "Attend Service",
+        "buttonHref": "/plan-your-visit"
+      }
+    ],
+    "backgroundImage": "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/04/Test_Background_4.png"
+  },
+  "about": {
+    "eyebrow": "Where God Lives...",
+    "title": "Welcome to Winners Chapel International Milwaukee Wisconsin",
+    "description": "Welcome to the home of victory! At Winners Chapel International Milwaukee Wisconsin, we are committed to providing a place of spiritual growth, empowerment, and community. We believe in a life of abundance, guided by the Word of God. Whether you are visiting for the first time or looking for a place to call home, we are here to support you on your faith journey.",
+    "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
+    "buttonText": "More About Us",
+    "buttonHref": "/about-us"
+  },
+  "serviceTimes": [
+    {
+      "day": "Sunday",
+      "service": "First Service",
+      "time": "9:00 AM"
+    },
+    {
+      "day": "Wednesday",
+      "service": "Midweek Communion Service",
+      "time": "6:00 PM"
+    }
+  ],
+  "weekOfEmphasis": "1st Wednesday, Thursday & Friday of each month – 6:00pm",
+  "pastor": {
+    "label": "Resident Pastor",
+    "name": "Pastor Ayodeji Ajibulu",
+    "description": "Pastor Ayodeji Ajibulu is a Full-time Missionary Pastor in Mission to Europe on the Liberation Mission. He is the current serving Resident and District Pastor, WCI Manchester, United Kingdom. He is committed to passionately carrying out, and pursuing his God-given assignment and the delivery of the Liberation Mandate.",
+    "buttonText": "Book Appointment with Pastor"
+  },
+  "churchUpdates": {
+    "label": "Church Updates",
+    "title": "Stay informed with our special services and programs",
+    "description": "We provide weekly updates about all our recent special services, events and programs to ensure that you are current with the latest faith news."
+  },
+  "csr": {
+    "label": "Making a Positive Difference in Society",
+    "title": "Corporate Social Responsibility",
+    "description": "The Corporate Social Responsibility (CSR) was formed over 10 years ago as a community development arm of Winners Chapel International UK, to impact our local community as a way of giving back to the communities where our churches are situated in the UK.",
+    "buttonText": "Learn More"
+  },
+  "footer": {
+    "address": "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
+    "emails": [
+      "winnerschapelwisconsin@gmail.com",
+      "info@winnerschapelwi.org"
+    ],
+    "phones": [
+      "414-368-7753",
+      "708-769-7141",
+      "414-255-4387"
+    ],
+    "copyright": "© 2026 Winners Chapel International Milwaukee Wisconsin. All Rights Reserved."
+  }
 }
