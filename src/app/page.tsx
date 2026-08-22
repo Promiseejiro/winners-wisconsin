@@ -7,8 +7,7 @@ import Ministries from "@/components/Ministries";
 import Quote from "@/components/Quote";
 import Services from "@/components/Services";
 import HomeCards from "@/components/HomeCards";
-
-// import InstagramFeed from "@/components/InstagramFeed";
+ 
 import ResidentPastor from "@/components/ResidentPastor";
 import ChurchUpdates from "@/components/ChurchUpdates";
 import LatestSermon from "@/components/LatestSermon";
