@@ -1,0 +1,1048 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us · Winners Chapel</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ---------- RESET ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #111111;
+      overflow-x: hidden;
+      padding-top: 80px;
+    }
+    img {
+      width: 100%;
+      display: block;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    ul {
+      list-style: none;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* ---------- COLORS ---------- */
+    :root {
+      --primary-red: #ef2b34;
+      --black: #000000;
+      --dark: #111111;
+      --white: #ffffff;
+      --light: #f8f8f8;
+      --gray: #777777;
+      --border: #ececec;
+    }
+
+    /* ---------- TYPOGRAPHY ---------- */
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    p {
+      line-height: 1.8;
+      color: #555;
+    }
+
+    /* ---------- BUTTONS ---------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 30px;
+      background: var(--primary-red);
+      color: var(--white);
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: 0.3s;
+      border-radius: 4px;
+    }
+    .btn:hover {
+      background: #c81d26;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--white);
+    }
+    .btn-outline:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+    .btn-dark {
+      background: var(--primary-red);
+      color: #fff;
+    }
+    .btn-dark:hover {
+      background: #c81d26;
+    }
+
+    /* ---------- HEADER · FIXED · FULL WIDTH · WHITE BG ---------- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      background: #ffffff;
+      padding: 10px 0;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+      border-bottom: 3px solid var(--primary-red);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .logo img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .logo span {
+      font-size: 16px;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-links a {
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: 500;
+      transition: 0.3s;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-red);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-red);
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-right .btn {
+      padding: 10px 24px;
+      font-size: 12px;
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .menu-toggle span {
+      width: 28px;
+      height: 3px;
+      background: var(--dark);
+      transition: 0.3s;
+    }
+
+    /* ---------- HERO · FULLSCREEN VIDEO ---------- */
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      text-align: left;
+      color: var(--white);
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 100px 20px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .hero-content .hero-badge {
+      display: inline-block;
+      background: var(--primary-red);
+      color: #fff;
+      padding: 6px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      border-radius: 30px;
+    }
+
+    .hero-content h1 {
+      font-size: 80px;
+      margin-bottom: 15px;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      max-width: 700px;
+    }
+
+    .hero-content h1 span {
+      color: var(--primary-red);
+    }
+
+    .hero-content p {
+      max-width: 550px;
+      color: #ddd;
+      font-size: 17px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      margin-bottom: 35px;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ---------- SECTION STYLES ---------- */
+    section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .section-title span {
+      color: var(--primary-red);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .section-title h2 {
+      font-size: 50px;
+      margin-top: 10px;
+    }
+
+    /* ---------- BISHOP SECTION (two column) ---------- */
+    .bishop-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .bishop-content h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #111;
+    }
+
+    .bishop-content p {
+      margin-bottom: 18px;
+      color: #444;
+    }
+
+    .bishop-content .read-more-btn {
+      color: var(--primary-red);
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-block;
+      margin-top: 10px;
+      border-bottom: 2px solid var(--primary-red);
+      padding-bottom: 2px;
+    }
+
+    .bishop-content .read-more-btn:hover {
+      color: #c81d26;
+    }
+
+    .bishop-image-side {
+      background: #f5f5f5;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    .bishop-image-side img {
+      max-width: 280px;
+      margin: 0 auto 20px;
+      border-radius: 8px;
+      border: 4px solid var(--primary-red);
+    }
+
+    .bishop-image-side .quote {
+      font-size: 18px;
+      font-style: italic;
+      color: #222;
+      padding: 20px;
+      border-left: 4px solid var(--primary-red);
+      background: #fff;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+
+    .bishop-image-side .bishop-name {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      color: #111;
+    }
+
+    .bishop-image-side .bishop-title {
+      font-size: 15px;
+      color: #666;
+      font-weight: 400;
+    }
+
+    .extra-text {
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 2px solid var(--border);
+      display: none;
+    }
+
+    .extra-text.open {
+      display: block;
+    }
+
+    /* ---------- MANDATE SECTION (dark bg) ---------- */
+    .mandate-section {
+      background: #111;
+      color: #fff;
+      padding: 80px 0;
+      position: relative;
+    }
+
+    .mandate-section .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .mandate-section h2 {
+      font-size: 52px;
+      color: #fff;
+      margin-bottom: 25px;
+    }
+
+    .mandate-section p {
+      color: #ddd;
+      max-width: 800px;
+      font-size: 17px;
+    }
+
+    /* ---------- FAITH TABERNACLE ---------- */
+    .faith-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .faith-grid img {
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .faith-grid h2 {
+      font-size: 44px;
+      margin-bottom: 10px;
+    }
+
+    .faith-grid .subtitle {
+      color: var(--primary-red);
+      font-weight: 600;
+      font-size: 16px;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .faith-grid p {
+      margin-bottom: 18px;
+    }
+
+    /* ---------- ABOUT MARYLAND ---------- */
+    .maryland-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .maryland-grid h2 {
+      font-size: 44px;
+      margin-bottom: 20px;
+    }
+
+    .maryland-grid p {
+      margin-bottom: 18px;
+    }
+
+    .maryland-grid img {
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ---------- LIVING FAITH STORY ---------- */
+    .livingfaith-section {
+      background: #111;
+      color: #fff;
+      padding: 80px 0;
+    }
+
+    .livingfaith-section .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .livingfaith-section h2 {
+      font-size: 48px;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .livingfaith-section .subtitle {
+      color: var(--primary-red);
+      font-weight: 500;
+      font-size: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+
+    .livingfaith-section p {
+      color: #ddd;
+      margin-bottom: 18px;
+    }
+
+    .livingfaith-section img {
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ---------- SERVICE TIMES ---------- */
+    .service-times {
+      background: #f8f8f8;
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .service-times h4 {
+      font-size: 22px;
+      margin-bottom: 8px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+    }
+
+    .service-times p {
+      font-size: 16px;
+      color: #444;
+    }
+
+    .service-times .location {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 2px solid var(--border);
+    }
+
+    .service-times .btn {
+      margin-top: 25px;
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer {
+      position: relative;
+      background: #111111;
+      color: #ffffff;
+      padding: 70px 0 30px;
+      border-top: 4px solid #ef2b34;
+      background-image: url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1600&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 0;
+      border-top: 4px solid #ef2b34;
+    }
+
+    footer .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-col h4 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    .footer-col ul li a {
+      color: #d0d0d0;
+      font-size: 15px;
+      transition: 0.2s;
+      font-weight: 400;
+      line-height: 2;
+    }
+
+    .footer-col ul li a:hover {
+      color: #ef2b34;
+    }
+
+    .footer-contact p {
+      color: #d0d0d0;
+      font-size: 15px;
+      margin-bottom: 4px;
+      line-height: 1.6;
+    }
+
+    .footer-contact .phone {
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 18px;
+      margin-top: 6px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 25px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: #bbb;
+      font-size: 14px;
+    }
+
+    .footer-bottom .copy {
+      color: #bbb;
+    }
+
+    .footer-links-row {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links-row a {
+      color: #d0d0d0;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    .footer-links-row a:hover {
+      color: #ef2b34;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .hero-content h1 {
+        font-size: 60px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .bishop-grid,
+      .faith-grid,
+      .maryland-grid,
+      .livingfaith-section .container {
+        grid-template-columns: 1fr;
+      }
+
+      .livingfaith-section .container {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-content h1 {
+        font-size: 55px;
+      }
+
+      .mandate-section h2 {
+        font-size: 40px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding-top: 70px;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        max-height: 0;
+        overflow: hidden;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        transition: 0.4s ease;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links.active {
+        max-height: 500px;
+        padding: 20px 0;
+      }
+
+      .nav-links a {
+        width: 100%;
+        padding: 14px 25px;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        color: var(--dark);
+        font-size: 14px;
+      }
+
+      .nav-links a::after {
+        display: none;
+      }
+
+      .header-right .btn {
+        display: none;
+      }
+
+      .hero {
+        min-height: 100vh;
+        height: 100vh;
+        text-align: left;
+      }
+
+      .hero-content {
+        padding: 80px 20px 40px;
+      }
+
+      .hero-content h1 {
+        font-size: 40px;
+        max-width: 100%;
+      }
+
+      .hero-content p {
+        font-size: 15px;
+        max-width: 100%;
+      }
+
+      .section-title h2 {
+        font-size: 36px;
+      }
+
+      .bishop-content h1 {
+        font-size: 36px;
+      }
+
+      .faith-grid h2,
+      .maryland-grid h2,
+      .livingfaith-section h2 {
+        font-size: 34px;
+      }
+
+      .mandate-section h2 {
+        font-size: 32px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-links-row {
+        gap: 16px;
+      }
+
+      .bishop-image-side img {
+        max-width: 200px;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 30px;
+      }
+
+      .hero-content p {
+        font-size: 14px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .section-title h2 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="navbar">
+      <div class="logo">
+        <img src="https://res.cloudinary.com/dxqg5hify/image/upload/v1783712016/file_00000000e9a871f48a2e8a1984b8eeda_qorcdm.png" alt="Winners Chapel Logo" />
+        <span>WINNERS' CHAPEL INTL.</span>
+      </div>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Ministries</a>
+        <a href="#">Get Involved</a>
+        <a href="#">Sermons</a>
+        <a href="#">Give</a>
+        <a href="#">Contact</a>
+      </div>
+
+      <div class="header-right">
+        <a href="#" class="btn btn-dark">Attend Service</a>
+        <div class="menu-toggle" id="menuToggle">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <Image >
+     
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <!-- <div class="hero-badge">MARYLAND</div> -->
+      <h1>About <span>Winners Chapel</span></h1>
+      <p>Learn about our history, our mandate, and the vision that drives us to liberate the world through the word of faith.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn">Our Mandate</a>
+        <a href="#" class="btn btn-outline">Get Involved</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BISHOP DAVID OYEDEPO ===== -->
+  <section>
+    <div class="container">
+      <div class="bishop-grid">
+        <div class="bishop-content">
+          <h1>Bishop David Oyedepo</h1>
+          <p>David Oyedepo received a mandate from God in an 18 hour long vision in May 1981 to liberate the world from all oppression of the devil through the preaching of the word of faith. This is the inaugural vision that led to the founding of the Living Faith Church World Wide (LFCWW), first called Liberation Faith Hour Ministries, in 1981.</p>
+          <p>In 1982 he married Florence Abiola Akano (now known as Faith). They have four children together (David Jr., Isaac, Love and Joys). David Jr. and Isaac Oyedepo were ordained as Pastors in May 2007 by Kenneth Copeland.</p>
+
+          <!-- Read More toggle -->
+          <div id="bishopExtra" class="extra-text">
+            <p>On September 27, 1954, Bishop David Olaniyi Oyedepo, a native of Omu-Aran, Kwara State, Nigeria, was born in Osogbo into a religiously mixed family. His father, Ibrahim, was a Muslim healer, while his mother, Dorcas, was a member of the Eternal Order of the Cherubim and Seraphim Movement (C&amp;S).</p>
+            <p>David Oyedepo was "born again" in 1969 through the influence of his former teacher, Ms. Betty Lasher. He studied Architecture at Kwara State Polytechnic, Ilorin and earned a Ph.D. in Human Development from Honolulu University.</p>
+            <p>Living Faith Church (AKA Winners Chapel) started in Kaduna, but David Oyedepo moved to Lagos in September 1989, leading to the building of the renowned Faith Tabernacle.</p>
+            <p>David Oyedepo is an acclaimed author and publisher who has written over 70 titles. He is also Chairman/Publisher of Dominion Publishing House (DPH).</p>
+          </div>
+          <a class="read-more-btn" id="bishopToggle">Read More..</a>
+        </div>
+
+        <div class="bishop-image-side">
+          <img src="https://winnerschapelmaryland.com/wp-content/uploads/2020/03/Bishop-david-oyedepo-265x300.jpg" alt="Bishop David Oyedepo" />
+          <div class="quote">
+            "The hour has come to liberate the world from all oppressions of the devil through the preaching of the word of faith, and I am sending you to undertake this task."
+          </div>
+          <div class="bishop-name">Bishop David O. Oyedepo</div>
+          <div class="bishop-title">Presiding Bishop, Living Faith Church Worldwide</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MANDATE SECTION ===== -->
+  <section class="mandate-section">
+    <div class="container">
+      <h2>Our Mandate</h2>
+      <p>Our Mandate speaks of liberation in all facets of human existence. We focus mainly on destinies that have been afflicted, battered, beaten, tattered, deformed and subsequently in groaning and agonies, as a result of pains, pangs and crying. This is the mandate. <em>"The hour has come to liberate the world from all oppression of the devil through the preaching of the word of faith, and I am sending you to undertake this task."</em> Today, testimonies of liberation through our messages, books, tapes, magazines and other periodicals are most humbling. The word of faith is working like fire for the liberation of mankind across the nations.</p>
+    </div>
+  </section>
+
+  <!-- ===== LIVING FAITH STORY ===== -->
+  <section class="livingfaith-section">
+    <div class="container">
+      <div>
+        <div class="subtitle">How the Living Faith Church began.</div>
+        <h2>Living Faith</h2>
+        <p>When Bishop David Oyedepo founded Living Faith Church Worldwide in 1981, he initially saw his mandate as more of an outreach ministry rather than establishing new churches. At the time, church planting was not a priority. The focus was on seeking revival in existing churches.</p>
+        <p>However, one morning the Lord spoke to Bishop Oyedepo through Luke chapter one, verses 1-3, impressing upon him that while many churches existed, God was giving him a portion of the church ministry to fulfill. "I also…" became a marching order to launch church plants as his part in the wider body of Christ.</p>
+        <p>What began as outreach became a church ministry that has grown into a global phenomenon under Bishop Oyedepo's leadership. Living Faith Church Worldwide serves as the fulfillment of the God-given mandate to plant life-changing churches that minister to needs across the world. To God alone be the glory!</p>
+      </div>
+      <div>
+        <img src="https://winnerschapelmaryland.com/wp-content/uploads/2024/08/a2.jpg" alt="Living Faith Church" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAITH TABERNACLE ===== -->
+  <section>
+    <div class="container">
+      <div class="faith-grid">
+        <div>
+          <img src="https://winnerschapelmaryland.com/wp-content/uploads/2024/08/faith-tabernacle.jpg" alt="Faith Tabernacle" />
+        </div>
+        <div>
+          <h2>Faith Tabernacle</h2>
+          <div class="subtitle">The largest church auditorium in the world</div>
+          <p>In 1998, David Oyedepo set forth to build a new building to accommodate the increasing number of worshippers. This resulted in the Ministry's acquisition of the initial 530-acre (2.1 km2) facility, known as Canaanland, which serves as the headquarters of the Ministry.</p>
+          <p>It is the home of the 50,000-seat capacity auditorium, the 'Faith Tabernacle', which is reputed to be the largest Church auditorium in the world; a feat also recorded in the Guinness Book of Records.</p>
+          <div id="faithExtra" class="extra-text">
+            <p>The speed of the construction of Faith Tabernacle was breath taking, considering the size of the building. Construction of this gigantic project was completed within 12 months, which experts claim could only have been a miracle. This 50,000-seat edifice was dedicated on September 18, 1999.</p>
+            <p>Canaanland is in Ota, a suburb of Lagos and is a 10,500-acre campus that houses the 50,000-seat church building, the church secretariat, Covenant University, Faith Academy, and numerous other facilities.</p>
+          </div>
+          <a class="read-more-btn" id="faithToggle">Read More..</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT WINNERS CHAPEL MARYLAND ===== -->
+  <section style="background:#f8f8f8;">
+    <div class="container">
+      <div class="maryland-grid">
+        <div>
+          <h2>About Winners Chapel Maryland</h2>
+          <p>Winners Chapel International, Maryland (WCIMD) is a branch of Living Faith Church Worldwide under the leadership of presiding Bishop Oyedepo. WCIMD was established in January 2008 as the very first Winners Chapel location in the state.</p>
+          <p>Since its inauguration, the church has experienced tremendous growth by God's grace, fulfilling the liberation mandate entrusted to Bishop Oyedepo. WCIMD continues to carry out this life-changing mission as Maryland expansion of an internationally-impacting ministry.</p>
+        </div>
+        <div>
+          <img src="https://winnerschapelmaryland.com/wp-content/uploads/2024/08/winnersmd.jpg" alt="Winners Chapel Maryland" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICE TIMES ===== -->
+  <section class="service-times">
+    <div class="container">
+      <h4>Sunday Morning Worship:</h4>
+      <p><strong>First Service: 8:00 am</strong> &nbsp;|&nbsp; <strong>Second Service: 10:30 am</strong></p>
+      <br />
+      <h4>Communion Service:</h4>
+      <p><strong>Wednesdays at 6:00 pm</strong></p>
+      <div class="location">
+        <h4>Main Location:</h4>
+        <p><strong>4825 Glenn Dale Rd, Bowie, MD 20720</strong></p>
+      </div>
+      <a href="/plan-your-visit" class="btn" style="margin-top:30px;">Attend a Service</a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4>CONTACT</h4>
+          <div class="footer-contact">
+            <p>Faith Dome 4825 Glenn Dale Rd, Bowie, MD 20720</p>
+            <p>info@winnerschapelWisconsin.org</p>
+            <p class="phone">301-526-3382</p>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>GET IN TOUCH</h4>
+          <ul>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Downloads</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="#">News</a></li>
+            <li><a href="#">Give</a></li>
+            <li><a href="#">Egroups</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>LINKS</h4>
+          <ul>
+            <li><a href="#">David Oyedepo</a></li>
+            <li><a href="#">Faith Oyedepo</a></li>
+            <li><a href="#">Covenant University</a></li>
+            <li><a href="#">Landmark University</a></li>
+            <li><a href="#">Online Radio</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="copy">© 2024 Winners Chapel Maryland</span>
+        <div class="footer-links-row">
+          <a href="#">Contact Us</a>
+          <a href="#">Events</a>
+          <a href="#">Downloads</a>
+          <a href="#">Careers</a>
+          <a href="#">Gallery</a>
+          <a href="#">News</a>
+          <a href="#">Give</a>
+          <a href="#">Egroups</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Bishop Read More toggle
+    const bishopToggle = document.getElementById('bishopToggle');
+    const bishopExtra = document.getElementById('bishopExtra');
+
+    bishopToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      bishopExtra.classList.toggle('open');
+      this.textContent = bishopExtra.classList.contains('open') ? 'Read Less' : 'Read More..';
+    });
+
+    // Faith Tabernacle Read More toggle
+    const faithToggle = document.getElementById('faithToggle');
+    const faithExtra = document.getElementById('faithExtra');
+
+    faithToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      faithExtra.classList.toggle('open');
+      this.textContent = faithExtra.classList.contains('open') ? 'Read Less' : 'Read More..';
+    });
+  </script>
+
+</body>
+</html>
