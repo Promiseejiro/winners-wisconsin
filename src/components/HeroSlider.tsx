@@ -15,7 +15,7 @@ const HeroSlider = () => {
   const swiperRef = useRef(null);
 
   const slides = content.hero.slides;
-
+  console.log(slides);
   return (
     <section
       className="relative w-full h-[60vh] lg:h-screen overflow-hidden flex items-center justify-center"
