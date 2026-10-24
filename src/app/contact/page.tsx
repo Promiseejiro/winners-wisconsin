@@ -1,388 +1,461 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
-import { motion, Variants } from "framer-motion";
-import { useState, FormEvent } from "react";
-import Button from "@/components/common/Button";
-import { MdLocationOn, MdOutlineMailOutline } from "react-icons/md";
-import { FaPhoneAlt } from "react-icons/fa";
-import { useRouter } from "next/navigation";
-const fadeInUp: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 60,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  },
+
+import { useState } from "react";
+import type { FormEvent, ChangeEvent } from "react";
+
+type ContactFormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
 };
 
-const fadeInLeft: Variants = {
-  hidden: {
-    opacity: 0,
-    x: -60,
-  },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  },
+const initialFormData: ContactFormData = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  subject: "",
+  message: "",
 };
 
-const fadeInRight: Variants = {
-  hidden: {
-    opacity: 0,
-    x: 60,
-  },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-    },
-  },
-};
+function getContactEndpoint(): string {
+  const configuredUrl = (
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+  ).replace(/\/+$/, "");
 
-const staggerContainer: Variants = {
-  hidden: {
-    opacity: 0,
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
+  // Supports both:
+  // NEXT_PUBLIC_API_URL=http://localhost:3000
+  // NEXT_PUBLIC_API_URL=http://localhost:3000/api/v1
+  if (configuredUrl.endsWith("/api/v1")) {
+    return `${configuredUrl}/contact`;
+  }
+
+  return `${configuredUrl}/api/v1/contact`;
+}
+
+const inputClass =
+  "w-full rounded-xl border border-gray-300 bg-white px-4 py-3.5 text-sm text-[#111] outline-none transition placeholder:text-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:bg-gray-100";
+
+const labelClass = "mb-2 block text-sm font-semibold text-[#222]";
 
 export default function ContactPage() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [subject, setSubject] = useState("");
-  const [message, setMessage] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const router = useRouter();
+  const [formData, setFormData] = useState<ContactFormData>(initialFormData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  function handleChange(
+    event: ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) {
+    const { name, value } = event.target;
+
+    setFormData((previous) => ({
+      ...previous,
+      [name]: value,
+    }));
+
+    setErrorMessage("");
+    setSuccessMessage("");
+  }
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (isSubmitting) return;
+
+    setErrorMessage("");
+    setSuccessMessage("");
+
+    const payload = {
+      firstName: formData.firstName.trim(),
+      lastName: formData.lastName.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      subject: formData.subject.trim(),
+      message: formData.message.trim(),
+    };
+
+    if (
+      !payload.firstName ||
+      !payload.lastName ||
+      !payload.email ||
+      !payload.subject ||
+      !payload.message
+    ) {
+      setErrorMessage("Please complete all required fields.");
+      return;
+    }
+
+    if (payload.message.length < 5) {
+      setErrorMessage("Please provide a little more detail in your message.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000/api/v1"}/contact`, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstName, lastName, email, subject, message }),
+      const response = await fetch(getContactEndpoint(), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
       });
-      const body = await response.json();
-      if (!response.ok) throw new Error(body.message || "Unable to send message");
-      setIsSubmitted(true); setFirstName(""); setLastName(""); setEmail(""); setSubject(""); setMessage("");
-      setTimeout(() => setIsSubmitted(false), 3000);
-    } catch (error) { console.error(error); alert(error instanceof Error ? error.message : "Unable to send message"); }
-  };
+
+      const result = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const backendMessage =
+          typeof result?.message === "string"
+            ? result.message
+            : Array.isArray(result?.message)
+              ? result.message.join(", ")
+              : "";
+
+        throw new Error(
+          backendMessage || "We could not send your message. Please try again.",
+        );
+      }
+
+      setSuccessMessage(
+        "Thank you for contacting us! Your enquiry has been submitted successfully. Our team will get back to you as soon as possible.",
+      );
+
+      setFormData({ ...initialFormData });
+    } catch (error) {
+      console.error("Contact form submission failed:", error);
+
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again later.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
-    <>
-      {/* ===== HERO ===== */}
-      <section className="relative w-full min-h-screen h-screen overflow-hidden flex items-center text-center text-white">
-        <Image
-          alt="Bishop David Oyedepo preaching at Winners Chapel"
-          fill
-          className="object-cover z-0"
-          src="https://winnerschapelmaryland.com/wp-content/uploads/2024/11/david-oyedepo.jpg"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/55 z-1" />
+    <main className="min-h-screen bg-white text-[#111]">
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-[#111] px-5 py-20 text-white sm:py-24">
+        <div className="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-white/[0.04]" />
+        <div className="absolute -bottom-36 -left-16 h-80 w-80 rounded-full bg-white/[0.04]" />
 
-        <motion.div
-          className="relative z-2 w-full px-5 pt-[100px] pb-[60px] max-w-[1200px] mx-auto"
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-        >
-          <motion.h1
-            variants={fadeInUp}
-            className="font-cormorant text-5xl sm:text-6xl md:text-7xl lg:text-[70px] font-bold mb-2.5 [text-shadow:0_4px_20px_rgba(0,0,0,0.6)]"
-          >
-            Contact Us
-          </motion.h1>
-          <motion.h2
-            variants={fadeInUp}
-            className="text-2xl font-normal text-[#ddd] [text-shadow:0_2px_10px_rgba(0,0,0,0.5)]"
-          >
-            Winners Chapel Intl. Maryland
-          </motion.h2>
-        </motion.div>
+        <div className="relative mx-auto max-w-6xl">
+          <p className="mb-4 text-xs font-bold uppercase tracking-[3px] text-primary">
+            Winners Chapel International Wisconsin
+          </p>
+
+          <h1 className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl lg:text-7xl">
+            We&apos;d love to{" "}
+            <span className="text-primary">hear from you.</span>
+          </h1>
+
+          <p className="mt-6 max-w-2xl text-base leading-8 text-white/70 sm:text-lg">
+            Have a question, need assistance, or want to get in touch with our
+            church? Send us a message and our team will be happy to connect with
+            you.
+          </p>
+
+          <div className="mt-8 h-1 w-20 bg-primary" />
+        </div>
       </section>
 
-      {/* ===== CONTACT SECTION ===== */}
-      <section className="py-[80px]">
-        <div className="container">
-          <motion.p
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeInUp}
-            className="text-center max-w-[750px] mx-auto mb-[50px] text-lg text-[#444]"
-          >
-            Thank you for visiting our website. Please use the form below to
-            contact us if you have any enquiries regarding our church or any of
-            our services.
-          </motion.p>
-
-          <motion.div
-            className="grid grid-cols-1 lg:grid-cols-2 gap-[60px] items-start"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            {/* Form */}
-            <motion.div variants={fadeInLeft}>
-              <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  <div className="form-group">
-                    <label
-                      htmlFor="firstName"
-                      className="block font-semibold text-sm mb-1.5 text-[#333]"
-                    >
-                      First Name <span className="text-primary">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      required
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      placeholder="Your first name"
-                      className="w-full px-[18px] py-[14px] border border-[#ececec] rounded-[6px] text-[15px] bg-[#fafafa] transition-colors focus:border-primary focus:outline-none focus:bg-white focus:shadow-[0_0_0_3px_rgba(239,43,52,0.1)]"
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label
-                      htmlFor="lastName"
-                      className="block font-semibold text-sm mb-1.5 text-[#333]"
-                    >
-                      Last Name <span className="text-primary">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      required
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      placeholder="Your last name"
-                      className="w-full px-[18px] py-[14px] border border-[#ececec] rounded-[6px] text-[15px] bg-[#fafafa] transition-colors focus:border-primary focus:outline-none focus:bg-white focus:shadow-[0_0_0_3px_rgba(239,43,52,0.1)]"
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group mt-5">
-                  <label
-                    htmlFor="email"
-                    className="block font-semibold text-sm mb-1.5 text-[#333]"
-                  >
-                    Email Address <span className="text-primary">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@example.com"
-                    className="w-full px-[18px] py-[14px] border border-[#ececec] rounded-[6px] text-[15px] bg-[#fafafa] transition-colors focus:border-primary focus:outline-none focus:bg-white focus:shadow-[0_0_0_3px_rgba(239,43,52,0.1)]"
-                  />
-                </div>
-
-                <div className="form-group mt-5">
-                  <label htmlFor="subject" className="block font-semibold text-sm mb-1.5 text-[#333]">
-                    Subject <span className="text-primary">*</span>
-                  </label>
-                  <input type="text" id="subject" name="subject" required value={subject} onChange={(e) => setSubject(e.target.value)} placeholder="Subject" className="w-full px-[18px] py-[14px] border border-[#ececec] rounded-[6px] text-[15px] bg-[#fafafa] transition-colors focus:border-primary focus:outline-none focus:bg-white" />
-                </div>
-
-                <div className="form-group mt-5">
-                  <label
-                    htmlFor="message"
-                    className="block font-semibold text-sm mb-1.5 text-[#333]"
-                  >
-                    Your Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={5}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder="Write your message here..."
-                    className="w-full px-[18px] py-[14px] border border-[#ececec] rounded-[6px] text-[15px] bg-[#fafafa] transition-colors focus:border-primary focus:outline-none focus:bg-white focus:shadow-[0_0_0_3px_rgba(239,43,52,0.1)] min-h-[140px] resize-y"
-                  />
-                </div>
-
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className="w-full text-center justify-center mt-5"
-                >
-                  Send{" "}
-                </Button>
-                {isSubmitted && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-4 p-4 bg-green-50 border border-green-200 text-green-700 rounded-[6px] text-center"
-                  >
-                    Thank you for your message. We will get back to you soon!
-                  </motion.div>
-                )}
-              </form>
-            </motion.div>
-
-            {/* Contact Info */}
-            <motion.div
-              variants={fadeInRight}
-              className="bg-[#f8f8f8] p-[40px] rounded-xl border-l-4 border-primary"
-            >
-              <h3 className="font-cormorant text-[28px] mb-2.5 font-bold">
-                Get in Touch
-              </h3>
-              <p className="text-[#666] mb-[30px] text-[15px]">
-                We'd love to hear from you. Reach out to us through any of the
-                channels below.
+      {/* CONTACT CONTENT */}
+      <section className="bg-white px-5 py-14 sm:py-20">
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+          {/* CONTACT INFORMATION */}
+          <aside className="space-y-8">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[3px] text-primary">
+                Get in touch
               </p>
 
-              <div className="flex gap-4 mb-5 items-start">
-                <div className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center text-lg flex-shrink-0">
-                  <MdLocationOn />
+              <h2 className="mt-3 text-3xl font-bold leading-tight text-[#111] sm:text-4xl">
+                How can we help?
+              </h2>
+
+              <p className="mt-4 leading-7 text-gray-600">
+                Whether you have a question about our services, need information
+                about our ministry, or would like to share a message, please use
+                the contact form.
+              </p>
+            </div>
+
+            <div className="space-y-5">
+              <div className="flex gap-4 border border-gray-200 bg-white p-5 transition hover:border-primary/50">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-[#f8f8f8] text-xl text-primary">
+                  <span aria-hidden="true">✉</span>
                 </div>
-                <div className="text-[15px] text-[#333] leading-relaxed">
-                  <strong className="block font-semibold text-[#111]">
-                    Address
-                  </strong>
-                  Faith Dome 4825 Glenn Dale Rd, Bowie, MD 20720
+
+                <div>
+                  <h3 className="font-bold text-[#111]">Send us a message</h3>
+                  <p className="mt-1 text-sm leading-6 text-gray-600">
+                    Complete the contact form and your enquiry will be sent to
+                    our team.
+                  </p>
                 </div>
               </div>
 
-              <div className="flex gap-4 mb-5 items-start">
-                <div className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center text-lg flex-shrink-0">
-                  {/* <FaEmai
-                   */}
-
-                  <MdOutlineMailOutline />
+              <div className="flex gap-4 border border-gray-200 bg-white p-5 transition hover:border-primary/50">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-[#f8f8f8] text-xl text-primary">
+                  <span aria-hidden="true">✦</span>
                 </div>
-                <div className="text-[15px] text-[#333] leading-relaxed">
-                  <strong className="block font-semibold text-[#111]">
-                    Email
-                  </strong>
-                  info@winnerschapelWisconsin.org
+
+                <div>
+                  <h3 className="font-bold text-[#111]">
+                    We&apos;re here to help
+                  </h3>
+                  <p className="mt-1 text-sm leading-6 text-gray-600">
+                    Our team will review your enquiry and respond as soon as
+                    possible.
+                  </p>
                 </div>
               </div>
 
-              <div className="flex gap-4 mb-5 items-start">
-                <div className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center text-lg flex-shrink-0">
-                  <FaPhoneAlt className="text-white" />
-                </div>
-                <div className="text-[15px] text-[#333] leading-relaxed">
-                  <strong className="block font-semibold text-[#111]">
-                    Phone
-                  </strong>
-                  301-526-3382
-                </div>
-              </div>
+              <div className="bg-[#111] p-6 text-white">
+                <p className="text-xs font-bold uppercase tracking-[2px] text-primary">
+                  We welcome you
+                </p>
 
-              <Button
-                variant="primary"
-                size="lg"
-                className="w-full text-center justify-center mt-5"
+                <h3 className="mt-3 text-xl font-bold">
+                  We look forward to hearing from you.
+                </h3>
+
+                <p className="mt-3 text-sm leading-7 text-white/70">
+                  Thank you for reaching out to Winners Chapel International
+                  Wisconsin. We appreciate your message.
+                </p>
+
+                <div className="mt-5 h-1 w-12 bg-primary" />
+              </div>
+            </div>
+          </aside>
+
+          {/* CONTACT FORM */}
+          <div className="border border-gray-200 bg-white p-6 shadow-sm sm:p-9">
+            <div className="mb-8">
+              <p className="text-xs font-bold uppercase tracking-[2px] text-primary">
+                Contact us
+              </p>
+
+              <h2 className="mt-2 text-2xl font-bold text-[#111] sm:text-3xl">
+                Send us a message
+              </h2>
+
+              <p className="mt-3 text-sm leading-6 text-gray-600">
+                Fields marked with an asterisk (*) are required.
+              </p>
+            </div>
+
+            {successMessage && (
+              <div
+                role="status"
+                aria-live="polite"
+                className="mb-6 border border-gray-200 bg-[#f8f8f8] p-4 text-sm leading-6 text-[#222]"
               >
-                JOIN NOW
-              </Button>
-            </motion.div>
-          </motion.div>
+                <p className="font-bold text-[#111]">
+                  Message submitted successfully
+                </p>
+                <p className="mt-1">{successMessage}</p>
+              </div>
+            )}
+
+            {errorMessage && (
+              <div
+                role="alert"
+                aria-live="assertive"
+                className="mb-6 border border-red-200 bg-red-50 p-4 text-sm leading-6 text-red-700"
+              >
+                {errorMessage}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="firstName" className={labelClass}>
+                    First name *
+                  </label>
+                  <input
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    autoComplete="given-name"
+                    placeholder="Enter your first name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    maxLength={100}
+                    required
+                    disabled={isSubmitting}
+                    className={inputClass}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="lastName" className={labelClass}>
+                    Last name *
+                  </label>
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    autoComplete="family-name"
+                    placeholder="Enter your last name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    maxLength={100}
+                    required
+                    disabled={isSubmitting}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label htmlFor="email" className={labelClass}>
+                    Email address *
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    maxLength={254}
+                    required
+                    disabled={isSubmitting}
+                    className={inputClass}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="phone" className={labelClass}>
+                    Phone number
+                  </label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    placeholder="Enter your phone number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    maxLength={40}
+                    disabled={isSubmitting}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="subject" className={labelClass}>
+                  Subject *
+                </label>
+                <select
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                  disabled={isSubmitting}
+                  className={inputClass}
+                >
+                  <option value="" disabled>
+                    Select a subject
+                  </option>
+                  <option value="General enquiry">General enquiry</option>
+                  <option value="Prayer request">Prayer request</option>
+                  <option value="Church services">Church services</option>
+                  <option value="Ministry information">
+                    Ministry information
+                  </option>
+                  <option value="Testimony">Testimony</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="message" className={labelClass}>
+                  Your message *
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={6}
+                  placeholder="How can we help you?"
+                  value={formData.message}
+                  onChange={handleChange}
+                  maxLength={10000}
+                  required
+                  disabled={isSubmitting}
+                  className={`${inputClass} resize-y leading-6`}
+                />
+
+                <p className="mt-2 text-right text-xs text-gray-500">
+                  {formData.message.length}/10000 characters
+                </p>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex w-full items-center justify-center gap-3 bg-primary px-6 py-4 text-sm font-bold text-white transition hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isSubmitting ? (
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className="h-5 w-5 animate-spin rounded-full border-2 border-white/40 border-t-white"
+                    />
+                    Sending your message...
+                  </>
+                ) : (
+                  <>
+                    Send message
+                    <span aria-hidden="true">→</span>
+                  </>
+                )}
+              </button>
+
+              <p className="text-center text-xs leading-5 text-gray-500">
+                Your information will be used to respond to your enquiry.
+              </p>
+            </form>
+          </div>
         </div>
       </section>
 
-      {/* ===== MAP ===== */}
-      <section className="pb-[60px]">
-        <div className="container">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeInUp}
+      {/* BOTTOM CALL TO ACTION */}
+      <section className="bg-[#f8f8f8] px-5 py-12">
+        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[2px] text-primary">
+              Winners Chapel International Wisconsin
+            </p>
+            <h2 className="mt-2 text-2xl font-bold text-[#111]">
+              We look forward to connecting with you.
+            </h2>
+          </div>
+
+          <a
+            href="/"
+            className="inline-flex items-center justify-center border border-[#111] px-6 py-3 text-sm font-bold text-[#111] transition hover:bg-[#111] hover:text-white"
           >
-            <iframe
-              src="https://maps.google.com/maps?q=Faith%20Dome%204825%20Glenn%20Dale%20Rd%2C%20Bowie%2C%20MD%2020720&t=m&z=16&output=embed&iwloc=near"
-              title="Faith Dome 4825 Glenn Dale Rd, Bowie, MD 20720"
-              allowFullScreen
-              loading="lazy"
-              className="w-full h-[450px] border-0 rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
-            />
-          </motion.div>
+            Back to Home
+          </a>
         </div>
       </section>
-
-      {/* ===== SERVICE TIMES ===== */}
-      <motion.section
-        className="bg-[#f8f8f8] py-[60px] text-center"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeInUp}
-      >
-        <div className="container">
-          <motion.h4
-            variants={fadeInUp}
-            className="text-[22px] mb-2 font-inter font-semibold"
-          >
-            Sunday Morning Worship:
-          </motion.h4>
-          <motion.p variants={fadeInUp} className="text-base text-[#444]">
-            <strong>First Service: 8:00 am</strong> &nbsp;|&nbsp;{" "}
-            <strong>Second Service: 10:30 am</strong>
-          </motion.p>
-          <motion.div variants={fadeInUp} className="mt-4">
-            <h4 className="text-[22px] mb-2 font-inter font-semibold">
-              Communion Service:
-            </h4>
-            <p className="text-base text-[#444]">
-              <strong>Wednesdays at 6:00 pm</strong>
-            </p>
-          </motion.div>
-          <motion.div
-            variants={fadeInUp}
-            className="mt-5 pt-5 border-t-2 border-[#ececec]"
-          >
-            <h4 className="text-[22px] mb-2 font-inter font-semibold">
-              Main Location:
-            </h4>
-            <p className="text-base text-[#444]">
-              <strong>4825 Glenn Dale Rd, Bowie, MD 20720</strong>
-            </p>
-          </motion.div>
-          <motion.div variants={fadeInUp} className="mt-[30px]">
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => {
-                router.push("/plan-your-visit");
-              }}
-            >
-              Attend a Service
-            </Button>
-          </motion.div>
-        </div>
-      </motion.section>
-    </>
+    </main>
   );
 }

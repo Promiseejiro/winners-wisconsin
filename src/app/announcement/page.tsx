@@ -1,7 +1,6 @@
 "use client";
 import { motion, Variants } from "framer-motion";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCreative, Pagination } from "swiper/modules";
 
@@ -29,7 +28,51 @@ const staggerContainer: Variants = {
 export default function AnnouncementPage() {
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
   const [liveAnnouncements, setLiveAnnouncements] = useState<any[]>([]);
-  useEffect(() => { fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000/api/v1"}/announcements`).then(r => r.json()).then(b => setLiveAnnouncements(b.data || [])).catch(() => {}); }, []);
+  useEffect(() => {
+    const loadAnnouncements = async () => {
+      try {
+        const baseUrl = (
+          process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000/api/v1"
+        ).replace(/\/$/, "");
+        const response = await fetch(`${baseUrl}/announcements`, {
+          cache: "no-store",
+        });
+        if (!response.ok) return;
+        const body = await response.json();
+        const records = Array.isArray(body)
+          ? body
+          : Array.isArray(body?.data)
+            ? body.data
+            : Array.isArray(body?.items)
+              ? body.items
+              : [];
+        setLiveAnnouncements(records);
+      } catch (error) {
+        console.error("Failed to load announcements:", error);
+      }
+    };
+    loadAnnouncements();
+  }, []);
+
+  // Accept common image field names so images uploaded by the admin are rendered.
+  const getAnnouncementImage = (item: any): string | null => {
+    const candidate =
+      item?.imageUrl ??
+      item?.image ??
+      item?.thumbnailUrl ??
+      item?.thumbnail ??
+      item?.bannerImage ??
+      item?.featuredImage ??
+      item?.photo ??
+      item?.coverImage;
+    if (typeof candidate === "string" && candidate.trim())
+      return candidate.trim();
+    if (candidate && typeof candidate === "object") {
+      const nested = candidate.url ?? candidate.secure_url ?? candidate.src;
+      if (typeof nested === "string" && nested.trim()) return nested.trim();
+    }
+    return null;
+  };
 
   const announcementImages = [
     {
@@ -73,6 +116,20 @@ export default function AnnouncementPage() {
       alt: "Announcement 8",
     },
   ];
+
+  // Prefer Cloudinary images uploaded with live announcements; use the legacy
+  // slider images only when there are no announcement images available.
+  const uploadedAnnouncementImages = liveAnnouncements
+    .map((item) => ({
+      id: item._id ?? item.id,
+      src: getAnnouncementImage(item),
+      alt: item.title || "Church announcement",
+    }))
+    .filter((item) => Boolean(item.src));
+
+  const sliderImages = uploadedAnnouncementImages.length
+    ? uploadedAnnouncementImages
+    : announcementImages;
 
   const announcements = [
     {
@@ -408,19 +465,48 @@ export default function AnnouncementPage() {
   return (
     <>
       {liveAnnouncements.length > 0 && (
-      <section className="py-[70px] bg-white">
-        <div className="container">
-          <div className="mb-10 text-center"><p className="text-[#ef2b34] font-semibold text-sm uppercase tracking-[1px]">Live Updates</p><h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111]">Latest Church Announcements</h2></div>
-          <div className="grid gap-5 md:grid-cols-2">
-            {liveAnnouncements.map((item) => (
-              <article key={item._id} className="rounded-xl border bg-[#fafafa] p-6">
-                <h3 className="font-cormorant text-2xl font-bold text-[#111]">{item.title}</h3>
-                <p className="mt-3 whitespace-pre-line text-[#555] leading-relaxed">{item.content}</p>
-              </article>
-            ))}
+        <section className="py-[70px] bg-white">
+          <div className="container">
+            <div className="mb-10 text-center">
+              <p className="text-[#ef2b34] font-semibold text-sm uppercase tracking-[1px]">
+                Live Updates
+              </p>
+              <h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111]">
+                Latest Church Announcements
+              </h2>
+            </div>
+            <div className="grid gap-5 md:grid-cols-2">
+              {liveAnnouncements.map((item) => (
+                <article
+                  key={item._id ?? item.id}
+                  className="overflow-hidden rounded-xl border bg-[#fafafa]"
+                >
+                  {getAnnouncementImage(item) && (
+                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100">
+                      <img
+                        src={getAnnouncementImage(item)!}
+                        alt={item.title || "Church announcement"}
+                        className="h-full w-full object-cover"
+                        loading="lazy"
+                        onError={(event) => {
+                          event.currentTarget.style.display = "none";
+                        }}
+                      />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <h3 className="font-cormorant text-2xl font-bold text-[#111]">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 whitespace-pre-line text-[#555] leading-relaxed">
+                      {item.content}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
       )}
       {/* ===== PAGE HEADER ===== */}
       <section className="relative w-full py-20 text-white">
@@ -483,16 +569,22 @@ export default function AnnouncementPage() {
                 slidesPerView={1}
                 spaceBetween={0}
               >
-                {announcementImages.map((image) => (
+                {sliderImages.map((image) => (
                   <SwiperSlide
                     key={image.id}
                     className=" bg-white  flex items-center"
                   >
                     <div className=" relative  bg-white w-full h-62.5  sm:h-87 md:h-125 lg:h-150 overflow-hidden">
                       <img
-                        src={image.src}
+                        src={image.src ?? undefined}
                         alt={image.alt}
-                        className="w-full h-full  rounded-2xl transition-transform duration-500"
+                        className="w-full h-full rounded-2xl object-cover transition-transform duration-500"
+                        loading={
+                          image.id === sliderImages[0]?.id ? "eager" : "lazy"
+                        }
+                        onError={(event) => {
+                          event.currentTarget.style.display = "none";
+                        }}
                       />
                     </div>
                   </SwiperSlide>
