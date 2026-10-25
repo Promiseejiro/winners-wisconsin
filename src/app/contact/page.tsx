@@ -23,12 +23,8 @@ const initialFormData: ContactFormData = {
 
 function getContactEndpoint(): string {
   const configuredUrl = (
-    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+    process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000"
   ).replace(/\/+$/, "");
-
-  // Supports both:
-  // NEXT_PUBLIC_API_URL=http://localhost:3000
-  // NEXT_PUBLIC_API_URL=http://localhost:3000/api/v1
   if (configuredUrl.endsWith("/api/v1")) {
     return `${configuredUrl}/contact`;
   }
