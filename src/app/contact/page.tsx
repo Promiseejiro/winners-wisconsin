@@ -23,7 +23,7 @@ const initialFormData: ContactFormData = {
 
 function getContactEndpoint(): string {
   const configuredUrl = (
-    process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000"
+    process.env.NEXT_PUBLIC_SERVER_URL || "https://winners-be.onrender.com"
   ).replace(/\/+$/, "");
   if (configuredUrl.endsWith("/api/v1")) {
     return `${configuredUrl}/contact`;
