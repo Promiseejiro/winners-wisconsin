@@ -23,11 +23,11 @@
         "buttonHref": "/plan-your-visit"
       }
     ],
-    "backgroundImage": "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/04/Test_Background_4.png"
+    "backgroundImage": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793604355/winners-chapel/vgik4inwwpatl9riqdkh.jpg"
   },
   "about": {
     "eyebrow": "Where God Lives...",
-    "title": "Welcome to Winners Chapel International",
+    "title": "Welcome to Winners Chapel International Milwaukee, Wisconsin",
     "description": "Welcome to the home of victory! At Winners Chapel International Milwaukee Wisconsin, we are committed to providing a place of spiritual growth, empowerment, and community. We believe in a life of abundance, guided by the Word of God. Whether you are visiting for the first time or looking for a place to call home, we are here to support you on your faith journey.",
     "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
     "buttonText": "More About Us",
