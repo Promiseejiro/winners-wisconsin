@@ -3,9 +3,9 @@
     "slides": [
       {
         "id": 1,
-        "tagline": "Wisconsine",
+        "tagline": "Wisconsin",
         "title": "Building Lives",
-        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1787508679/winners-chapel/zm4ay1efdgm2fbbua3hz.webp",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793603939/winners-chapel/dibnpjxozokjh42rmfjz.png",
         "subtitle": "Through Faith",
         "description": "Join us as we grow together in Christ through worship, prayer, and community.",
         "buttonText": "Attend Service",
@@ -15,10 +15,10 @@
         "id": 2,
         "badge": "Monthly Theme",
         "title": "FINANCIAl",
-        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1787508693/winners-chapel/rdkue5e9ufyf90tlbxwd.webp",
-        "subtitle": "FORTUNE IS MY HERITAGE",
-        "verse": "Job 22:21–25",
-        "description": "JULY 2026 PROPHETIC THEME",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793603807/winners-chapel/winyqczdtsgs8dbufgw1.jpg",
+        "subtitle": "I AM REDEEMED A WONDER TO MY WORLD",
+        "verse": "Isaiah 8:18",
+        "description": "NOVEMBER 2026 PROPHETIC THEME",
         "buttonText": "Attend Service",
         "buttonHref": "/plan-your-visit"
       }
