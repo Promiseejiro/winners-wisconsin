@@ -1,1 +1,48 @@
-{"header":{"label":"Latest Updates","title":"Announcements"},"items":[{"title":"Next Sunday at Winners Chapel International Milwaukee Wisconsin","content":"Good News! Next Sunday shall be our New Dawn Banquet Service. It shall be a service to be much remembered. We are all required to come along with our new converts, invitees, and other loved ones to partake of the wonders that await us in this service.","time":"9:00 AM"},{"title":"Covenant Hour of Prayer","content":"We gather for personal and corporate prayer for spiritual empowerment, direction, and breakthroughs.","time":"Monday–Friday: 6:00 AM – 7:00 AM; Saturday: 8:00 AM"},{"title":"Midweek Communion Service","content":"Our Midweek Communion Service holds every Wednesday. We shall be observing a fast and break with the communion.","time":"6:00 PM"},{"title":"AYAC 2026","content":"Annual Youth Alive Convention will hold from 18th August to 22nd August 2026. The theme is NEXT LEVELS.","time":"18–22 August 2026"},{"title":"Winners Satellite Fellowship","content":"Winners Satellite Fellowship holds every Saturday. Members are encouraged to attend with their new converts and invitees at the centre nearest to them.","time":"5:00 PM – 6:00 PM"},{"title":"Believers Foundation Class","content":"Believers Foundation Class holds every Sunday immediately after the third service at the Welcome Lounge.","time":"After the third service"},{"title":"Free Transport","content":"Contact the Transport Ministry to pre-book a ride to church.","time":"Contact Transport Ministry"},{"title":"Pastoral Rescue Line","content":"Members are encouraged to call the Pastoral Rescue Lines for matters requiring prayers and urgent attention.","time":"Available for urgent attention"}]}
+{
+  "header": {
+    "label": "Latest Updates",
+    "title": "Announcements"
+  },
+  "items": [
+    {
+      "title": "Next Sunday at Winners Chapel International Milwaukee Wisconsin",
+      "content": "Good News! Next Sunday shall be our New Dawn Banquet Service. It shall be a service to be much remembered. We are all required to come along with our new converts, invitees, and other loved ones to partake of the wonders that await us in this service.",
+      "time": "9:00 AM"
+    },
+    {
+      "title": "Covenant Hour of Prayer",
+      "content": "Monday–Friday: 6:00 AM – 7:00 AM (online via WhatsApp); Saturday: 8:00 AM (in-person)",
+      "time": "Monday–Friday: 6:00 AM – 7:00 AM; Saturday: 8:00 AM"
+    },
+    {
+      "title": "Midweek Communion Service",
+      "content": "Our Midweek Communion Service holds every Wednesday. We shall be observing a fast and break with the communion.",
+      "time": "6:00 PM"
+    },
+    {
+      "title": "AYAC 2026",
+      "content": "Annual Youth Alive Convention will hold from 18th August to 22nd August 2026. The theme is NEXT LEVELS.",
+      "time": "18–22 August 2026"
+    },
+    {
+      "title": "Winners Satellite Fellowship",
+      "content": "Our house-to-house fellowship is held every Saturday at our WSF Centers across our cities and counties in Wisconsin. \nMembers are encouraged to attend with their new converts and invitees at the centre nearest to them.\n",
+      "time": "5:00 PM – 6:00 PM"
+    },
+    {
+      "title": "Believers Foundation Class",
+      "content": "Our BFC for all our new converts and new members will start immediately after every service. Everyone who is yet to take this class since joining this commission should take advantage of this very important platform for spiritual empowerment that will lead to victorious living. Every first timer is encouraged to see our ministers in the room beside prosperity, as we have a gift for them.",
+      "time": "After every service"
+    },
+    {
+      "title": "Free Transport",
+      "content": "Contact the Transport Ministry to pre-book a ride to church. Call: 414-255-4387",
+      "time": "Contact Transport Ministry"
+    },
+    {
+      "title": "Pastoral Rescue Line",
+      "content": "Members are encouraged to call the Pastoral Rescue Lines for matters requiring prayers and urgent attention. Phone Numbers: +1(414)-368-7753 ",
+      "time": "Available for urgent attention"
+    }
+  ]
+}

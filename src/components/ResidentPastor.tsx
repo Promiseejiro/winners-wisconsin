@@ -35,7 +35,7 @@ const staggerContainer: Variants = {
 export default function ResidentPastor() {
   const { settings } = useChurchSettings();
 
-  const pastorContent = (content as any).pastor || {};
+  const pastorContent = content.pastor;
 
   const pastorName =
     settings.pastorName || pastorContent.name || "Resident Pastor";
@@ -74,6 +74,7 @@ export default function ResidentPastor() {
                 <div className="flex h-[500px] w-full items-center justify-center bg-white/10 text-center text-white/80">
                   <div>
                     <p className="text-lg font-semibold">{pastorName}</p>
+
                     <p className="mt-2 text-sm">
                       Pastor photograph will appear here.
                     </p>

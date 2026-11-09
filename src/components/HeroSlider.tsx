@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import Image from "next/image";
@@ -12,22 +11,21 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const HeroSlider = () => {
-  const swiperRef = useRef(null);
-
   const slides = content.hero.slides;
-  console.log(slides);
+
   return (
     <section
-      className="relative w-full h-[60vh] lg:h-screen overflow-hidden flex items-center justify-center"
+      className="relative flex h-[60vh] w-full items-center justify-center overflow-hidden lg:h-screen"
       style={{
-        backgroundImage: `url("${content.hero.backgroundImage}")`,
+        backgroundImage: content.hero.backgroundImage
+          ? `url("${content.hero.backgroundImage}")`
+          : undefined,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >
       <Swiper
-        ref={swiperRef}
         modules={[Autoplay, EffectFade, Navigation, Pagination]}
         effect="fade"
         fadeEffect={{ crossFade: true }}
@@ -47,14 +45,14 @@ const HeroSlider = () => {
           bulletClass: "swiper-pagination-bullet-custom",
           bulletActiveClass: "swiper-pagination-bullet-custom-active",
         }}
-        className="h-full w-full absolute inset-0 flex items-center justify-center"
+        className="absolute inset-0 h-full w-full"
       >
         {slides.map((slide) => (
           <SwiperSlide
             key={slide.id}
-            className="relative h-full w-full flex! items-center justify-center"
+            className="relative flex! h-full w-full items-center justify-center"
           >
-            <div className="relative h-full w-full flex items-center justify-center p-4">
+            <div className="relative flex h-full w-full items-center justify-center p-4">
               <Image
                 src={slide.image}
                 alt={slide.title || "Winners Chapel Wisconsin"}
@@ -67,33 +65,43 @@ const HeroSlider = () => {
             </div>
 
             <div className="pointer-events-none absolute inset-0 z-1 bg-black/20" />
-            {/* <div className="absolute inset-0 z-2 flex items-center justify-center px-8 text-center">
+
+            {/*
+            Uncomment this block whenever you want to display
+            text and buttons over the hero images.
+
+            <div className="absolute inset-0 z-2 flex items-center justify-center px-8 text-center">
               <div className="max-w-4xl text-white drop-shadow-lg">
                 {slide.badge && (
                   <p className="mb-3 text-sm font-bold uppercase tracking-[3px]">
                     {slide.badge}
                   </p>
                 )}
+
                 {slide.tagline && (
                   <p className="mb-2 text-sm font-semibold uppercase tracking-[3px]">
                     {slide.tagline}
                   </p>
                 )}
+
                 {slide.title && (
                   <h1 className="font-cormorant text-5xl font-bold sm:text-6xl lg:text-8xl">
                     {slide.title}
                   </h1>
                 )}
+
                 {slide.subtitle && (
                   <h2 className="mt-2 text-2xl font-semibold sm:text-3xl">
                     {slide.subtitle}
                   </h2>
                 )}
+
                 {slide.description && (
                   <p className="mx-auto mt-4 max-w-2xl text-base text-white/90 sm:text-lg">
                     {slide.description}
                   </p>
                 )}
+
                 {slide.buttonText && (
                   <a
                     href={slide.buttonHref}
@@ -103,7 +111,8 @@ const HeroSlider = () => {
                   </a>
                 )}
               </div>
-            </div> */}
+            </div>
+            */}
           </SwiperSlide>
         ))}
       </Swiper>

@@ -3,9 +3,9 @@
     "slides": [
       {
         "id": 1,
-        "tagline": "Wisconsine",
+        "tagline": "Wisconsin",
         "title": "Building Lives",
-        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1787508679/winners-chapel/zm4ay1efdgm2fbbua3hz.webp",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793604538/winners-chapel/qna86pco2smvz53bliit.jpg",
         "subtitle": "Through Faith",
         "description": "Join us as we grow together in Christ through worship, prayer, and community.",
         "buttonText": "Attend Service",
@@ -13,22 +13,58 @@
       },
       {
         "id": 2,
-        "badge": "Monthly Theme",
-        "title": "FINANCIAl",
-        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1787508693/winners-chapel/rdkue5e9ufyf90tlbxwd.webp",
-        "subtitle": "FORTUNE IS MY HERITAGE",
-        "verse": "Job 22:21–25",
-        "description": "JULY 2026 PROPHETIC THEME",
+        "badge": "Monthly Prophetic Focus",
+        "title": "I AM REDEEMED A WONDER TO MY WORLD",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793604573/winners-chapel/dg4vncieaxo0hen7ox1s.jpg",
+        "subtitle": "I AM REDEEMED A WONDER TO MY WORLD",
+        "verse": "Isaiah 8:18",
+        "description": "NOVEMBER 2026 PROPHETIC THEME",
         "buttonText": "Attend Service",
         "buttonHref": "/plan-your-visit"
       }
     ],
-    "backgroundImage": "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/04/Test_Background_4.png"
+    "backgroundImage": ""
+  },
+  "services": {
+    "items": [
+      {
+        "id": 1,
+        "title": "JOIN US TODAY",
+        "description": "Looking for a community? Find your place with us. Your journey starts here with us.",
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop",
+        "link": "/announcement",
+        "buttonText": "Learn More"
+      },
+      {
+        "id": 2,
+        "title": "ATTEND A SERVICE",
+        "description": "Don't live a life less than God designed for you. Take your first step today. Join us for worship.",
+        "image": "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200&auto=format&fit=crop",
+        "link": "/announcement",
+        "buttonText": "Learn More"
+      },
+      {
+        "id": 3,
+        "title": "COVENANT HOUR",
+        "description": "This is a time for personal and corporate prayer, where we connect with God.",
+        "image": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1200&auto=format&fit=crop",
+        "link": "/announcement",
+        "buttonText": "Learn More"
+      },
+      {
+        "id": 4,
+        "title": "FREE TRANSPORT",
+        "description": "Join our free buses to get to church. New and old members are always welcome.",
+        "image": "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop",
+        "link": "/announcement",
+        "buttonText": "Learn More"
+      }
+    ]
   },
   "about": {
     "eyebrow": "Where God Lives...",
-    "title": "Welcome to Winners Chapel International",
-    "description": "Welcome to the home of victory! At Winners Chapel International Milwaukee Wisconsin, we are committed to providing a place of spiritual growth, empowerment, and community. We believe in a life of abundance, guided by the Word of God. Whether you are visiting for the first time or looking for a place to call home, we are here to support you on your faith journey.",
+    "title": "Welcome to Winners Chapel International Milwaukee, Wisconsin",
+    "description": "Welcome to the Home of Signs & Wonders! At Winners Chapel International Milwaukee, Wisconsin, we are committed to providing a place of spiritual growth, empowerment, and community. We believe in a life of abundance, guided by the Word of God. Whether you are visiting for the first time or looking for a place to call home, we are here to support you on your faith journey.",
     "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
     "buttonText": "More About Us",
     "buttonHref": "/about-us"
@@ -48,21 +84,155 @@
   "weekOfEmphasis": "1st Wednesday, Thursday & Friday of each month – 6:00pm",
   "pastor": {
     "label": "Resident Pastor",
-    "name": "Pastor Alaka",
-    "description": "Pastor Ayodeji Ajibulu is a Full-time Missionary Pastor in Mission to Europe on the Liberation Mission. He is the current serving Resident and District Pastor, WCI Manchester, United Kingdom. He is committed to passionately carrying out, and pursuing his God-given assignment and the delivery of the Liberation Mandate.",
+    "name": "Pastor Ajibola Alaka",
+    "description": "Pastor Ajibola Alaka is the current serving Resident Pastor, WCI Milwaukee Wisconsin, United States of America. He is committed to passionately carrying out, and pursuing his God-given assignment and the delivery of the Liberation Mandate.",
     "buttonText": "Book Appointment with Pastor",
-    "image": ""
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793949224/winners-chapel/ua92kwb8jjpsq2cp7at1.jpg"
   },
   "churchUpdates": {
     "label": "Church Updates",
     "title": "Stay informed with our special services and programs",
-    "description": "We provide weekly updates about all our recent special services, events and programs to ensure that you are current with the latest faith news."
+    "description": "We provide weekly updates about all our recent special services, events and programs to ensure that you are current with the latest faith news.",
+    "tabs": [
+      {
+        "id": "prayer",
+        "label": "Covenant Hour of Prayer",
+        "title": "Covenant Hour of Prayer",
+        "description": "We gather every Monday to Saturday at 6:00 AM for the Covenant Hour of Prayer. This is a time for personal and corporate prayer, where we connect with God for spiritual empowerment, direction, and breakthroughs. We encourage all members to start their day in prayer and receive strength for the day ahead.",
+        "details": [
+          "Time: Monday - Saturday, 6:00 AM",
+          "Location: Church Sanctuary/Online (if applicable)"
+        ],
+        "image": "/assets/images/eveangelism.jpg"
+      },
+      {
+        "id": "wsf",
+        "label": "Winners Satellite Fellowship (WSF)",
+        "title": "Winners Satellite Fellowship (WSF)",
+        "description": "We gather in homes across the city for our Winners Satellite Fellowship (WSF). This is a time for intimate fellowship, Bible study, and prayer. It's an opportunity to connect with other believers and grow together in faith.",
+        "details": [
+          "Time: Every Saturday at 5:00 PM",
+          "Location: Various Locations (Check our WSF Page)"
+        ],
+        "image": "/assets/images/eveangelism.jpg"
+      },
+      {
+        "id": "andrew",
+        "label": "Operation Andrew",
+        "title": "Operation Andrew",
+        "description": "We believe in the power of personal evangelism, which is why Operation Andrew is held every third Saturday of every month. It is a time when members invite their friends, family, and neighbors to experience the power of the Gospel in an inviting atmosphere.",
+        "details": [
+          "Next Date: Third Saturday of Every Month"
+        ],
+        "image": "/assets/images/eveangelism.jpg"
+      },
+      {
+        "id": "bfc",
+        "label": "Believers Foundation Class (BFS)",
+        "title": "Believer's Foundation Class",
+        "description": "At Winners Chapel Milwaukee, we are committed to nurturing and growing new believers in Christ. Our Believer's Foundation Class is designed to equip individuals with the foundational knowledge they need to live a victorious Christian life.",
+        "details": [
+          "Word Foundation",
+          "Effective Prayer Life",
+          "Kingdom Stewardship",
+          "Holy Ghost Baptism (Practical Ministration)"
+        ],
+        "image": "/assets/images/eveangelism.jpg"
+      },
+      {
+        "id": "wofbi",
+        "label": "Word Of Faith Bible Institute",
+        "title": "Word of Faith Bible Institute (WOFBI)",
+        "description": "This is a life-changing training centre where we equip believers with the knowledge of God's Word. Through WOFBI, we train future leaders, ministers, and believers who desire to deepen their knowledge of Scripture and live out the Word of God in their daily lives.",
+        "details": [
+          "Basic Certificate Course (BCC)",
+          "Leadership Certificate Course (LCC)",
+          "Leadership Diploma Course (LDC)",
+          "Summer Junior Bible School (SJBS)"
+        ],
+        "image": "/assets/images/eveangelism.jpg"
+      }
+    ]
   },
   "csr": {
-    "label": "Making a Positive Difference in Society",
-    "title": "Corporate Social Responsibility",
-    "description": "The Corporate Social Responsibility (CSR) was formed over 10 years ago as a community development arm of Winners Chapel International UK, to impact our local community as a way of giving back to the communities where our churches are situated in the UK.",
-    "buttonText": "Learn More"
+    "label": "Winners in the Community",
+    "title": "Making a Difference in Our Community",
+    "description": "We are committed to making a positive difference in our community through practical expressions of love, compassion, and service.",
+    "image": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1400&auto=format&fit=crop",
+    "buttonText": "Learn More",
+    "buttonHref": "https://winnersinthecommunity.com/",
+    "items": [
+      "Skills development through education, enterprise and employability training",
+      "Food Bank and Poverty Alleviation",
+      "Tackling Homelessness",
+      "Improving Health, Safety and the Environment",
+      "Improving Collaboration and Partnership"
+    ]
+  },
+  "ministries": {
+    "label": "Departments",
+    "title": "Our Ministries",
+    "items": [
+      {
+        "id": 1,
+        "title": "Kids Ministry",
+        "image": "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop",
+        "link": "/ministries"
+      },
+      {
+        "id": 2,
+        "title": "Women Ministry",
+        "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1200&auto=format&fit=crop",
+        "link": "/ministries"
+      },
+      {
+        "id": 3,
+        "title": "Teen Ministry",
+        "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop",
+        "link": "/ministries"
+      },
+      {
+        "id": 4,
+        "title": "Prayer Ministry",
+        "image": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1200&auto=format&fit=crop",
+        "link": "/ministries"
+      }
+    ]
+  },
+  "quote": {
+    "text": "Faith makes all things possible.",
+    "image": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1400&auto=format&fit=crop"
+  },
+  "contact": {
+    "title": "We'd love to hear from you",
+    "contactButton": "Contact Us",
+    "prayerButton": "Prayer Request",
+    "contactLink": "/contact",
+    "prayerLink": "/contact"
+  },
+  "gallery": {
+    "label": "Our Moments",
+    "title": "Life at Winners Chapel Milwaukee",
+    "description": "Explore moments of worship, fellowship, service, and the wonderful things God is doing in our church community.",
+    "viewButtonText": "View",
+    "viewAllText": "View All Photos",
+    "showLessText": "Show Less",
+    "collapseText": "Collapse",
+    "initialDisplayCount": 4,
+    "images": [
+      "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=1200&auto=format&fit=crop"
+    ]
   },
   "footer": {
     "address": "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
@@ -76,17 +246,5 @@
       "414-255-4387"
     ],
     "copyright": "© 2026 Winners Chapel International Milwaukee Wisconsin. All Rights Reserved."
-  },
-  "gallery": {
-    "images": [
-      "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop"
-    ]
   }
 }

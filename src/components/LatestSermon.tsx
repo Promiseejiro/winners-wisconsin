@@ -21,7 +21,16 @@ const staggerContainer: Variants = {
 
 const LatestSermon = () => {
   const [sermon, setSermon] = useState<any>(null);
-  useEffect(() => { fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000/api/v1"}/sermons`).then(r=>r.json()).then(b=>setSermon(b.data?.[0] || null)).catch(()=>{}); }, []);
+  useEffect(() => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000/api/v1"}/sermons`,
+    )
+      .then((r) => r.json())
+      .then((b) => setSermon(b.data?.[0] || null))
+      .catch(() => {});
+  }, []);
+
+  console.log(sermon);
   return (
     <section className="py-[80px] bg-white">
       <div className="container">
@@ -62,7 +71,9 @@ const LatestSermon = () => {
                   {sermon?.title || "COVENANT DAY OF FAVOUR"}
                 </h3>
                 <p className="text-[#ef2b34] font-medium text-sm">
-                  {sermon?.date ? new Date(sermon.date).toLocaleDateString() : "19th JULY 2026"}
+                  {sermon?.date
+                    ? new Date(sermon.date).toLocaleDateString()
+                    : "19th JULY 2026"}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-3 justify-center md:justify-start">
                   <span className="px-3 py-1 bg-[#ef2b34] text-white text-xs rounded-full">

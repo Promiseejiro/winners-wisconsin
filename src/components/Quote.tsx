@@ -1,18 +1,21 @@
+import content from "@/content/home.json";
+
 const Quote = () => {
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 min-h-[550px]">
+    <section className="grid min-h-[550px] grid-cols-1 md:grid-cols-2">
       <div
         className="min-h-[250px] md:min-h-full"
         style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1400&auto=format&fit=crop')",
+          backgroundImage: `url('${content.quote.image}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
         }}
       />
-      <div className="bg-primary text-white flex items-center justify-center p-[50px] md:p-[80px]">
-        <h2 className="font-cormorant text-4xl sm:text-5xl lg:text-[65px] font-bold leading-[1.2] text-center md:text-left">
-          “Faith makes all things possible.”
+
+      <div className="flex items-center justify-center bg-primary p-[50px] text-white md:p-[80px]">
+        <h2 className="text-center font-cormorant text-4xl font-bold leading-[1.2] sm:text-5xl md:text-left lg:text-[65px]">
+          “{content.quote.text}”
         </h2>
       </div>
     </section>
