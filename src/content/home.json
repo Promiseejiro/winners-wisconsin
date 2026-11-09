@@ -59,10 +59,11 @@
     "description": "We provide weekly updates about all our recent special services, events and programs to ensure that you are current with the latest faith news."
   },
   "csr": {
-    "label": "",
-    "title": "",
-    "description": "",
-    "buttonText": ""
+    "label": "CSR",
+    "title": "trirutr",
+    "description": "rhtrthrhtr",
+    "buttonText": "CSR btn",
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193224/winners-chapel/vh4a0mndstgny1qeihcs.jpg"
   },
   "footer": {
     "address": "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
@@ -76,5 +77,18 @@
       "414-255-4387"
     ],
     "copyright": "© 2026 Winners Chapel International Milwaukee Wisconsin. All Rights Reserved."
+  },
+  "ministries": {
+    "items": [
+      {
+        "id": 1794193130237,
+        "title": "grehghfdhds",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193146/winners-chapel/pqczwvobb6mnkjmwrqoz.jpg",
+        "link": "/ministries"
+      }
+    ]
+  },
+  "quote": {
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193266/winners-chapel/vfyuhkkfwfceyf24xavm.jpg"
   }
 }
