@@ -5,13 +5,17 @@ import Link from "next/link";
 import Image from "next/image";
 import Button from "./Button";
 import { usePathname, useRouter } from "next/navigation";
+import { useChurchSettings } from "@/providers/church-settings-provider";
 
 const Header = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const { settings } = useChurchSettings();
+  const churchLogo = settings.logo || "/assets/images/logo.png";
   const pathname = usePathname();
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -142,8 +146,8 @@ const Header = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 flex-shrink-0">
             <Image
-              src="/assets/images/logo.png"
-              alt="Winner's Chapel"
+              src={churchLogo}
+              alt={settings.churchName}
               width={32}
               height={32}
               className="h-26 w-26"
@@ -291,8 +295,8 @@ const Header = () => {
           <div className="flex items-center justify-between p-6 border-b border-white/10">
             <Link href="/" onClick={() => setIsMenuOpen(false)}>
               <Image
-                src="/assets/images/logo.png"
-                alt="Winner's Chapel"
+                src={churchLogo}
+                alt={settings.churchName}
                 width={40}
                 height={40}
                 className="h-10 w-10"
@@ -394,8 +398,7 @@ const Header = () => {
                   />
                 </svg>
                 <div>
-                  <span className="block">81-83 Broughton Lane,</span>
-                  <span className="block">Salford M8 9UE</span>
+                  <span className="block">{settings.address}</span>
                 </div>
               </div>
 
@@ -414,9 +417,9 @@ const Header = () => {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
-                <span className="break-all">
-                  admin.manchester@winners-chapel.org.uk
-                </span>
+                <a className="break-all hover:text-white" href={`mailto:${settings.email}`}>
+                  {settings.email}
+                </a>
               </div>
 
               {/* Hours */}
@@ -452,7 +455,13 @@ const Header = () => {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-                <span>Contact Us: 01618326020</span>
+                <div className="flex flex-col gap-1">
+                  {settings.phones.map((phone) => (
+                    <a key={phone} href={`tel:${phone.replace(/[^+\d]/g, "")}`} className="hover:text-white">
+                      {phone}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
 

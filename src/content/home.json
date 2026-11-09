@@ -50,7 +50,8 @@
     "label": "Resident Pastor",
     "name": "Pastor Alaka",
     "description": "Pastor Ayodeji Ajibulu is a Full-time Missionary Pastor in Mission to Europe on the Liberation Mission. He is the current serving Resident and District Pastor, WCI Manchester, United Kingdom. He is committed to passionately carrying out, and pursuing his God-given assignment and the delivery of the Liberation Mandate.",
-    "buttonText": "Book Appointment with Pastor"
+    "buttonText": "Book Appointment with Pastor",
+    "image": ""
   },
   "churchUpdates": {
     "label": "Church Updates",
@@ -75,5 +76,17 @@
       "414-255-4387"
     ],
     "copyright": "© 2026 Winners Chapel International Milwaukee Wisconsin. All Rights Reserved."
+  },
+  "gallery": {
+    "images": [
+      "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop"
+    ]
   }
 }

@@ -3,6 +3,7 @@ import { Inter, Cormorant_Garamond, Jost } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import { ChurchSettingsProvider } from "@/providers/church-settings-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,10 +30,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${jost.variable} antialiased bg-transparent`}>
-        <Header />
-        <main className="max-w-screen overflow-hidden">{children}</main>
-        <div id="modal-root"></div>
-        <Footer />
+        <ChurchSettingsProvider>
+          <Header />
+          <main className="max-w-screen overflow-hidden">{children}</main>
+          <div id="modal-root"></div>
+          <Footer />
+        </ChurchSettingsProvider>
       </body>
     </html>
   );

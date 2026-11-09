@@ -6,6 +6,17 @@ import Button from "@/components/common/Button";
 import { useState } from "react";
 import Input from "@/components/common/input";
 import { useRouter } from "next/navigation";
+import { useChurchSettings } from "@/providers/church-settings-provider";
+
+interface YouthLeader {
+  _id?: string;
+  id?: string;
+  name: string;
+  role?: string;
+  position?: string;
+  image?: string;
+  description?: string;
+}
 
 // Animation variants
 const fadeInUp: Variants = {
@@ -58,6 +69,7 @@ const staggerContainer: Variants = {
 };
 
 export default function YouthAlivePage() {
+  const { settings } = useChurchSettings();
   const router = useRouter();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -77,92 +89,9 @@ export default function YouthAlivePage() {
     },
   ];
 
-  const leaders = [
-    {
-      name: "Olajire Tayo",
-      role: "Youth Pastor",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/te3.jpg",
-    },
-    {
-      name: "James Onayiga",
-      role: "YAF Coordinator",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/onayiga-james-1.jpg",
-    },
-    {
-      name: "Tracy Magino",
-      role: "Assistant YAF Coordinator",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/Tracy-Magino-1.jpg",
-    },
-    {
-      name: "Oreoluwa Toluwani",
-      role: "YAF Secretary",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/ore-1.jpg",
-    },
-    {
-      name: "Segun Bolufemi",
-      role: "YAF Program Coordinator",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/eimage.jpg",
-    },
-    {
-      name: "Jennifer Zoro",
-      role: "YAF Special Duties Coordinator",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/jen-z.jpg",
-    },
-    {
-      name: "Loveth Igineweka",
-      role: "YAF Choir Coordinator",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/WhatsApp-Image-2024-01-13-at-3.57.03-PM.jpg",
-    },
-    {
-      name: "Ifeanyi Nwafor",
-      role: "YAF Prayer Coordinator",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/NWAFOR-I.jpg",
-    },
-    {
-      name: "Temitope Munjoh",
-      role: "YAF Usher & Hospitality Coordinator",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/munjoh-t-1.jpg",
-    },
-    {
-      name: "Claudia Nwafor",
-      role: "YAF Evangelism Coordinator",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/NWAFOR-C.jpg",
-    },
-    {
-      name: "Emillienne Swiri",
-      role: "YAF Sanctuary Coordinator",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/SWIRRI-E.jpg",
-    },
-    {
-      name: "Toluwa Soniregum",
-      role: "YAF Utility Coordinator",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/SONURI-T.jpg",
-    },
-    {
-      name: "Johnson Ayuk",
-      role: "YAF Sports Coordinator",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/JOHNSON-AYUK.jpg",
-    },
-    {
-      name: "Clement Etuk",
-      role: "Drama Coordinator (Mighty Acts)",
-      image:
-        "https://winnerschapelmaryland.com/wp-content/uploads/2024/08/ETUK-C-scaled-1.jpg",
-    },
-  ];
+  const leaders: YouthLeader[] = Array.isArray((content as any).leaders)
+    ? (content as any).leaders
+    : [];
 
   const teamOptions = [
     "Choir",
@@ -190,7 +119,7 @@ export default function YouthAlivePage() {
           alt="Bishop David Oyedepo preaching at Winners Chapel"
           fill
           className="object-cover z-0"
-          src="https://winnerschapelmaryland.com/wp-content/uploads/2024/11/david-oyedepo.jpg"
+          src="/assets/images/eveangelism.jpg"
           priority
         />{" "}
         <motion.div
@@ -351,16 +280,17 @@ export default function YouthAlivePage() {
             viewport={{ once: true, amount: 0.1 }}
             variants={staggerContainer}
           >
-            {leaders.map((leader, index) => (
+            {leaders.map((leader: YouthLeader, index: number) => (
               <motion.div
-                key={index}
+                key={leader._id || leader.id || `${leader.name}-${index}`}
                 variants={fadeInScale}
                 className="bg-[#f8f8f8] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
               >
                 <div className="relative h-64">
                   <Image
-                    src={leader.image}
-                    alt={leader.name}
+                    src={leader.image || "/assets/images/eveangelism.jpg"}
+                    alt={leader.name || "Youth Alive Leader"}
+                    unoptimized
                     fill
                     className="object-cover"
                   />
@@ -369,11 +299,14 @@ export default function YouthAlivePage() {
                   <h4 className="font-inter font-semibold text-white text-base">
                     {leader.name}
                   </h4>
-                  <p className="text-[#aaa] text-sm">{leader.role}</p>
+                  <p className="text-[#aaa] text-sm">{leader.role || leader.position || "Ministry Leader"}</p>
                 </div>
               </motion.div>
             ))}
           </motion.div>
+          {leaders.length === 0 && (
+            <p className="mt-6 text-center text-gray-500">Our Youth Alive leadership team will be announced soon.</p>
+          )}
         </div>
       </section>
 
@@ -550,10 +483,13 @@ export default function YouthAlivePage() {
               variants={fadeInUp}
               className="text-[#555] text-center mb-8"
             >
-              For inquiries, contact 301-526-3382
+              For inquiries, contact us at:
               <br />
-              Are you in need of prayers, contact our Prayer Squad on
-              301-526-3382
+              {settings.phones.join(" · ")}
+              <br />
+              Are you in need of prayers? Contact our church office.
+              <br />
+              <a href={`mailto:${settings.email}`} className="text-primary font-semibold">{settings.email}</a>
             </motion.p>
 
             <motion.div variants={fadeInUp}>
@@ -684,7 +620,7 @@ export default function YouthAlivePage() {
                 Main Location:
               </h5>
               <p className="text-[#555] text-base mb-6">
-                <strong>4825 Glenn Dale Rd, Bowie, MD 20720</strong>
+                <strong>{settings.address}</strong>
               </p>
               <Button
                 variant="primary"

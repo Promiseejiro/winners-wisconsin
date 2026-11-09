@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { FormEvent, ChangeEvent } from "react";
+import { useChurchSettings } from "@/providers/church-settings-provider";
 
 type ContactFormData = {
   firstName: string;
@@ -38,6 +39,7 @@ const inputClass =
 const labelClass = "mb-2 block text-sm font-semibold text-[#222]";
 
 export default function ContactPage() {
+  const { settings } = useChurchSettings();
   const [formData, setFormData] = useState<ContactFormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -146,7 +148,7 @@ export default function ContactPage() {
 
         <div className="relative mx-auto max-w-6xl">
           <p className="mb-4 text-xs font-bold uppercase tracking-[3px] text-primary">
-            Winners Chapel International Wisconsin
+            {settings.churchName}
           </p>
 
           <h1 className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl lg:text-7xl">
@@ -183,6 +185,24 @@ export default function ContactPage() {
                 about our ministry, or would like to share a message, please use
                 the contact form.
               </p>
+              <div className="mt-6 space-y-3 border border-gray-200 bg-[#fafafa] p-5">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-gray-500">Church address</p>
+                  <p className="mt-1 text-sm text-[#222]">{settings.address}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-gray-500">Email</p>
+                  <a className="mt-1 block break-all text-sm text-primary" href={`mailto:${settings.email}`}>{settings.email}</a>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-gray-500">Telephone</p>
+                  <div className="mt-1 flex flex-col gap-1">
+                    {settings.phones.map((phone) => (
+                      <a key={phone} href={`tel:${phone.replace(/[^+\d]/g, "")}`} className="text-sm text-[#222] hover:text-primary">{phone}</a>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="space-y-5">
@@ -437,7 +457,7 @@ export default function ContactPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
           <div>
             <p className="text-xs font-bold uppercase tracking-[2px] text-primary">
-              Winners Chapel International Wisconsin
+              {settings.churchName}
             </p>
             <h2 className="mt-2 text-2xl font-bold text-[#111]">
               We look forward to connecting with you.

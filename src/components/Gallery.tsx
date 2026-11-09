@@ -8,17 +8,12 @@ import {
   FaImages,
 } from "react-icons/fa";
 import ModalBackdrop from "./common/modalBackdrop";
+import homeContent from "@/content/home.json";
 
-const galleryImages = [
-  "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop",
-];
+const galleryImages: string[] =
+  (homeContent as any).gallery?.images?.length
+    ? (homeContent as any).gallery.images
+    : [];
 
 const Gallery = () => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -87,7 +82,7 @@ const Gallery = () => {
           </div>
         ))}
 
-        {!showAll && galleryImages.length > 5 && (
+        {!showAll && galleryImages.length > 4 && (
           <div
             className="relative overflow-hidden cursor-pointer group"
             onClick={() => setShowAll(true)}
@@ -95,7 +90,7 @@ const Gallery = () => {
             <div className="h-[180px] sm:h-[240px] w-full bg-gradient-to-br from-gray-800 to-gray-900 flex flex-col items-center justify-center transition duration-500 group-hover:scale-105">
               <FaImages className="w-12 h-12 text-white/80 mb-3" />
               <span className="text-white text-lg font-bold">
-                +{galleryImages.length - 5} More
+                +{galleryImages.length - 4} More
               </span>
               <span className="text-white/60 text-sm">View All Photos</span>
             </div>
@@ -103,7 +98,7 @@ const Gallery = () => {
         )}
 
         {/* View Less Button */}
-        {showAll && galleryImages.length > 5 && (
+        {showAll && galleryImages.length > 4 && (
           <div
             className="relative overflow-hidden cursor-pointer group"
             onClick={() => setShowAll(false)}

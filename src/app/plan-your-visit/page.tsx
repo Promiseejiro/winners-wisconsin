@@ -5,6 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/common/Button";
 import { useRouter } from "next/navigation";
+import { useChurchSettings } from "@/providers/church-settings-provider";
 
 // Animation variants
 const fadeInUp: Variants = {
@@ -50,6 +51,7 @@ const staggerContainer: Variants = {
 export default function PlanYourVisitPage() {
   // Move useRouter inside the component
   const router = useRouter();
+  const { settings } = useChurchSettings();
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
 
   const accordionItems = [
@@ -117,7 +119,7 @@ export default function PlanYourVisitPage() {
             variants={fadeInUp}
             className="font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-bold mb-4 leading-tight"
           >
-            We are so excited to welcome you to Winners Chapel Maryland
+            We are so excited to welcome you to {settings.churchName}
           </motion.h1>
           <motion.h2
             variants={fadeInUp}
@@ -189,7 +191,7 @@ export default function PlanYourVisitPage() {
                 First Service: 8:00 am | Second Service: 10:30 am
               </h3>
               <p className="text-[#555] text-base mb-6">
-                4825 Glenn Dale Rd, Bowie, MD 20720
+                {settings.address}
               </p>
 
               <div className="border-t-2 border-[#ececec] pt-6">
@@ -262,7 +264,7 @@ export default function PlanYourVisitPage() {
                   Every Wednesday from 6:00 pm
                 </h3>
                 <p className="text-[#ddd] text-base">
-                  4825 Glenn Dale Rd, Bowie, MD 20720
+                  {settings.address}
                 </p>
               </div>
             </motion.div>
@@ -309,7 +311,7 @@ export default function PlanYourVisitPage() {
                 Every Saturday 9:00am – 10:00am
               </h3>
               <p className="text-[#555] text-base">
-                4825 Glenn Dale Rd, Bowie, MD 20720
+                {settings.address}
               </p>
             </motion.div>
 
@@ -345,7 +347,7 @@ export default function PlanYourVisitPage() {
                 Our Main Location
               </h2>
               <p className="text-white/80 text-lg mt-2">
-                4825 Glenn Dale Rd, Bowie, MD 20720
+                {settings.address}
               </p>
             </motion.div>
 
@@ -355,7 +357,7 @@ export default function PlanYourVisitPage() {
             >
               <div className="rounded-lg overflow-hidden">
                 <Image
-                  src="https://winnerschapelmaryland.com/wp-content/uploads/2020/03/MainLocationWorshipTeam.jpg"
+                  src="/assets/images/eveangelism.jpg"
                   alt="Main Location"
                   width={600}
                   height={400}
@@ -385,7 +387,7 @@ export default function PlanYourVisitPage() {
                   </svg>
                   <p className="text-lg">View on Google Maps</p>
                   <p className="text-sm text-white/40">
-                    4825 Glenn Dale Rd, Bowie, MD 20720
+                    {settings.address}
                   </p>
                 </div>
               </div>
@@ -460,7 +462,7 @@ export default function PlanYourVisitPage() {
                 Main Location:
               </h5>
               <p className="text-[#555] text-base mb-6">
-                <strong>4825 Glenn Dale Rd, Bowie, MD 20720</strong>
+                <strong>{settings.address}</strong>
               </p>
               <Button
                 variant="primary"

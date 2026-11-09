@@ -1,9 +1,10 @@
 "use client";
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/components/common/Button";
 import content from "@/content/about-us.json";
+import { useChurchSettings } from "@/providers/church-settings-provider";
 //02
 // Animation variants
 const fadeInUp: Variants = {
@@ -31,10 +32,21 @@ const staggerContainer: Variants = {
   },
 };
 
-const pillars = content.pillars;
 
 export default function AboutUsPage() {
+  const { settings } = useChurchSettings();
   const [openPillar, setOpenPillar] = useState<number | null>(null);
+  const [pageContent, setPageContent] = useState<any>(content);
+  const aboutImage = settings.aboutImage || "/assets/images/eveangelism.jpg";
+
+  useEffect(() => {
+    const configured = (process.env.NEXT_PUBLIC_SERVER_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api/v1").replace(/\/+$/, "");
+    const api = configured.endsWith("/api/v1") ? configured : `${configured}/api/v1`;
+    fetch(`${api}/content/public/page?slug=about-us`, { cache: "no-store" })
+      .then((r) => r.ok ? r.json() : null)
+      .then((about) => { if (about?.data) setPageContent(about.data); })
+      .catch(() => undefined);
+  }, []);
 
   const togglePillar = (id: number) => {
     setOpenPillar(openPillar === id ? null : id);
@@ -69,8 +81,8 @@ export default function AboutUsPage() {
             {/* Image */}
             <motion.div variants={fadeInLeft}>
               <Image
-                src="/assets/images/about-wcim-2.png"
-                alt="About Winners Chapel Manchester"
+                src={aboutImage}
+                alt="Winners Chapel International Milwaukee Wisconsin"
                 width={600}
                 height={600}
                 className="w-full h-auto object-contain rounded-xl"
@@ -85,7 +97,7 @@ export default function AboutUsPage() {
                   OUR VISION
                 </h2>
                 <p className="text-[#555] leading-relaxed text-base">
-                  {content.vision}
+                  {pageContent.vision}
                 </p>
               </div>
 
@@ -95,7 +107,7 @@ export default function AboutUsPage() {
                   OUR MISSION
                 </h2>
                 <p className="text-[#555] leading-relaxed text-base">
-                  {content.mission}
+                  {pageContent.mission}
                 </p>
               </div>
             </motion.div>
@@ -123,7 +135,7 @@ export default function AboutUsPage() {
               variants={fadeInUp}
               className="text-[#555] leading-relaxed text-base mb-8"
             >
-              {content.history}
+              {pageContent.history}
             </motion.p>
             <motion.div variants={fadeInUp}>
               <Button variant="primary" size="md" href="/contact">
@@ -161,7 +173,7 @@ export default function AboutUsPage() {
               variants={fadeInUp}
               className="grid grid-cols-1 md:grid-cols-2 gap-6"
             >
-              {pillars.map((pillar) => (
+              {(pageContent.pillars || content.pillars).map((pillar: any) => (
                 <div
                   key={pillar.id}
                   className="bg-[#f8f8f8] rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
