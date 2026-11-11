@@ -155,84 +155,11 @@
     ]
   },
   "csr": {
-    "label": "Winners in the Community",
-    "title": "Making a Difference in Our Community",
-    "description": "We are committed to making a positive difference in our community through practical expressions of love, compassion, and service.",
-    "image": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1400&auto=format&fit=crop",
-    "buttonText": "Learn More",
-    "buttonHref": "https://winnersinthecommunity.com/",
-    "items": [
-      "Skills development through education, enterprise and employability training",
-      "Food Bank and Poverty Alleviation",
-      "Tackling Homelessness",
-      "Improving Health, Safety and the Environment",
-      "Improving Collaboration and Partnership"
-    ]
-  },
-  "ministries": {
-    "label": "Departments",
-    "title": "Our Ministries",
-    "items": [
-      {
-        "id": 1,
-        "title": "Kids Ministry",
-        "image": "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop",
-        "link": "/ministries"
-      },
-      {
-        "id": 2,
-        "title": "Women Ministry",
-        "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=1200&auto=format&fit=crop",
-        "link": "/ministries"
-      },
-      {
-        "id": 3,
-        "title": "Teen Ministry",
-        "image": "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop",
-        "link": "/ministries"
-      },
-      {
-        "id": 4,
-        "title": "Prayer Ministry",
-        "image": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1200&auto=format&fit=crop",
-        "link": "/ministries"
-      }
-    ]
-  },
-  "quote": {
-    "text": "Faith makes all things possible.",
-    "image": "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1400&auto=format&fit=crop"
-  },
-  "contact": {
-    "title": "We'd love to hear from you",
-    "contactButton": "Contact Us",
-    "prayerButton": "Prayer Request",
-    "contactLink": "/contact",
-    "prayerLink": "/contact"
-  },
-  "gallery": {
-    "label": "Our Moments",
-    "title": "Life at Winners Chapel Milwaukee",
-    "description": "Explore moments of worship, fellowship, service, and the wonderful things God is doing in our church community.",
-    "viewButtonText": "View",
-    "viewAllText": "View All Photos",
-    "showLessText": "Show Less",
-    "collapseText": "Collapse",
-    "initialDisplayCount": 4,
-    "images": [
-      "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1516280440614-37939bbacd81?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=1200&auto=format&fit=crop"
-    ]
+    "label": "CSR",
+    "title": "trirutr",
+    "description": "rhtrthrhtr",
+    "buttonText": "CSR btn",
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193224/winners-chapel/vh4a0mndstgny1qeihcs.jpg"
   },
   "footer": {
     "address": "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
@@ -246,5 +173,18 @@
       "414-255-4387"
     ],
     "copyright": "© 2026 Winners Chapel International Milwaukee Wisconsin. All Rights Reserved."
+  },
+  "ministries": {
+    "items": [
+      {
+        "id": 1794193130237,
+        "title": "grehghfdhds",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193146/winners-chapel/pqczwvobb6mnkjmwrqoz.jpg",
+        "link": "/ministries"
+      }
+    ]
+  },
+  "quote": {
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193266/winners-chapel/vfyuhkkfwfceyf24xavm.jpg"
   }
 }
