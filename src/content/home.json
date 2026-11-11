@@ -159,7 +159,9 @@
     "title": "trirutr",
     "description": "rhtrthrhtr",
     "buttonText": "CSR btn",
-    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193224/winners-chapel/vh4a0mndstgny1qeihcs.jpg"
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193224/winners-chapel/vh4a0mndstgny1qeihcs.jpg",
+    "items": [],
+    "buttonHref": "/get-involved"
   },
   "footer": {
     "address": "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
@@ -185,6 +187,25 @@
     ]
   },
   "quote": {
-    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193266/winners-chapel/vfyuhkkfwfceyf24xavm.jpg"
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193266/winners-chapel/vfyuhkkfwfceyf24xavm.jpg",
+    "text": "Building lives through faith and raising a people of purpose."
+  },
+  "contact": {
+    "title": "We Would Love to Hear From You",
+    "contactLink": "/contact",
+    "contactButton": "Contact Us",
+    "prayerLink": "/prayer-request",
+    "prayerButton": "Prayer Request"
+  },
+  "gallery": {
+    "label": "Our Community",
+    "title": "Life at Winners Chapel",
+    "description": "Moments of worship, fellowship, service and community at Winners Chapel International Milwaukee, Wisconsin.",
+    "images": [],
+    "initialDisplayCount": 6,
+    "viewButtonText": "View Image",
+    "viewAllText": "View all photos",
+    "showLessText": "Show Less",
+    "collapseText": "Collapse gallery"
   }
 }

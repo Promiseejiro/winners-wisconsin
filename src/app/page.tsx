@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <>
       <HeroSlider />
-      {/* <HomeCards /> */}
+    
       <Services />
       <About />
 
@@ -25,7 +25,7 @@ export default function Home() {
       <ChurchUpdates />
       <LatestSermon />
       <CSR />
-     
+
       <Ministries />
       <Quote />
       <Contact />
