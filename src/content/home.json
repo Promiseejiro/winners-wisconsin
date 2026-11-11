@@ -62,7 +62,9 @@
     "label": "CSR",
     "title": "trirutr",
     "description": "rhtrthrhtr",
+    "items": [],
     "buttonText": "CSR btn",
+    "buttonHref": "",
     "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193224/winners-chapel/vh4a0mndstgny1qeihcs.jpg"
   },
   "footer": {
@@ -89,6 +91,31 @@
     ]
   },
   "quote": {
-    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193266/winners-chapel/vfyuhkkfwfceyf24xavm.jpg"
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193266/winners-chapel/vfyuhkkfwfceyf24xavm.jpg",
+    "text": ""
+  },
+  "contact": {
+    "title": "contact",
+    "contactButton": "Contact",
+    "contactLink": "Contact link",
+    "prayerButton": "Preyer",
+    "prayerLink": "linke"
+  },
+  "gallery": {
+    "label": "Galary",
+    "title": "Testing",
+    "description": "Description",
+    "images": [
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431295/winners-chapel/sj5viloj0isrg0gvhdj0.jpg",
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431274/winners-chapel/retoqvcab8yfpdwhoyaj.jpg",
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431271/winners-chapel/zq56z8nqsvnzaiow9qpo.png",
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431271/winners-chapel/wrtsverxrwzszanxcu01.png",
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431270/winners-chapel/mytukef5ziwr60jgojzq.png"
+    ],
+    "initialDisplayCount": 5,
+    "viewButtonText": "View Image",
+    "viewAllText": "View All",
+    "showLessText": "Show Less",
+    "collapseText": "Collapse Gallery"
   }
 }
