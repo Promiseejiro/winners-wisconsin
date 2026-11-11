@@ -25,6 +25,18 @@
     ],
     "backgroundImage": ""
   },
+  "services": {
+    "items": [
+      {
+        "id": 1794432553403,
+        "title": "",
+        "description": "",
+        "image": "",
+        "link": "",
+        "buttonText": ""
+      }
+    ]
+  },
   "about": {
     "eyebrow": "Where God Lives...",
     "title": "Welcome to Winners Chapel International Milwaukee, Wisconsin",
@@ -56,7 +68,26 @@
   "churchUpdates": {
     "label": "Church Updates",
     "title": "Stay informed with our special services and programs",
-    "description": "We provide weekly updates about all our recent special services, events and programs to ensure that you are current with the latest faith news."
+    "description": "We provide weekly updates about all our recent special services, events and programs to ensure that you are current with the latest faith news.",
+    "tabs": [
+      {
+        "id": "",
+        "label": "",
+        "title": "",
+        "description": "",
+        "details": [],
+        "image": ""
+      }
+    ]
+  },
+  "latestSermon": {
+    "label": "",
+    "title": "",
+    "description": "",
+    "buttonText": "",
+    "buttonHref": "",
+    "image": "",
+    "videoUrl": ""
   },
   "csr": {
     "label": "CSR",
@@ -66,19 +97,6 @@
     "buttonText": "CSR btn",
     "buttonHref": "",
     "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193224/winners-chapel/vh4a0mndstgny1qeihcs.jpg"
-  },
-  "footer": {
-    "address": "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
-    "emails": [
-      "winnerschapelwisconsin@gmail.com",
-      "info@winnerschapelwi.org"
-    ],
-    "phones": [
-      "414-368-7753",
-      "708-769-7141",
-      "414-255-4387"
-    ],
-    "copyright": "© 2026 Winners Chapel International Milwaukee Wisconsin. All Rights Reserved."
   },
   "ministries": {
     "items": [
@@ -91,8 +109,10 @@
     ]
   },
   "quote": {
-    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193266/winners-chapel/vfyuhkkfwfceyf24xavm.jpg",
-    "text": "Nothing dies in my hands"
+    "text": "Nothing dies in my hands",
+    "quote": "",
+    "author": "",
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193266/winners-chapel/vfyuhkkfwfceyf24xavm.jpg"
   },
   "contact": {
     "title": "contact",
@@ -106,7 +126,6 @@
     "title": "Testing",
     "description": "Description",
     "images": [
-      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431295/winners-chapel/sj5viloj0isrg0gvhdj0.jpg",
       "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431274/winners-chapel/retoqvcab8yfpdwhoyaj.jpg",
       "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431271/winners-chapel/zq56z8nqsvnzaiow9qpo.png",
       "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431271/winners-chapel/wrtsverxrwzszanxcu01.png",
@@ -117,5 +136,17 @@
     "viewAllText": "View All",
     "showLessText": "Show Less",
     "collapseText": "Collapse Gallery"
+  },
+  "footer": {
+    "address": "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
+    "emails": [
+      "info@winnerschapelwi.org"
+    ],
+    "phones": [
+      "414-368-7753",
+      "708-769-7141",
+      "414-255-4387"
+    ],
+    "copyright": "© 2026 Winners Chapel International Milwaukee Wisconsin. All Rights Reserved."
   }
 }
