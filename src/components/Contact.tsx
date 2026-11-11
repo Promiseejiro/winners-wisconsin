@@ -48,15 +48,11 @@ const Contact = () => {
         </div>
 
         <div className="flex flex-wrap justify-center gap-5">
-          <Button
-            variant="primary"
-            size="lg"
-            href={content.contact.contactLink}
-          >
+          <Button variant="primary" size="lg" href={"/contact"}>
             {content.contact.contactButton}
           </Button>
 
-          <Button variant="primary" size="lg" href={content.contact.prayerLink}>
+          <Button variant="primary" size="lg" href={"/contact"}>
             {content.contact.prayerButton}
           </Button>
         </div>

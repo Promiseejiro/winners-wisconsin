@@ -50,7 +50,7 @@ const HeroSlider = () => {
         {slides.map((slide) => (
           <SwiperSlide
             key={slide.id}
-            className="relative flex! h-full w-full items-center justify-center mt-24"
+            className="relative flex! h-full w-full items-center justify-center lg:mt-24"
           >
             <div className="relative flex h-full w-full items-center justify-center p-4">
               <Image
