@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <>
       <HeroSlider />
-    
+
       <Services />
       <About />
 
