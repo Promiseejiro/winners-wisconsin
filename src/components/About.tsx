@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 import Button from "./common/Button";
 import content from "@/content/home.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 
 const fadeInLeft: Variants = {
   hidden: { opacity: 0, x: -60 },
@@ -34,7 +35,8 @@ const staggerContainer: Variants = {
 };
 
 const About = () => {
-  const serviceTimes = content.serviceTimes;
+  const pageContent = useCmsPageData("home", content);
+  const serviceTimes = pageContent.serviceTimes;
 
   return (
     <section className="bg-white py-[80px]">
@@ -48,7 +50,7 @@ const About = () => {
         >
           <motion.div variants={fadeInLeft}>
             <Image
-              src={content.about.image}
+              src={pageContent.about.image}
               alt="Winners Chapel Milwaukee"
               width={600}
               height={550}
@@ -58,15 +60,15 @@ const About = () => {
 
           <motion.div variants={fadeInRight}>
             <div className="mb-2 text-sm font-semibold uppercase tracking-[1px] text-[#ef2b34]">
-              {content.about.eyebrow}
+              {pageContent.about.eyebrow}
             </div>
 
             <h2 className="mb-6 font-cormorant text-4xl font-bold text-[#111] sm:text-5xl lg:text-6xl">
-              {content.about.title}
+              {pageContent.about.title}
             </h2>
 
             <p className="mb-6 leading-relaxed text-[#555]">
-              {content.about.description}
+              {pageContent.about.description}
             </p>
 
             <div className="mb-6">
@@ -105,11 +107,11 @@ const About = () => {
 
             <p className="mb-6 text-sm text-[#555]">
               <strong className="text-[#111]">Week of Emphasis:</strong>{" "}
-              {content.weekOfEmphasis}
+              {pageContent.weekOfEmphasis}
             </p>
 
-            <Button variant="primary" size="md" href={content.about.buttonHref}>
-              {content.about.buttonText}
+            <Button variant="primary" size="md" href={pageContent.about.buttonHref}>
+              {pageContent.about.buttonText}
             </Button>
           </motion.div>
         </motion.div>

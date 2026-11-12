@@ -13,11 +13,13 @@ import {
 
 import ModalBackdrop from "./common/modalBackdrop";
 import homeContent from "@/content/home.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 
-const gallery = homeContent.gallery;
-const galleryImages = gallery.images;
 
 const Gallery = () => {
+  const pageContent = useCmsPageData("home", homeContent);
+  const gallery = pageContent.gallery || homeContent.gallery;
+  const galleryImages = gallery.images || [];
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [showAll, setShowAll] = useState(false);
 

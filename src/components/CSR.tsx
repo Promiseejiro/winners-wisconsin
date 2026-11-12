@@ -3,6 +3,7 @@
 import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 import content from "@/content/home.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 import Button from "./common/Button";
 
 const fadeInLeft: Variants = {
@@ -34,6 +35,7 @@ const staggerContainer: Variants = {
 };
 
 const CSR = () => {
+  const pageContent = useCmsPageData("home", content);
   return (
     <section className="bg-[#f8f8f8] py-[80px]">
       <div className="container">
@@ -46,19 +48,19 @@ const CSR = () => {
         >
           <motion.div variants={fadeInLeft}>
             <div className="mb-2 text-sm font-semibold uppercase tracking-[1px] text-[#ef2b34]">
-              {content.csr.label}
+              {pageContent.csr.label}
             </div>
 
             <h2 className="mb-6 font-cormorant text-4xl font-bold text-[#111] sm:text-5xl">
-              {content.csr.title}
+              {pageContent.csr.title}
             </h2>
 
             <p className="mb-6 text-base leading-relaxed text-[#555]">
-              {content.csr.description}
+              {pageContent.csr.description}
             </p>
 
             <ul className="mb-6 space-y-2">
-              {content.csr.items.map((item, index) => (
+              {pageContent.csr.items.map((item, index) => (
                 <li key={index} className="flex items-start gap-3 text-[#555]">
                   <svg
                     className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#ef2b34]"
@@ -82,17 +84,17 @@ const CSR = () => {
             <Button
               variant="primary"
               size="md"
-              href={content.csr.buttonHref}
+              href={pageContent.csr.buttonHref}
               className="rounded-full"
             >
-              {content.csr.buttonText}
+              {pageContent.csr.buttonText}
             </Button>
           </motion.div>
 
           <motion.div variants={fadeInRight} className="flex justify-center">
             <div className="relative aspect-square w-full max-w-[400px]">
               <Image
-                src={content.csr.image}
+                src={pageContent.csr.image}
                 alt="Winners in the Community Logo"
                 fill
                 sizes="(max-width: 1024px) 100vw, 400px"

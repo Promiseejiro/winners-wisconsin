@@ -2,23 +2,25 @@
 
 import Button from "./common/Button";
 import content from "@/content/home.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 import { useChurchSettings } from "@/providers/church-settings-provider";
 
 const Contact = () => {
+  const pageContent = useCmsPageData("home", content);
   const { settings } = useChurchSettings();
 
-  const address = settings.address || content.footer.address;
+  const address = settings.address || pageContent.footer.address;
 
-  const emails = settings.email ? [settings.email] : content.footer.emails;
+  const emails = settings.email ? [settings.email] : pageContent.footer.emails;
 
   const phones =
-    settings.phones?.length > 0 ? settings.phones : content.footer.phones;
+    settings.phones?.length > 0 ? settings.phones : pageContent.footer.phones;
 
   return (
     <section className="bg-[#f6f6f6] py-[100px] text-center">
       <div className="container">
         <h2 className="mb-6 font-cormorant text-4xl font-bold sm:text-5xl lg:text-[65px]">
-          {content.contact.title}
+          {pageContent.contact.title}
         </h2>
 
         <div className="mx-auto mb-8 max-w-2xl space-y-2 text-[#444]">
@@ -49,11 +51,11 @@ const Contact = () => {
 
         <div className="flex flex-wrap justify-center gap-5">
           <Button variant="primary" size="lg" href={"/contact"}>
-            {content.contact.contactButton}
+            {pageContent.contact.contactButton}
           </Button>
 
           <Button variant="primary" size="lg" href={"/contact"}>
-            {content.contact.prayerButton}
+            {pageContent.contact.prayerButton}
           </Button>
         </div>
       </div>

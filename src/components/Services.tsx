@@ -4,11 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import content from "@/content/home.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 
 const Services = () => {
+  const pageContent = useCmsPageData("home", content);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const services = content.services.items;
+  const services = pageContent.services.items;
 
   return (
     <section>

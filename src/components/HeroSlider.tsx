@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import Image from "next/image";
 import content from "@/content/home.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -11,14 +12,15 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const HeroSlider = () => {
-  const slides = content.hero.slides;
+  const pageContent = useCmsPageData("home", content);
+  const slides = pageContent.hero.slides;
 
   return (
     <section
       className="relative flex h-[60vh] w-full items-center justify-center overflow-hidden lg:h-screen"
       style={{
-        backgroundImage: content.hero.backgroundImage
-          ? `url("${content.hero.backgroundImage}")`
+        backgroundImage: pageContent.hero.backgroundImage
+          ? `url("${pageContent.hero.backgroundImage}")`
           : undefined,
         backgroundSize: "cover",
         backgroundPosition: "center",

@@ -1,0 +1,36 @@
+{
+  "hero": {
+    "eyebrow": "Winners Chapel International Milwaukee Wisconsin",
+    "title": "We'd love to hear from you.",
+    "description": "Have a question, need assistance, or want to get in touch with our church? Send us a message and our team will be happy to connect with you."
+  },
+  "information": {
+    "eyebrow": "Get in touch",
+    "title": "How can we help?",
+    "description": "Whether you have a question about our services, need information about our ministry, or would like to share a message, please use the contact form.",
+    "addressLabel": "Church address",
+    "emailLabel": "Email",
+    "phoneLabel": "Telephone"
+  },
+  "cards": [
+    {
+      "title": "Send us a message",
+      "description": "Complete the contact form and your enquiry will be sent to our team."
+    },
+    {
+      "title": "We're here to help",
+      "description": "Our team will review your enquiry and respond as soon as possible."
+    }
+  ],
+  "welcome": {
+    "eyebrow": "We welcome you",
+    "title": "We look forward to hearing from you.",
+    "description": "Thank you for reaching out to Winners Chapel International Wisconsin. We appreciate your message."
+  },
+  "form": {
+    "eyebrow": "Contact us",
+    "title": "Send us a message",
+    "description": "Fields marked with an asterisk (*) are required.",
+    "successTitle": "Message submitted successfully"
+  }
+}

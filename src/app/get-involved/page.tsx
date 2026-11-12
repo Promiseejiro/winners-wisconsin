@@ -4,6 +4,8 @@ import { motion, Variants } from "framer-motion";
 import { useState } from "react";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/input";
+import fallback from "@/content/get-involved.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 
 // Animation variants
 const fadeInUp: Variants = {
@@ -41,6 +43,7 @@ const fadeInScale: Variants = {
 };
 
 export default function GetInvolvedPage() {
+  const pageContent = useCmsPageData("get-involved", fallback);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -85,7 +88,7 @@ export default function GetInvolvedPage() {
     console.log("Form submitted:", formData);
   };
 
-  const ministryCards = [
+  const ministryCardsFallback = [
     {
       title: "Children's Ministry",
       image: "/images/g1.jpg",
@@ -171,6 +174,12 @@ export default function GetInvolvedPage() {
         "This team ensures safety from the moment guests pull onto our property.",
     },
   ];
+  const ministryCards = pageContent.opportunities?.length
+    ? pageContent.opportunities
+    : ministryCardsFallback;
+  const editableTeamOptions = pageContent.opportunities?.length
+    ? pageContent.opportunities.map((item: any) => item.title).filter(Boolean)
+    : teamOptions;
 
   return (
     <>
@@ -189,13 +198,13 @@ export default function GetInvolvedPage() {
             variants={fadeInUp}
             className="font-cormorant text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-4"
           >
-            Get <span className="text-primary">Involved.</span>
+            {pageContent.header?.title || "Get Involved"}
           </motion.h1>
           <motion.h2
             variants={fadeInUp}
             className="text-xl sm:text-2xl md:text-3xl font-light text-white/80 max-w-2xl"
           >
-            Ministry Opportunities at Winners Chapel
+            {pageContent.header?.eyebrow || "Ministry Opportunities at Winners Chapel"}
           </motion.h2>
         </motion.div>
       </section>
@@ -247,7 +256,7 @@ export default function GetInvolvedPage() {
               A help to those who need it.
             </p>
             <h2 className="font-cormorant text-4xl sm:text-5xl lg:text-[52px] font-bold text-[#111]">
-              Help Change a Life Ministry Opportunities at WCIMD
+              {pageContent.description || "Help Change a Life Ministry Opportunities at WCIMD"}
             </h2>
           </motion.div>
         </div>
@@ -399,7 +408,7 @@ export default function GetInvolvedPage() {
                       What Team are you interested in?
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-2">
-                      {teamOptions.map((team) => (
+                      {editableTeamOptions.map((team: string) => (
                         <label
                           key={team}
                           className="flex items-center gap-2 text-sm text-[#555] cursor-pointer hover:text-primary transition-colors"

@@ -1,0 +1,72 @@
+{
+  "logo": "/assets/images/logo.png",
+  "navigation": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "About Us",
+      "href": "/about-us"
+    },
+    {
+      "label": "Ministries",
+      "children": [
+        {
+          "label": "Children's Ministry",
+          "href": "/ministries/children"
+        },
+        {
+          "label": "Teens Ministry",
+          "href": "/ministries/teens"
+        },
+        {
+          "label": "Youth Alive",
+          "href": "/ministries/youth-alive"
+        },
+        {
+          "label": "Home Groups",
+          "href": "/ministries/home-groups"
+        },
+        {
+          "label": "Bible Institute",
+          "href": "/ministries/wofbi"
+        }
+      ]
+    },
+    {
+      "label": "Get Involved",
+      "href": "/get-involved"
+    },
+    {
+      "label": "Media Resources",
+      "children": [
+        {
+          "label": "Announcement",
+          "href": "/announcement"
+        },
+        {
+          "label": "Watch Live",
+          "href": "/live"
+        },
+        {
+          "label": "Archives",
+          "href": "/sermons/archive"
+        }
+      ]
+    },
+    {
+      "label": "Give",
+      "href": "/give"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ],
+  "sidebarIntro": "You can contact/visit us using the information below...",
+  "contactHeading": "CONTACT INFO",
+  "hours": "Sun to Fri: 09.00 to 17.00",
+  "buttonText": "Attend Service",
+  "buttonHref": "/plan-your-visit"
+}

@@ -1,5 +1,6 @@
 "use client";
 import content from "@/content/ministries/wofbi.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 import { motion, Variants } from "framer-motion";
 import Button from "@/components/common/Button";
 import { useRouter } from "next/navigation";
@@ -56,6 +57,7 @@ const staggerContainer: Variants = {
 };
 
 export default function WofbiPage() {
+  const pageContent = useCmsPageData("ministries/wofbi", content);
   const router = useRouter();
 
   const bccCurriculum = [
@@ -117,7 +119,7 @@ export default function WofbiPage() {
             variants={fadeInUp}
             className="text-lg sm:text-xl md:text-2xl font-light text-white/80 max-w-[600px] mx-auto"
           >
-            {content.subtitle}
+            {pageContent.title}
           </motion.h2>
 
           {/* Apply Buttons */}

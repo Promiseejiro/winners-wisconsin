@@ -1,5 +1,6 @@
 "use client";
 import content from "@/content/plan-your-visit.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 import { motion, Variants } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
@@ -49,6 +50,7 @@ const staggerContainer: Variants = {
 };
 
 export default function PlanYourVisitPage() {
+  const pageContent = useCmsPageData("plan-your-visit", content);
   // Move useRouter inside the component
   const router = useRouter();
   const { settings } = useChurchSettings();
@@ -57,8 +59,7 @@ export default function PlanYourVisitPage() {
   const accordionItems = [
     {
       title: "What to expect",
-      content:
-        "Our services are packaged with intense worship and inspirational teachings from the Word of God. You should expect a transformation as you attend.",
+      content: pageContent.sunday?.whatToExpect || "Our services are packaged with intense worship and inspirational teachings from the Word of God. You should expect a transformation as you attend.",
     },
     {
       title: "Parking Information",
@@ -119,13 +120,13 @@ export default function PlanYourVisitPage() {
             variants={fadeInUp}
             className="font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-bold mb-4 leading-tight"
           >
-            We are so excited to welcome you to {settings.churchName}
+            {pageContent.header?.title || `We are so excited to welcome you to ${settings.churchName}`}
           </motion.h1>
           <motion.h2
             variants={fadeInUp}
             className="text-lg sm:text-xl md:text-2xl font-light text-white/80 max-w-[700px] mx-auto"
           >
-            Here are some information on our services and events
+            {pageContent.header?.description}
           </motion.h2>
 
           {/* Quick Links */}
@@ -140,7 +141,7 @@ export default function PlanYourVisitPage() {
                 className="rounded-full px-8"
                 href="#sunday"
               >
-                SUNDAY SERVICES
+                {(pageContent.quickLinks || [])[0] || "SUNDAY SERVICES"}
               </Button>
             </motion.div>
             <motion.div variants={slideInUp}>
@@ -150,7 +151,7 @@ export default function PlanYourVisitPage() {
                 className="rounded-full px-8"
                 href="#wednesday"
               >
-                Wednesday Communion Service
+                {(pageContent.quickLinks || [])[1] || "Wednesday Communion Service"}
               </Button>
             </motion.div>
             <motion.div variants={slideInUp}>
@@ -160,7 +161,7 @@ export default function PlanYourVisitPage() {
                 className="rounded-full px-8"
                 href="#daily"
               >
-                DAILY PRAYER
+                {(pageContent.quickLinks || [])[2] || "DAILY PRAYER"}
               </Button>
             </motion.div>
           </motion.div>
@@ -182,16 +183,16 @@ export default function PlanYourVisitPage() {
               className="bg-[#f8f8f8] p-8 rounded-lg"
             >
               <h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111] mb-2">
-                Sunday Services
+                {pageContent.sunday?.title || "Sunday Services"}
               </h2>
               <h3 className="font-inter text-2xl font-semibold text-primary mb-2">
-                Every Sunday
+                {pageContent.sunday?.subtitle || "Every Sunday"}
               </h3>
               <h3 className="font-inter text-xl font-semibold text-[#111] mb-4">
                 First Service: 8:00 am | Second Service: 10:30 am
               </h3>
               <p className="text-[#555] text-base mb-6">
-                {settings.address}
+                {pageContent.location?.address || settings.address}
               </p>
 
               <div className="border-t-2 border-[#ececec] pt-6">
@@ -258,13 +259,13 @@ export default function PlanYourVisitPage() {
             >
               <div>
                 <h2 className="font-cormorant text-4xl sm:text-5xl font-bold mb-2">
-                  Wednesday Communion Service
+                  {pageContent.wednesday?.title || "Wednesday Communion Service"}
                 </h2>
                 <h3 className="font-inter text-2xl font-semibold text-primary mb-2">
-                  Every Wednesday from 6:00 pm
+                  {pageContent.wednesday?.subtitle || "Every Wednesday from 6:00 pm"}
                 </h3>
                 <p className="text-[#ddd] text-base">
-                  {settings.address}
+                  {pageContent.location?.address || settings.address}
                 </p>
               </div>
             </motion.div>
@@ -302,16 +303,16 @@ export default function PlanYourVisitPage() {
               className="bg-[#f8f8f8] p-8 rounded-lg"
             >
               <h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111] mb-2">
-                Covenant Hour of Prayer
+                {pageContent.prayer?.title || "Covenant Hour of Prayer"}
               </h2>
               <h3 className="font-inter text-2xl font-semibold text-primary mb-2">
-                Everyday from 6:00am – 7:00am
+                {(pageContent.prayer?.schedule || [])[0] || "Everyday from 6:00am – 7:00am"}
               </h3>
               <h3 className="font-inter text-xl font-semibold text-[#111] mb-4">
                 Every Saturday 9:00am – 10:00am
               </h3>
               <p className="text-[#555] text-base">
-                {settings.address}
+                {pageContent.location?.address || settings.address}
               </p>
             </motion.div>
 
@@ -344,10 +345,10 @@ export default function PlanYourVisitPage() {
           >
             <motion.div variants={fadeInUp} className="text-center mb-8">
               <h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-white">
-                Our Main Location
+                {pageContent.location?.title || "Our Main Location"}
               </h2>
               <p className="text-white/80 text-lg mt-2">
-                {settings.address}
+                {pageContent.location?.address || settings.address}
               </p>
             </motion.div>
 
@@ -387,7 +388,7 @@ export default function PlanYourVisitPage() {
                   </svg>
                   <p className="text-lg">View on Google Maps</p>
                   <p className="text-sm text-white/40">
-                    {settings.address}
+                    {pageContent.location?.address || settings.address}
                   </p>
                 </div>
               </div>
@@ -462,7 +463,7 @@ export default function PlanYourVisitPage() {
                 Main Location:
               </h5>
               <p className="text-[#555] text-base mb-6">
-                <strong>{settings.address}</strong>
+                <strong>{pageContent.location?.address || settings.address}</strong>
               </p>
               <Button
                 variant="primary"

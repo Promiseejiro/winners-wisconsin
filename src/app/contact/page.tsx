@@ -3,6 +3,8 @@
 import { useState } from "react";
 import type { FormEvent, ChangeEvent } from "react";
 import { useChurchSettings } from "@/providers/church-settings-provider";
+import fallback from "@/content/contact.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 
 type ContactFormData = {
   firstName: string;
@@ -40,6 +42,7 @@ const labelClass = "mb-2 block text-sm font-semibold text-[#222]";
 
 export default function ContactPage() {
   const { settings } = useChurchSettings();
+  const content = useCmsPageData("contact", fallback);
   const [formData, setFormData] = useState<ContactFormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -148,18 +151,15 @@ export default function ContactPage() {
 
         <div className="relative mx-auto max-w-6xl">
           <p className="mb-4 text-xs font-bold uppercase tracking-[3px] text-primary">
-            {settings.churchName}
+            {content.hero?.eyebrow || settings.churchName}
           </p>
 
           <h1 className="max-w-3xl text-4xl font-bold leading-tight sm:text-5xl lg:text-7xl">
-            We&apos;d love to{" "}
-            <span className="text-primary">hear from you.</span>
+            {content.hero?.title || "We'd love to hear from you."}
           </h1>
 
           <p className="mt-6 max-w-2xl text-base leading-8 text-white/70 sm:text-lg">
-            Have a question, need assistance, or want to get in touch with our
-            church? Send us a message and our team will be happy to connect with
-            you.
+            {content.hero?.description}
           </p>
 
           <div className="mt-8 h-1 w-20 bg-primary" />
@@ -173,29 +173,27 @@ export default function ContactPage() {
           <aside className="space-y-8">
             <div>
               <p className="text-xs font-bold uppercase tracking-[3px] text-primary">
-                Get in touch
+                {content.information?.eyebrow || "Get in touch"}
               </p>
 
               <h2 className="mt-3 text-3xl font-bold leading-tight text-[#111] sm:text-4xl">
-                How can we help?
+                {content.information?.title || "How can we help?"}
               </h2>
 
               <p className="mt-4 leading-7 text-gray-600">
-                Whether you have a question about our services, need information
-                about our ministry, or would like to share a message, please use
-                the contact form.
+                {content.information?.description}
               </p>
               <div className="mt-6 space-y-3 border border-gray-200 bg-[#fafafa] p-5">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-gray-500">Church address</p>
+                  <p className="text-xs font-bold uppercase tracking-wider text-gray-500">{content.information?.addressLabel || "Church address"}</p>
                   <p className="mt-1 text-sm text-[#222]">{settings.address}</p>
                 </div>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-gray-500">Email</p>
+                  <p className="text-xs font-bold uppercase tracking-wider text-gray-500">{content.information?.emailLabel || "Email"}</p>
                   <a className="mt-1 block break-all text-sm text-primary" href={`mailto:${settings.email}`}>{settings.email}</a>
                 </div>
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wider text-gray-500">Telephone</p>
+                  <p className="text-xs font-bold uppercase tracking-wider text-gray-500">{content.information?.phoneLabel || "Telephone"}</p>
                   <div className="mt-1 flex flex-col gap-1">
                     {settings.phones.map((phone) => (
                       <a key={phone} href={`tel:${phone.replace(/[^+\d]/g, "")}`} className="text-sm text-[#222] hover:text-primary">{phone}</a>
@@ -212,10 +210,9 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <h3 className="font-bold text-[#111]">Send us a message</h3>
+                  <h3 className="font-bold text-[#111]">{content.cards?.[0]?.title || "Send us a message"}</h3>
                   <p className="mt-1 text-sm leading-6 text-gray-600">
-                    Complete the contact form and your enquiry will be sent to
-                    our team.
+                    {content.cards?.[0]?.description}
                   </p>
                 </div>
               </div>
@@ -227,27 +224,25 @@ export default function ContactPage() {
 
                 <div>
                   <h3 className="font-bold text-[#111]">
-                    We&apos;re here to help
+                    {content.cards?.[1]?.title || "We're here to help"}
                   </h3>
                   <p className="mt-1 text-sm leading-6 text-gray-600">
-                    Our team will review your enquiry and respond as soon as
-                    possible.
+                    {content.cards?.[1]?.description}
                   </p>
                 </div>
               </div>
 
               <div className="bg-[#111] p-6 text-white">
                 <p className="text-xs font-bold uppercase tracking-[2px] text-primary">
-                  We welcome you
+                  {content.welcome?.eyebrow || "We welcome you"}
                 </p>
 
                 <h3 className="mt-3 text-xl font-bold">
-                  We look forward to hearing from you.
+                  {content.welcome?.title || "We look forward to hearing from you."}
                 </h3>
 
                 <p className="mt-3 text-sm leading-7 text-white/70">
-                  Thank you for reaching out to Winners Chapel International
-                  Wisconsin. We appreciate your message.
+                  {content.welcome?.description}
                 </p>
 
                 <div className="mt-5 h-1 w-12 bg-primary" />
@@ -267,7 +262,7 @@ export default function ContactPage() {
               </h2>
 
               <p className="mt-3 text-sm leading-6 text-gray-600">
-                Fields marked with an asterisk (*) are required.
+                {content.form?.description || "Fields marked with an asterisk (*) are required."}
               </p>
             </div>
 
@@ -457,7 +452,7 @@ export default function ContactPage() {
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-5 sm:flex-row sm:items-center">
           <div>
             <p className="text-xs font-bold uppercase tracking-[2px] text-primary">
-              {settings.churchName}
+              {content.hero?.eyebrow || settings.churchName}
             </p>
             <h2 className="mt-2 text-2xl font-bold text-[#111]">
               We look forward to connecting with you.

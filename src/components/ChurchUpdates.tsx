@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
 import content from "@/content/home.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 60 },
@@ -25,9 +26,10 @@ const staggerContainer: Variants = {
 };
 
 const ChurchUpdates = () => {
+  const pageContent = useCmsPageData("home", content);
   const [activeTab, setActiveTab] = useState(0);
 
-  const tabs = content.churchUpdates.tabs;
+  const tabs = pageContent.churchUpdates.tabs;
   const activeContent = tabs[activeTab];
 
   if (!tabs.length) return null;
@@ -43,15 +45,15 @@ const ChurchUpdates = () => {
         >
           <motion.div variants={fadeInUp} className="mb-12 text-center">
             <div className="mb-2 text-sm font-semibold uppercase tracking-[1px] text-[#ef2b34]">
-              {content.churchUpdates.label}
+              {pageContent.churchUpdates.label}
             </div>
 
             <h2 className="font-cormorant text-4xl font-bold text-[#111] sm:text-5xl">
-              {content.churchUpdates.title}
+              {pageContent.churchUpdates.title}
             </h2>
 
             <p className="mx-auto mt-4 max-w-2xl text-[#555]">
-              {content.churchUpdates.description}
+              {pageContent.churchUpdates.description}
             </p>
           </motion.div>
 

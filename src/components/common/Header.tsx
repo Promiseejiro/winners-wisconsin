@@ -6,6 +6,35 @@ import Image from "next/image";
 import Button from "./Button";
 import { usePathname, useRouter } from "next/navigation";
 import { useChurchSettings } from "@/providers/church-settings-provider";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
+
+const defaultHeaderContent = {
+  logo: "/assets/images/logo.png",
+  navigation: [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about-us" },
+    { label: "Ministries", children: [
+      { label: "Children's Ministry", href: "/ministries/children" },
+      { label: "Teens Ministry", href: "/ministries/teens" },
+      { label: "Youth Alive", href: "/ministries/youth-alive" },
+      { label: "Home Groups", href: "/ministries/home-groups" },
+      { label: "Bible Institute", href: "/ministries/wofbi" },
+    ]},
+    { label: "Get Involved", href: "/get-involved" },
+    { label: "Media Resources", children: [
+      { label: "Announcement", href: "/announcement" },
+      { label: "Watch Live", href: "/live" },
+      { label: "Archives", href: "/sermons/archive" },
+    ]},
+    { label: "Give", href: "/give" },
+    { label: "Contact", href: "/contact" },
+  ],
+  sidebarIntro: "You can contact/visit us using the information below...",
+  contactHeading: "CONTACT INFO",
+  hours: "Sun to Fri: 09.00 to 17.00",
+  buttonText: "Attend Service",
+  buttonHref: "/plan-your-visit",
+};
 
 const Header = () => {
   const router = useRouter();
@@ -13,7 +42,9 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { settings } = useChurchSettings();
-  const churchLogo = settings.logo || "/assets/images/logo.png";
+  const headerContent = useCmsPageData("header", defaultHeaderContent);
+  const churchLogo = headerContent.logo || settings.logo || "/assets/images/logo.png";
+  const navLinks: any[] = headerContent.navigation || defaultHeaderContent.navigation;
   const pathname = usePathname();
 
   useEffect(() => {
@@ -38,71 +69,6 @@ const Header = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  const navLinks = [
-    {
-      label: "Home",
-      href: "/",
-    },
-    {
-      label: "About Us",
-      href: "/about-us",
-    },
-    {
-      label: "Ministries",
-      children: [
-        {
-          label: "Children's Ministry",
-          href: "/ministries/children",
-        },
-        {
-          label: "Teens Ministry",
-          href: "/ministries/teens",
-        },
-        {
-          label: "Youth Alive",
-          href: "/ministries/youth-alive",
-        },
-        {
-          label: "Home Groups",
-          href: "/ministries/home-groups",
-        },
-        {
-          label: "Bible Institute",
-          href: "/ministries/wofbi",
-        },
-      ],
-    },
-    {
-      label: "Get Involved",
-      href: "/get-involved",
-    },
-    {
-      label: "Media Resources",
-      children: [
-        {
-          label: "Announcement",
-          href: "/announcement",
-        },
-        {
-          label: "Watch Live",
-          href: "/live",
-        },
-        {
-          label: "Archives",
-          href: "/sermons/archive",
-        },
-      ],
-    },
-    {
-      label: "Give",
-      href: "/give",
-    },
-    {
-      label: "Contact",
-      href: "/contact",
-    },
-  ];
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -365,14 +331,14 @@ const Header = () => {
 
           {/* Sidebar Footer - Contact Info */}
           <div className="p-6 border-t border-white/10">
-            {/* "You can contact/visit us using the information below..." */}
+            {/* "{headerContent.sidebarIntro || defaultHeaderContent.sidebarIntro}" */}
             <p className="text-white/50 text-xs mb-4">
-              You can contact/visit us using the information below...
+              {headerContent.sidebarIntro || defaultHeaderContent.sidebarIntro}
             </p>
 
             {/* CONTACT INFO Heading */}
             <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
-              CONTACT INFO
+              {headerContent.contactHeading || defaultHeaderContent.contactHeading}
             </h4>
 
             <div className="space-y-4 text-white/60 text-sm">
@@ -437,7 +403,7 @@ const Header = () => {
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <span>Sun to Fri: 09.00 to 17.00</span>
+                <span>{headerContent.hours || defaultHeaderContent.hours}</span>
               </div>
 
               {/* Phone */}
@@ -471,11 +437,11 @@ const Header = () => {
               size="sm"
               className="w-full mt-6 rounded-full"
               onClick={() => {
-                router.push("/plan-your-visit");
+                router.push(headerContent.buttonHref || defaultHeaderContent.buttonHref);
                 setIsMenuOpen(false);
               }}
             >
-              Attend Service
+              {headerContent.buttonText || defaultHeaderContent.buttonText}
             </Button>
           </div>
         </div>

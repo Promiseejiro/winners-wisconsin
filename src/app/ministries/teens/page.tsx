@@ -1,5 +1,6 @@
 "use client";
 import content from "@/content/ministries/teens.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import Button from "@/components/common/Button";
@@ -56,22 +57,10 @@ const staggerContainer: Variants = {
 };
 
 export default function TeensMinistryPage() {
+  const pageContent = useCmsPageData("ministries/teens", content);
   const router = useRouter();
 
-  const focusAreas = [
-    {
-      icon: "🔒",
-      title: "Secure their future",
-    },
-    {
-      icon: "📖",
-      title: "Impart Godly values",
-    },
-    {
-      icon: "🎯",
-      title: "Help them find their purpose",
-    },
-  ];
+  const focusAreas = (pageContent.focusAreas || []).map((title: string) => ({ title }));
 
   return (
     <>
@@ -94,7 +83,7 @@ export default function TeensMinistryPage() {
             variants={fadeInUp}
             className="font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-bold mb-2.5"
           >
-            {content.title}
+            {pageContent.title}
           </motion.h1>
           <motion.h2
             variants={fadeInUp}

@@ -1,5 +1,6 @@
 "use client";
 import content from "@/content/ministries/children.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import Button from "@/components/common/Button";
@@ -56,19 +57,10 @@ const staggerContainer: Variants = {
 };
 
 export default function TeensMinistryPage() {
+  const pageContent = useCmsPageData("ministries/children", content);
   const router = useRouter();
 
-  const focusAreas = [
-    {
-      title: "Secure their future",
-    },
-    {
-      title: "Impart Godly values",
-    },
-    {
-      title: "Help them find their purpose",
-    },
-  ];
+  const focusAreas = (pageContent.focusAreas || []).map((title: string) => ({ title }));
 
   return (
     <>
@@ -91,13 +83,13 @@ export default function TeensMinistryPage() {
             variants={fadeInUp}
             className="font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-bold mb-2.5"
           >
-            Teens Ministry
+            {pageContent.title}
           </motion.h1>
           <motion.h2
             variants={fadeInUp}
             className="text-lg sm:text-xl md:text-2xl font-light text-white/80 max-w-[600px] mx-auto"
           >
-            The youth ministry of Winners Chapel Maryland
+            {pageContent.subtitle}
           </motion.h2>
 
           {/* Focus Areas Icons Row */}

@@ -4,6 +4,7 @@ import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
 
 import content from "@/content/home.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 import { useChurchSettings } from "@/providers/church-settings-provider";
 
 const fadeInLeft: Variants = {
@@ -33,9 +34,10 @@ const staggerContainer: Variants = {
 };
 
 export default function ResidentPastor() {
+  const pageContent = useCmsPageData("home", content);
   const { settings } = useChurchSettings();
 
-  const pastorContent = content.pastor;
+  const pastorContent = pageContent.pastor;
 
   const pastorName =
     settings.pastorName || pastorContent.name || "Resident Pastor";

@@ -1,20 +1,24 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import content from "@/content/home.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 
 const Ministries = () => {
-  const ministries = content.ministries.items;
+  const pageContent = useCmsPageData("home", content);
+  const ministries = pageContent.ministries.items;
 
   return (
     <section className="bg-black py-[100px] text-white">
       <div className="container">
         <div className="mb-[70px] text-center">
           <span className="text-xs font-bold uppercase tracking-[2px] text-primary">
-            {content.ministries.label}
+            {pageContent.ministries.label}
           </span>
 
           <h2 className="mt-4 font-cormorant text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-            {content.ministries.title}
+            {pageContent.ministries.title}
           </h2>
         </div>
 

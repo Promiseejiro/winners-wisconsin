@@ -1,27 +1,88 @@
 {
   "header": {
+    "eyebrow": "Generosity",
     "title": "Give",
-    "description": "Support the work of God through your generous giving."
+    "description": "Your generosity helps us advance the Gospel, serve our community, support missions, and strengthen the work of Winners Chapel International Wisconsin.",
+    "buttonText": "Give Online Now",
+    "buttonHref": "https://give.tithe.ly/?formId=6baf686c-6865-11ee-90fc-1260ab546d11"
   },
-  "options": [
+  "introduction": {
+    "eyebrow": "Giving with purpose",
+    "title": "Give your kingdom seeds",
+    "description": "Thank you for your generosity and commitment to the work of God. Choose the giving method that is most convenient for you using the instructions provided below."
+  },
+  "methodsHeading": {
+    "eyebrow": "Other giving methods",
+    "title": "Choose how you would like to give",
+    "description": "In addition to online giving, you can support the church through Zelle, cheques, cash, or the designated Shiloh Sacrifice account."
+  },
+  "methods": [
     {
-      "title": "Online Giving",
-      "description": "Give securely online through our giving platform.",
-      "buttonText": "Give Online",
-      "href": "#"
+      "number": "01",
+      "title": "Give through Zelle",
+      "description": "Use your banking app to make a Zelle payment to the church using the details below.",
+      "details": [
+        {
+          "label": "Zelle email",
+          "value": "Tithes-offerings@winnerschapelwi.org"
+        },
+        {
+          "label": "Recipient",
+          "value": "WMA Winners Chapel International Wisconsin"
+        }
+      ]
     },
     {
-      "title": "Bank Transfer",
-      "description": "Give through the church bank account.",
-      "bank": "[Bank Name]",
-      "accountName": "[Account Name]",
-      "sortCode": "[Sort Code]",
-      "accountNumber": "[Account Number]"
+      "number": "02",
+      "title": "Give through Tithe.ly",
+      "description": "Give online through our Tithe.ly giving form, or download the Tithe.ly app and select Winners Chapel International, Wisconsin.",
+      "details": []
     },
     {
-      "title": "In-Person Giving",
-      "description": "Give during any of our church services.",
-      "address": "8159 W Brown Deer Road, Milwaukee, WI 53233"
+      "number": "03",
+      "title": "Give by cheque",
+      "description": "Make your cheque payable to the church using the official name below.",
+      "details": [
+        {
+          "label": "Payable to",
+          "value": "Winners Chapel International, Wisconsin"
+        }
+      ]
+    },
+    {
+      "number": "04",
+      "title": "Give by cash",
+      "description": "If you would like to give by cash during a church service, please obtain a giving envelope from one of the ushers.",
+      "details": []
+    },
+    {
+      "number": "05",
+      "title": "Shiloh Sacrifice",
+      "description": "For Shiloh Sacrifice giving, the bank details provided by the church are listed below.",
+      "details": [
+        {
+          "label": "Bank",
+          "value": "BMO Bank"
+        },
+        {
+          "label": "Account number",
+          "value": "4850295657"
+        },
+        {
+          "label": "Routing number",
+          "value": "071025661"
+        }
+      ]
     }
-  ]
+  ],
+  "tithelyUrl": "https://give.tithe.ly/?formId=6baf686c-6865-11ee-90fc-1260ab546d11",
+  "methodsNote": "Please verify bank details and payment instructions with the church if you have any questions before making a transfer.",
+  "closing": {
+    "eyebrow": "Thank you for giving",
+    "title": "Thank you for partnering with the work of God.",
+    "description": "Every gift supports the mission of the church and helps us serve our community. We are grateful for your generosity.",
+    "buttonText": "Give Through Tithe.ly",
+    "contactButtonText": "Contact the Church",
+    "contactHref": "/contact"
+  }
 }

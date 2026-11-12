@@ -1,5 +1,6 @@
 "use client";
 import content from "@/content/ministries/youth-alive.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import Button from "@/components/common/Button";
@@ -69,28 +70,16 @@ const staggerContainer: Variants = {
 };
 
 export default function YouthAlivePage() {
+  const pageContent = useCmsPageData("ministries/youth-alive", content);
   const { settings } = useChurchSettings();
   const router = useRouter();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const focusAreas = [
-    {
-      icon: "🔒",
-      title: "Secure their future",
-    },
-    {
-      icon: "📖",
-      title: "Impart Godly values",
-    },
-    {
-      icon: "🎯",
-      title: "Help them find their purpose",
-    },
-  ];
+  const focusAreas = (pageContent.focusAreas || []).map((title: string) => ({ title }));
 
-  const leaders: YouthLeader[] = Array.isArray((content as any).leaders)
-    ? (content as any).leaders
+  const leaders: YouthLeader[] = Array.isArray((pageContent as any).leaders)
+    ? (pageContent as any).leaders
     : [];
 
   const teamOptions = [
@@ -132,7 +121,7 @@ export default function YouthAlivePage() {
             variants={fadeInUp}
             className="font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-bold mb-2.5"
           >
-            {content.title}
+            {pageContent.title}
           </motion.h1>
           <motion.h2
             variants={fadeInUp}
