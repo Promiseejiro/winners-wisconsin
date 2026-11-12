@@ -9,12 +9,11 @@ const Contact = () => {
   const pageContent = useCmsPageData("home", content);
   const { settings } = useChurchSettings();
 
-  const address = settings.address || pageContent.footer.address;
+  const address = settings.address;
 
-  const emails = settings.email ? [settings.email] : pageContent.footer.emails;
+  const emails = settings.email ? [settings.email] : [];
 
-  const phones =
-    settings.phones?.length > 0 ? settings.phones : pageContent.footer.phones;
+  const phones = settings.phones?.length > 0 ? settings.phones : [];
 
   return (
     <section className="bg-[#f6f6f6] py-[100px] text-center">
