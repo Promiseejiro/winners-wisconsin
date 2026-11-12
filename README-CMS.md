@@ -4,7 +4,7 @@ This frontend keeps editable static page content in `src/content/*.json` files. 
 
 ## 
 
-- Public site: Next.js
+- Public site: Next
 - Admin: separate Next.js app
 - API: NestJS
 - MongoDB: dynamic records (admins, sermons, announcements, contact messages)
