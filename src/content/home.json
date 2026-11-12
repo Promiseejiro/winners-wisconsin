@@ -44,7 +44,7 @@
         "id": 1794433265448,
         "title": "Wednesday service",
         "description": "Join us every Sunday for a time of heartfelt worship, practical teaching from God's Word, prayer, and fellowship. Come expectant and experience the joy of growing in faith together.",
-        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794433306/winners-chapel/kjftmsmamlf6qmkb4eey.jpg",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794509893/winners-chapel/gwz04vuotc8ibugedptz.jpg",
         "link": "",
         "buttonText": "Plan visit"
       }
@@ -54,25 +54,25 @@
     "eyebrow": "Where God Lives...",
     "title": "Welcome to Winners Chapel International Milwaukee, Wisconsin",
     "description": "Welcome to the Home of Signs & Wonders! At Winners Chapel International Milwaukee, Wisconsin, we are committed to providing a place of spiritual growth, empowerment, and community. We believe in a life of abundance, guided by the Word of God. Whether you are visiting for the first time or looking for a place to call home, we are here to support you on your faith journey.",
-    "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
-    "buttonText": "More About Us",
-    "buttonHref": "/about-us",
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794509657/winners-chapel/mbof5rqytozcf3fa3vfe.jpg",
     "serviceTimesHeading": "Our Service Times",
-    "weekOfEmphasisLabel": "Week of Emphasis: Testing"
+    "serviceTimes": [
+      {
+        "day": "Sunday",
+        "service": "First Service",
+        "time": "9:00 AM"
+      },
+      {
+        "day": "Wednesday",
+        "service": "Midweek Communion Service",
+        "time": "6:00 PM"
+      }
+    ],
+    "weekOfEmphasisLabel": "Week of Emphasis: Testing",
+    "weekOfEmphasis": "1st Wednesday, Thursday & Friday of each month – 6:00pm",
+    "buttonText": "More About Us",
+    "buttonHref": "/about-us"
   },
-  "serviceTimes": [
-    {
-      "day": "Sunday",
-      "service": "First Service",
-      "time": "9:00 AM"
-    },
-    {
-      "day": "Wednesday",
-      "service": "Midweek Communion Service",
-      "time": "6:00 PM"
-    }
-  ],
-  "weekOfEmphasis": "1st Wednesday, Thursday & Friday of each month – 6:00pm",
   "pastor": {
     "label": "Resident Pastor",
     "name": "Pastor Ajibola Alaka",
@@ -119,7 +119,7 @@
     "items": [],
     "buttonText": "Learn About Our Outreach",
     "buttonHref": "/csr",
-    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193224/winners-chapel/vh4a0mndstgny1qeihcs.jpg"
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794510665/winners-chapel/rvgbkhfx1l4ni3n2elwp.jpg"
   },
   "ministries": {
     "label": "Our Ministries",
@@ -128,13 +128,13 @@
       {
         "id": 1794193130237,
         "title": "TEENS",
-        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193146/winners-chapel/pqczwvobb6mnkjmwrqoz.jpg",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794510303/winners-chapel/mkrpiaveihhofxlyvjhr.jpg",
         "link": "/ministries"
       },
       {
         "id": 1794433625010,
         "title": "YOUTH",
-        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794433644/winners-chapel/nztq2sexe2krnmdp7ule.jpg",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794510258/winners-chapel/ovztlwwy3dfiziigg3ii.jpg",
         "link": "/ministries"
       }
     ]
@@ -143,7 +143,7 @@
     "text": "Nothing dies in my hands",
     "quote": "Nothing dies in my hands. By faith, I walk in the life and victory God has made available to me.",
     "author": "A Declaration of Faith",
-    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193266/winners-chapel/vfyuhkkfwfceyf24xavm.jpg"
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794510379/winners-chapel/hrorl9svntmmtmbbvcgr.jpg"
   },
   "contact": {
     "title": "We Would Love to Hear From You",
@@ -157,10 +157,10 @@
     "title": "Life at Winners Chapel Milwaukee",
     "description": "A glimpse into our worship, fellowship and moments together as a church family. We look forward to sharing more memories with you.",
     "images": [
-      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431274/winners-chapel/retoqvcab8yfpdwhoyaj.jpg",
-      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431271/winners-chapel/zq56z8nqsvnzaiow9qpo.png",
-      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431271/winners-chapel/wrtsverxrwzszanxcu01.png",
-      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431270/winners-chapel/mytukef5ziwr60jgojzq.png"
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794510466/winners-chapel/hlzwidzwgsv9xqsahqpm.jpg",
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794510455/winners-chapel/woivf4mej5edvdv78ngw.jpg",
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794510456/winners-chapel/od4jeakeuvcpjh2wq6hg.jpg",
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794510438/winners-chapel/hfehxqqb0mqgrwvcruot.jpg"
     ],
     "initialDisplayCount": 5,
     "viewButtonText": "View Image",
