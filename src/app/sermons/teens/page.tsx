@@ -1,6 +1,7 @@
 "use client";
 import { motion, Variants } from "framer-motion";
 import { useState, useEffect } from "react";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 import Image from "next/image";
 import Link from "next/link";
 import Input from "@/components/common/input";
@@ -43,6 +44,7 @@ const floatAnimation = {
 };
 
 export default function ComingSoonPage() {
+  const pageCopy = useCmsPageData("sermons/teens", { badge: "Under development", title: "Teens Ministry", subtitle: "Our Teens Ministry resources are coming soon.", description: "Check back soon for updates and resources." });
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -110,7 +112,7 @@ export default function ComingSoonPage() {
             variants={fadeInUp}
             className="inline-block bg-primary text-white px-6 py-2 rounded-full text-sm font-semibold uppercase tracking-wider mb-6"
           >
-            Under development
+            {pageCopy.badge}
           </motion.div>
         </motion.div>
       </div>

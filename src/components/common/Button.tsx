@@ -66,7 +66,7 @@ const Button: React.FC<ButtonProps> = ({
 
   if (href && !loading && !disabled) {
     return (
-      <Link href={href} className={classes}>
+      <Link href="/contact" className={classes}>
         {buttonContent}
       </Link>
     );

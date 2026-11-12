@@ -615,7 +615,7 @@ export default function YouthAlivePage() {
                 variant="primary"
                 size="lg"
                 onClick={() => {
-                  router.push("/plan-your-visit");
+                  router.push("/contact");
                 }}
               >
                 Attend a Service

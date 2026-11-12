@@ -106,7 +106,7 @@ const HeroSlider = () => {
 
                 {slide.buttonText && (
                   <a
-                    href={slide.buttonHref}
+                    href="/contact"
                     className="pointer-events-auto mt-7 inline-flex rounded-full bg-[#ef2b34] px-7 py-3 font-semibold text-white"
                   >
                     {slide.buttonText}

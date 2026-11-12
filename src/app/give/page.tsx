@@ -24,7 +24,7 @@ function GivingCard({ number, title, description, details, buttonText, buttonHre
           ))}
         </div>
       )}
-      {buttonHref && <a href={buttonHref} target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 bg-primary px-6 py-3 font-semibold text-white transition hover:opacity-90">{buttonText || "Give Online"} <span aria-hidden="true">↗</span></a>}
+      {buttonHref && <a href="/contact" target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex items-center justify-center gap-2 bg-primary px-6 py-3 font-semibold text-white transition hover:opacity-90">{buttonText || "Give Online"} <span aria-hidden="true">↗</span></a>}
     </article>
   );
 }
@@ -39,7 +39,7 @@ export default function GivePage() {
           <p className="text-xs font-bold uppercase tracking-[3px] text-primary">{content.header?.eyebrow}</p>
           <h1 className="mt-4 text-5xl font-bold sm:text-6xl md:text-7xl">{content.header?.title}</h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">{content.header?.description}</p>
-          <a href={givingUrl} target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-3 bg-primary px-7 py-4 font-semibold text-white transition hover:opacity-90">{content.header?.buttonText || "Give Online Now"} <span aria-hidden="true">↗</span></a>
+          <a href="/contact" target="_blank" rel="noopener noreferrer" className="mt-8 inline-flex items-center gap-3 bg-primary px-7 py-4 font-semibold text-white transition hover:opacity-90">{content.header?.buttonText || "Give Online Now"} <span aria-hidden="true">↗</span></a>
         </div>
       </section>
       <section className="container mx-auto px-5 py-14 sm:py-16">
@@ -70,7 +70,7 @@ export default function GivePage() {
           <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-bold sm:text-4xl">{content.closing?.title}</h2>
           <p className="mx-auto mt-5 max-w-2xl leading-8 text-white/70">{content.closing?.description}</p>
           <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-            <a href={givingUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-primary px-7 py-4 font-semibold text-white transition hover:opacity-90">{content.closing?.buttonText || "Give Through Tithe.ly"} <span aria-hidden="true">↗</span></a>
+            <a href="/contact" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-primary px-7 py-4 font-semibold text-white transition hover:opacity-90">{content.closing?.buttonText || "Give Through Tithe.ly"} <span aria-hidden="true">↗</span></a>
             <Link href={content.closing?.contactHref || "/contact"} className="inline-flex items-center justify-center border border-white/40 px-7 py-4 font-semibold text-white transition hover:bg-white hover:text-black">{content.closing?.contactButtonText || "Contact the Church"}</Link>
           </div>
         </div>

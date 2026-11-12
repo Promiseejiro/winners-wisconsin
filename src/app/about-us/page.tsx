@@ -63,7 +63,7 @@ export default function AboutUsPage() {
             variants={fadeInUp}
             className="font-cormorant text-4xl sm:text-5xl md:text-6xl lg:text-[70px] font-bold"
           >
-            About Us
+            {pageContent.header?.title || "About Us"}
           </motion.h1>
         </div>
       </section>
@@ -94,7 +94,7 @@ export default function AboutUsPage() {
               {/* Vision */}
               <div className="mb-8">
                 <h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111] mb-4">
-                  OUR VISION
+                  {pageContent.visionTitle || "OUR VISION"}
                 </h2>
                 <p className="text-[#555] leading-relaxed text-base">
                   {pageContent.vision}
@@ -104,7 +104,7 @@ export default function AboutUsPage() {
               {/* Mission */}
               <div>
                 <h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111] mb-4">
-                  OUR MISSION
+                  {pageContent.missionTitle || "OUR MISSION"}
                 </h2>
                 <p className="text-[#555] leading-relaxed text-base">
                   {pageContent.mission}
@@ -129,7 +129,7 @@ export default function AboutUsPage() {
               variants={fadeInUp}
               className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111] mb-6"
             >
-              A BRIEF HISTORY
+              {pageContent.historyTitle || "A BRIEF HISTORY"}
             </motion.h2>
             <motion.p
               variants={fadeInUp}
@@ -139,7 +139,7 @@ export default function AboutUsPage() {
             </motion.p>
             <motion.div variants={fadeInUp}>
               <Button variant="primary" size="md" href="/contact">
-                Get in Touch
+                {pageContent.historyButtonText || "Get in Touch"}
               </Button>
             </motion.div>
           </motion.div>
@@ -157,15 +157,13 @@ export default function AboutUsPage() {
           >
             <motion.div variants={fadeInUp} className="text-center mb-12">
               <div className="text-[#ef2b34] font-semibold text-sm uppercase tracking-[1px] mb-2">
-                Faith based bible church
+                {pageContent.pillarsSection?.eyebrow || "Faith based bible church"}
               </div>
               <h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111] mb-4">
-                THE 12 PILLARS OF FAITH
+                {pageContent.pillarsSection?.title || "THE 12 PILLARS OF FAITH"}
               </h2>
               <p className="text-[#555] max-w-2xl mx-auto">
-                Our beliefs are built on the Twelve Pillars of Faith that shape
-                our teachings, empower our ministry, and guide us toward
-                fulfilling God's purpose.
+                {pageContent.pillarsSection?.description || "Our beliefs are built on the Twelve Pillars of Faith that shape our teachings, empower our ministry, and guide us toward fulfilling God's purpose."}
               </p>
             </motion.div>
 
@@ -195,7 +193,8 @@ export default function AboutUsPage() {
                     }`}
                   >
                     <div className="px-6 py-4 border-t border-gray-200 text-[#555] text-sm leading-relaxed italic">
-                      {/* "{pillar.description}" */}
+                      <p>{pillar.scripture}</p>
+                      <p className="mt-2">{pillar.quote || pillar.description}</p>
                     </div>
                   </div>
                 </div>

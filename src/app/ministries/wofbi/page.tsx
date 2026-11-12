@@ -351,13 +351,15 @@ export default function WofbiPage() {
                 Main Location:
               </h5>
               <p className="text-[#555] text-base mb-6">
-                <strong>4825 Glenn Dale Rd, Bowie, MD 20720</strong>
+                <strong>
+                  8159 W Brown Deer Rd, Milwaukee, WI 53223, United States
+                </strong>
               </p>
               <Button
                 variant="primary"
                 size="lg"
                 onClick={() => {
-                  router.push("/plan-your-visit");
+                  router.push("/contact");
                 }}
               >
                 Attend a Service

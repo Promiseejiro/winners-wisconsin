@@ -460,7 +460,7 @@ export default function ContactPage() {
           </div>
 
           <a
-            href="/"
+            href="/contact"
             className="inline-flex items-center justify-center border border-[#111] px-6 py-3 text-sm font-bold text-[#111] transition hover:bg-[#111] hover:text-white"
           >
             Back to Home

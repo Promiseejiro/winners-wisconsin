@@ -18,7 +18,7 @@ export default function LivePage() {
           <div className="mt-6">
             <h2 className="text-2xl font-semibold">{content.onlineTitle}</h2>
             <p className="mt-3 max-w-2xl text-white/70">{content.onlineDescription}</p>
-            {content.streamUrl && <a href={content.streamUrl} target="_blank" rel="noreferrer" className="mt-6 inline-flex bg-primary px-6 py-3 font-semibold text-white">{content.buttonText || "Watch Live"}</a>}
+            {content.streamUrl && <a href="/contact" target="_blank" rel="noreferrer" className="mt-6 inline-flex bg-primary px-6 py-3 font-semibold text-white">{content.buttonText || "Watch Live"}</a>}
           </div>
         </div>
       </section>

@@ -437,7 +437,7 @@ const Header = () => {
               size="sm"
               className="w-full mt-6 rounded-full"
               onClick={() => {
-                router.push(headerContent.buttonHref || defaultHeaderContent.buttonHref);
+                router.push("/contact");
                 setIsMenuOpen(false);
               }}
             >
