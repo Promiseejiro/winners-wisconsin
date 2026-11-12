@@ -1,26 +1,20 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond, Jost } from "next/font/google";
+import type { CSSProperties } from "react";
 import "./globals.css";
+
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import { ChurchSettingsProvider } from "@/providers/church-settings-provider";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-const jost = Jost({
-  subsets: ["latin"],
-  variable: "--font-cormorant",
-  weight: ["400", "500", "600", "700"],
-});
 
 export const metadata: Metadata = {
   title: "Winners Chapel · Video Hero",
   description: "Winners Chapel International - Building Lives Through Faith",
 };
+
+const fontVariables: CSSProperties = {
+  "--font-inter": "Arial, Helvetica, sans-serif",
+  "--font-cormorant": "Georgia, 'Times New Roman', serif",
+} as CSSProperties;
 
 export default function RootLayout({
   children,
@@ -29,11 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${jost.variable} antialiased bg-transparent`}>
+      <body style={fontVariables} className="antialiased bg-transparent">
         <ChurchSettingsProvider>
           <Header />
           <main className="max-w-screen overflow-hidden">{children}</main>
-          <div id="modal-root"></div>
+          <div id="modal-root" />
           <Footer />
         </ChurchSettingsProvider>
       </body>
