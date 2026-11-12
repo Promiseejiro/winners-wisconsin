@@ -31,9 +31,6 @@ const staggerContainer: Variants = {
   },
 };
 
-// The public CMS can contain fields that are not present in the bundled
-// fallback JSON. Declare those optional fields here so TypeScript knows
-// about them while preserving the fallback JSON's inferred pillar types.
 type AboutUsContent = typeof content & {
   aboutImage?: string;
   header?: { title?: string };

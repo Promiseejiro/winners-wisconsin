@@ -6,6 +6,7 @@ import Button from "@/components/common/Button";
 import Input from "@/components/common/input";
 import fallback from "@/content/get-involved.json";
 import { useCmsPageData } from "@/hooks/useCmsPageData";
+import { submitWebsiteForm } from "@/lib/forms";
 
 // Animation variants
 const fadeInUp: Variants = {
@@ -54,6 +55,8 @@ export default function GetInvolvedPage() {
   });
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
 
   const teamOptions: string[] = Array.isArray(pageContent.teamOptions)
     ? pageContent.teamOptions
@@ -68,11 +71,20 @@ export default function GetInvolvedPage() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    // Handle form submission here
-    console.log("Form submitted:", formData);
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    setFormError("");
+    try {
+      await submitWebsiteForm("get-involved", formData);
+      setFormSubmitted(true);
+      setFormData({ firstName: "", lastName: "", email: "", phone: "", teams: [], message: "" });
+    } catch (error) {
+      setFormError(error instanceof Error ? error.message : "Unable to submit the form. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const ministryCardsFallback = [
@@ -328,6 +340,7 @@ export default function GetInvolvedPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {formError && <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">{formError}</p>}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Input
                       id="firstName"
@@ -429,8 +442,9 @@ export default function GetInvolvedPage() {
                     variant="primary"
                     size="lg"
                     className="w-full"
+                    disabled={isSubmitting}
                   >
-                    {pageContent.uiText?.submitButton || "Send"}
+                    {isSubmitting ? "Submitting..." : pageContent.uiText?.submitButton || "Send"}
                   </Button>
                 </form>
               )}

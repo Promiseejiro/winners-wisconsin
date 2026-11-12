@@ -1,6 +1,7 @@
 "use client";
 import content from "@/content/ministries/youth-alive.json";
 import { useCmsPageData } from "@/hooks/useCmsPageData";
+import { submitWebsiteForm } from "@/lib/forms";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import Button from "@/components/common/Button";
@@ -75,6 +76,11 @@ export default function YouthAlivePage() {
   const router = useRouter();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [serviceSubmitting, setServiceSubmitting] = useState(false);
+  const [serviceError, setServiceError] = useState("");
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+  const [contactError, setContactError] = useState("");
+  const [contactSent, setContactSent] = useState(false);
 
   const focusAreas = (pageContent.focusAreas || []).map((title: string) => ({ title }));
 
@@ -86,10 +92,42 @@ export default function YouthAlivePage() {
     ? pageContent.serviceUnitOptions
     : [];
 
-  const handleServiceUnitSubmit = (e: React.FormEvent) => {
+  const handleServiceUnitSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => setFormSubmitted(false), 3000);
+    if (serviceSubmitting) return;
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries()) as Record<string, unknown>;
+    payload.teams = formData.getAll("teams");
+    setServiceSubmitting(true);
+    setServiceError("");
+    try {
+      await submitWebsiteForm("youth-service-unit", payload);
+      setFormSubmitted(true);
+      form.reset();
+    } catch (error) {
+      setServiceError(error instanceof Error ? error.message : "Unable to submit the form. Please try again.");
+    } finally {
+      setServiceSubmitting(false);
+    }
+  };
+
+  const handleYouthContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (contactSubmitting) return;
+    const form = e.currentTarget;
+    const payload = Object.fromEntries(new FormData(form).entries()) as Record<string, unknown>;
+    setContactSubmitting(true);
+    setContactError("");
+    try {
+      await submitWebsiteForm("youth-contact", payload);
+      setContactSent(true);
+      form.reset();
+    } catch (error) {
+      setContactError(error instanceof Error ? error.message : "Unable to send your message. Please try again.");
+    } finally {
+      setContactSubmitting(false);
+    }
   };
 
   return (
@@ -359,15 +397,18 @@ export default function YouthAlivePage() {
                 </div>
               ) : (
                 <form onSubmit={handleServiceUnitSubmit} className="space-y-6">
+                  {serviceError && <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">{serviceError}</p>}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Input
                       id="firstName"
+                      name="firstName"
                       label={pageContent.uiText?.firstNameLabel || "First Name"}
                       placeholder={pageContent.uiText?.firstNamePlaceholder || "Enter your first name"}
                       required
                     />
                     <Input
                       id="lastName"
+                      name="lastName"
                       label={pageContent.uiText?.lastNameLabel || "Last Name"}
                       placeholder={pageContent.uiText?.lastNamePlaceholder || "Enter your last name"}
                       required
@@ -377,6 +418,7 @@ export default function YouthAlivePage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Input
                       id="email"
+                      name="email"
                       label={pageContent.uiText?.emailLabel || "Email Address"}
                       type="email"
                       placeholder={pageContent.uiText?.emailPlaceholder || "Enter your email"}
@@ -384,6 +426,7 @@ export default function YouthAlivePage() {
                     />
                     <Input
                       id="phone"
+                      name="phone"
                       label={pageContent.uiText?.phoneLabel || "Phone"}
                       type="tel"
                       placeholder={pageContent.uiText?.phonePlaceholder || "Enter your phone number"}
@@ -403,6 +446,8 @@ export default function YouthAlivePage() {
                         >
                           <input
                             type="checkbox"
+                            name="teams"
+                            value={team}
                             className="w-4 h-4 accent-primary cursor-pointer"
                           />
                           {team}
@@ -413,6 +458,7 @@ export default function YouthAlivePage() {
 
                   <Input
                     id="message"
+                      name="message"
                     label={pageContent.uiText?.messageLabel || "Your Message"}
                     type="textarea"
                     placeholder={pageContent.uiText?.messagePlaceholder || "Tell us why you'd like to join this team..."}
@@ -424,8 +470,9 @@ export default function YouthAlivePage() {
                     variant="primary"
                     size="lg"
                     className="w-full"
+                    disabled={serviceSubmitting}
                   >
-                    {pageContent.uiText?.submitButton || "Send"}
+                    {serviceSubmitting ? "Submitting..." : pageContent.uiText?.submitButton || "Send"}
                   </Button>
                 </form>
               )}
@@ -465,16 +512,20 @@ export default function YouthAlivePage() {
             </motion.p>
 
             <motion.div variants={fadeInUp}>
-              <form className="space-y-6">
+              <form onSubmit={handleYouthContactSubmit} className="space-y-6">
+                {contactError && <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">{contactError}</p>}
+                {contactSent && <p role="status" className="rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-700">Your message has been sent successfully.</p>}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Input
                     id="contactFirstName"
+                    name="firstName"
                     label={pageContent.uiText?.firstNameLabel || "First Name"}
                     placeholder={pageContent.uiText?.firstNamePlaceholder || "Enter your first name"}
                     required
                   />
                   <Input
                     id="contactLastName"
+                    name="lastName"
                     label={pageContent.uiText?.lastNameLabel || "Last Name"}
                     placeholder={pageContent.uiText?.lastNamePlaceholder || "Enter your last name"}
                     required
@@ -484,6 +535,7 @@ export default function YouthAlivePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Input
                     id="contactEmail"
+                    name="email"
                     label={pageContent.uiText?.emailLabel || "Email Address"}
                     type="email"
                     placeholder={pageContent.uiText?.emailPlaceholder || "Enter your email"}
@@ -491,6 +543,7 @@ export default function YouthAlivePage() {
                   />
                   <Input
                     id="contactPhone"
+                    name="phone"
                     label={pageContent.uiText?.phoneLabel || "Phone"}
                     type="tel"
                     placeholder={pageContent.uiText?.phonePlaceholder || "Enter your phone number"}
@@ -499,6 +552,7 @@ export default function YouthAlivePage() {
 
                 <Input
                   id="subject"
+                    name="subject"
                   label="Subject"
                   placeholder="Enter subject"
                   required
@@ -506,6 +560,7 @@ export default function YouthAlivePage() {
 
                 <Input
                   id="contactMessage"
+                    name="message"
                   label={pageContent.uiText?.messageLabel || "Your Message"}
                   type="textarea"
                   placeholder="Write your message here..."
@@ -517,8 +572,9 @@ export default function YouthAlivePage() {
                   variant="primary"
                   size="lg"
                   className="w-full"
+                  disabled={contactSubmitting}
                 >
-                  Send
+                  {contactSubmitting ? "Sending..." : "Send"}
                 </Button>
               </form>
             </motion.div>

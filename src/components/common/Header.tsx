@@ -7,6 +7,7 @@ import Button from "./Button";
 import { usePathname, useRouter } from "next/navigation";
 import { useChurchSettings } from "@/providers/church-settings-provider";
 import { useCmsPageData } from "@/hooks/useCmsPageData";
+import headerJson from "@/content/header.json";
 
 type HeaderNavChild = {
   label: string;
@@ -19,7 +20,17 @@ type HeaderNavLink = {
   children?: HeaderNavChild[];
 };
 
-const defaultHeaderContent = {
+type HeaderContent = {
+  logo: string;
+  navigation: HeaderNavLink[];
+  sidebarIntro: string;
+  contactHeading: string;
+  hours: string;
+  buttonText: string;
+  buttonHref: string;
+};
+
+const defaultHeaderContent: HeaderContent = {
   logo: "/assets/images/logo.png",
   navigation: [
     { label: "Home", href: "/" },
@@ -53,21 +64,41 @@ const defaultHeaderContent = {
   buttonHref: "/plan-your-visit",
 };
 
+const localHeaderContent = {
+  ...defaultHeaderContent,
+  ...(headerJson as Partial<HeaderContent>),
+  navigation:
+    (headerJson as Partial<HeaderContent>).navigation ??
+    defaultHeaderContent.navigation,
+};
+
 const Header = () => {
   const router = useRouter();
+  const pathname = usePathname();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
   const { settings } = useChurchSettings();
+
+  // Load frontend header.json first, then override it with published CMS data.
   const headerContent = useCmsPageData(
     "header",
-    defaultHeaderContent,
-  ) as typeof defaultHeaderContent & { navigation: HeaderNavLink[] };
+    localHeaderContent,
+  ) as HeaderContent;
+
   const churchLogo =
-    headerContent.logo || settings.logo || "/assets/images/logo.png";
-  const navLinks: HeaderNavLink[] =
-    headerContent.navigation || defaultHeaderContent.navigation;
-  const pathname = usePathname();
+    headerContent.logo || settings.logo || defaultHeaderContent.logo;
+
+  const navLinks: HeaderNavLink[] = Array.isArray(headerContent.navigation)
+    ? headerContent.navigation
+    : localHeaderContent.navigation;
+
+  const churchName = settings.churchName || "Church";
+  const churchAddress = settings.address || "";
+  const churchEmail = settings.email || "";
+  const churchPhones = Array.isArray(settings.phones) ? settings.phones : [];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,6 +115,7 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll, {
       passive: true,
     });
+
     window.addEventListener("resize", handleResize);
 
     return () => {
@@ -92,10 +124,11 @@ const Header = () => {
     };
   }, []);
 
-  // Close mobile menu when clicking outside
+  // Close mobile menu when clicking outside.
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
+
       if (
         isMenuOpen &&
         !target.closest("header") &&
@@ -106,23 +139,33 @@ const Header = () => {
     };
 
     document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, [isMenuOpen]);
 
-  // Prevent scroll when mobile menu is open
+  // Prevent background scrolling while the sidebar is open.
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
+
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isMenuOpen]);
 
+  // Close the menu when the route changes.
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+
   const shouldBeWhite =
     pathname !== "/announcement" && (isMobile || isScrolled);
+
   return (
     <>
       <header
@@ -135,10 +178,10 @@ const Header = () => {
           <Link href="/" className="flex items-center gap-2 flex-shrink-0">
             <Image
               src={churchLogo}
-              alt={settings.churchName}
-              width={32}
-              height={32}
-              className="h-26 w-26"
+              alt={churchName}
+              width={104}
+              height={104}
+              className="h-26 w-26 object-contain"
               unoptimized
               priority
             />
@@ -147,10 +190,11 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) =>
-              link.children ? (
+              link.children?.length ? (
                 <div key={link.label} className="relative group">
                   <button
-                    className={`flex items-center gap-1 uppercase text-sm font-semibold transition text-white hover:text-red-600`}
+                    type="button"
+                    className="flex items-center gap-1 uppercase text-sm font-semibold transition text-white hover:text-red-600"
                   >
                     {link.label}
 
@@ -171,25 +215,18 @@ const Header = () => {
 
                   <div
                     className="
-                    absolute
-                    left-0
-                    top-full
-                    mt-2
-                    w-64
-                    bg-[#2a2a2a]
-                    rounded
-                    shadow-xl
-                    py-2
-                    opacity-0
-                    invisible
-                    translate-y-2
-                    transition-all
-                    duration-300
-                    group-hover:opacity-100
-                    group-hover:visible
-                    group-hover:translate-y-0
-                    z-50
-                  "
+                      absolute left-0 top-full mt-2 w-64
+                      bg-[#2a2a2a] rounded shadow-xl py-2
+                      opacity-0 invisible translate-y-2
+                      transition-all duration-300
+                      group-hover:opacity-100
+                      group-hover:visible
+                      group-hover:translate-y-0
+                      group-focus-within:opacity-100
+                      group-focus-within:visible
+                      group-focus-within:translate-y-0
+                      z-50
+                    "
                   >
                     {link.children.map((item) => (
                       <Link
@@ -203,23 +240,28 @@ const Header = () => {
                   </div>
                 </div>
               ) : (
-                <Link
-                  key={link.label}
-                  href={link.href!}
-                  className={`uppercase text-sm font-semibold transition text-white hover:text-red-600`}
-                >
-                  {link.label}
-                </Link>
+                link.href && (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="uppercase text-sm font-semibold transition text-white hover:text-red-600"
+                  >
+                    {link.label}
+                  </Link>
+                )
               ),
             )}
           </nav>
 
           {/* Right Section */}
           <div className="flex items-center gap-5 flex-shrink-0">
-            {/* Toggle Button - Opens Sidebar */}
+            {/* Desktop Sidebar Toggle */}
             <button
-              className="hidden md:flex items-center gap-2 px-6 py-3 bg-[rgba(255,255,255,0.3)] text-white font-semibold uppercase tracking-wider rounded-full hover:bg-[#c81d26] transition-colors text-sm "
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              type="button"
+              className="hidden md:flex items-center gap-2 px-6 py-3 bg-[rgba(255,255,255,0.3)] text-white font-semibold uppercase tracking-wider rounded-full hover:bg-[#c81d26] transition-colors text-sm"
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              aria-label="Open menu"
+              aria-expanded={isMenuOpen}
             >
               <svg
                 className="w-5 h-5"
@@ -236,22 +278,26 @@ const Header = () => {
               </svg>
             </button>
 
-            {/* Mobile Menu Toggle - Three bars */}
+            {/* Mobile Menu Toggle */}
             <button
+              type="button"
               className="flex lg:hidden flex-col gap-1.5 p-1 z-[1001] relative"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={() => setIsMenuOpen((prev) => !prev)}
               aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
             >
               <span
                 className={`w-7 h-[2.5px] rounded-full transition-all duration-300 bg-white ${
                   isMenuOpen ? "rotate-45 translate-y-[7px]" : ""
                 }`}
               />
+
               <span
                 className={`w-7 h-[2.5px] rounded-full transition-all duration-300 bg-white ${
                   isMenuOpen ? "opacity-0" : ""
                 }`}
               />
+
               <span
                 className={`w-7 h-[2.5px] rounded-full transition-all duration-300 bg-white ${
                   isMenuOpen ? "-rotate-45 -translate-y-[7px]" : ""
@@ -270,6 +316,7 @@ const Header = () => {
             : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsMenuOpen(false)}
+        aria-hidden="true"
       />
 
       {/* Sidebar Navigation */}
@@ -277,6 +324,7 @@ const Header = () => {
         className={`fixed top-0 right-0 h-full w-[320px] max-w-[85vw] bg-[#1a1a1a] z-[1001] transition-transform duration-300 ease-in-out ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
+        aria-hidden={!isMenuOpen}
       >
         <div className="flex flex-col h-full overflow-y-auto">
           {/* Sidebar Header */}
@@ -284,15 +332,17 @@ const Header = () => {
             <Link href="/" onClick={() => setIsMenuOpen(false)}>
               <Image
                 src={churchLogo}
-                alt={settings.churchName}
+                alt={churchName}
                 width={40}
                 height={40}
-                className="h-10 w-10"
+                className="h-10 w-10 object-contain"
                 unoptimized
                 priority
               />
             </Link>
+
             <button
+              type="button"
               onClick={() => setIsMenuOpen(false)}
               className="text-white/70 hover:text-white transition-colors"
               aria-label="Close menu"
@@ -333,6 +383,7 @@ const Header = () => {
                     <p className="py-4 text-white font-semibold">
                       {link.label}
                     </p>
+
                     <div className="pl-4 space-y-1 pb-2">
                       {link.children?.map((item) => (
                         <Link
@@ -353,66 +404,65 @@ const Header = () => {
 
           {/* Sidebar Footer - Contact Info */}
           <div className="p-6 border-t border-white/10">
-            {/* "{headerContent.sidebarIntro || defaultHeaderContent.sidebarIntro}" */}
             <p className="text-white/50 text-xs mb-4">
               {headerContent.sidebarIntro || defaultHeaderContent.sidebarIntro}
             </p>
 
-            {/* CONTACT INFO Heading */}
+            {/* Contact Heading */}
             <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
               {headerContent.contactHeading ||
                 defaultHeaderContent.contactHeading}
             </h4>
 
             <div className="space-y-4 text-white/60 text-sm">
-              {/* Address - 81-83 Broughton Lane, Salford M8 9UE */}
-              <div className="flex items-start gap-3">
-                <svg
-                  className="w-5 h-5 text-white/40 flex-shrink-0 mt-0.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                <div>
-                  <span className="block">{settings.address}</span>
+              {/* Address */}
+              {churchAddress && (
+                <div className="flex items-start gap-3">
+                  <svg
+                    className="w-5 h-5 text-white/40 flex-shrink-0 mt-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+
+                  <span className="block">{churchAddress}</span>
                 </div>
-              </div>
+              )}
 
               {/* Email */}
-              <div className="flex items-start gap-3">
-                <svg
-                  className="w-5 h-5 text-white/40 flex-shrink-0 mt-0.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+              {churchEmail && (
+                <div className="flex items-start gap-3">
+                  <svg
+                    className="w-5 h-5 text-white/40 flex-shrink-0 mt-0.5"
+                    fill="none"
+                    stroke="currentColor"
                     strokeWidth={2}
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-                <a
-                  className="break-all hover:text-white"
-                  href={`mailto:${settings.email}`}
-                >
-                  {settings.email}
-                </a>
-              </div>
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 00-2 2z" />
+                  </svg>
+
+                  <a
+                    className="break-all hover:text-white"
+                    href={`mailto:${churchEmail}`}
+                  >
+                    {churchEmail}
+                  </a>
+                </div>
+              )}
 
               {/* Hours */}
               <div className="flex items-start gap-3">
@@ -420,54 +470,52 @@ const Header = () => {
                   className="w-5 h-5 text-white/40 flex-shrink-0 mt-0.5"
                   fill="none"
                   stroke="currentColor"
+                  strokeWidth={2}
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
+                  <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
+
                 <span>{headerContent.hours || defaultHeaderContent.hours}</span>
               </div>
 
               {/* Phone */}
-              <div className="flex items-start gap-3">
-                <svg
-                  className="w-5 h-5 text-white/40 flex-shrink-0 mt-0.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+              {churchPhones.length > 0 && (
+                <div className="flex items-start gap-3">
+                  <svg
+                    className="w-5 h-5 text-white/40 flex-shrink-0 mt-0.5"
+                    fill="none"
+                    stroke="currentColor"
                     strokeWidth={2}
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                  />
-                </svg>
-                <div className="flex flex-col gap-1">
-                  {settings.phones.map((phone) => (
-                    <a
-                      key={phone}
-                      href={`tel:${phone.replace(/[^+\d]/g, "")}`}
-                      className="hover:text-white"
-                    >
-                      {phone}
-                    </a>
-                  ))}
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+
+                  <div className="flex flex-col gap-1">
+                    {churchPhones.map((phone) => (
+                      <a
+                        key={phone}
+                        href={`tel:${phone.replace(/[^+\d]/g, "")}`}
+                        className="hover:text-white"
+                      >
+                        {phone}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
-            {/* Attend Service Button in Sidebar */}
+            {/* Attend Service Button */}
             <Button
               variant="primary"
               size="sm"
               className="w-full mt-6 rounded-full"
               onClick={() => {
-                router.push("/contact");
+                router.push(
+                  headerContent.buttonHref || defaultHeaderContent.buttonHref,
+                );
                 setIsMenuOpen(false);
               }}
             >

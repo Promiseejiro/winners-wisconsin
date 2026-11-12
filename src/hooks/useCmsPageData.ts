@@ -40,7 +40,6 @@ function mergeCmsData<T>(fallback: T, incoming: unknown): T {
   return (incoming === undefined || incoming === null ? fallback : incoming) as T;
 }
 
-/** Loads a GitHub-backed public CMS page and keeps bundled JSON as an offline fallback. */
 export function useCmsPageData<T extends Record<string, any>>(
   slug: string,
   fallback: T,
