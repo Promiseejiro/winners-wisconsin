@@ -2,5 +2,12 @@
   "badge": "Under development",
   "title": "Bible Institute",
   "subtitle": "Our Bible Institute content is coming soon.",
-  "description": "Check back soon for updates and resources."
+  "description": "Check back soon for updates and resources.",
+  "uiText": {
+    "badge": "Under development",
+    "subscribeHeading": "Be the first to know when resources are available.",
+    "subscribeDescription": "Subscribe for updates and new resources.",
+    "emailPlaceholder": "Enter your email address",
+    "subscribeButton": "Notify me"
+  }
 }

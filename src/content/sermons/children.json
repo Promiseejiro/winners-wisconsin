@@ -8,7 +8,7 @@
   "secondService": "Second Service: 10:30 am",
   "midweekService": "Wednesdays at 6:00 pm",
   "locationHeading": "Our Location",
-  "address": "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
+  "address": "4825 Glenn Dale Rd, Bowie, MD 20720",
   "introHeading": "Today’s youth face new challenges.",
   "introHighlight": "We believe God’s eternal truths solve them.",
   "introParagraph": "Our youth should experience God’s freedom – both spiritually and physically. That’s why we are committed to bring the truth of the Word of God to this generation in ways that apply to them. Armed with the powerful truths of God’s promises, our next generation can rise to the challenge and conquer their world for Christ.",
@@ -32,5 +32,12 @@
     {
       "title": "Help them find their purpose"
     }
-  ]
+  ],
+  "uiText": {
+    "badge": "Under development",
+    "subscribeHeading": "Be the first to know when resources are available.",
+    "subscribeDescription": "Subscribe for updates and new resources.",
+    "emailPlaceholder": "Enter your email address",
+    "subscribeButton": "Notify me"
+  }
 }

@@ -24,6 +24,9 @@ type LatestSermonContent = {
   description?: string;
   buttonText?: string;
   buttonHref?: string;
+  emptyHeading?: string;
+  emptyDescription?: string;
+  missingLinkText?: string;
 };
 
 const DEFAULT_CONTENT: LatestSermonContent = {
@@ -33,6 +36,9 @@ const DEFAULT_CONTENT: LatestSermonContent = {
     "Revisit recent messages and continue growing in faith. Browse the sermon library for more teachings.",
   buttonText: "View All Sermons",
   buttonHref: "/sermons",
+  emptyHeading: "Sermons coming soon",
+  emptyDescription: "Please check back soon for the latest messages.",
+  missingLinkText: "Sermon link will be available soon",
 };
 
 const fadeInUp: Variants = {
@@ -52,8 +58,14 @@ const staggerContainer: Variants = {
   },
 };
 
-const API =
-  process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000/api/v1";
+const API = (() => {
+  const configured =
+    process.env.NEXT_PUBLIC_SERVER_URL ||
+    process.env.NEXT_PUBLIC_API_URL ||
+    "http://localhost:3000/api/v1";
+  const base = configured.replace(/\/+$/, "");
+  return base.endsWith("/api/v1") ? base : `${base}/api/v1`;
+})();
 
 function sermonLink(sermon: Sermon) {
   return sermon.sermonUrl || sermon.videoUrl || sermon.downloadUrl || "";
@@ -110,6 +122,9 @@ function extractHomeContent(body: any): LatestSermonContent {
     description: section.description || DEFAULT_CONTENT.description,
     buttonText: section.buttonText || DEFAULT_CONTENT.buttonText,
     buttonHref: section.buttonHref || DEFAULT_CONTENT.buttonHref,
+    emptyHeading: section.emptyHeading || DEFAULT_CONTENT.emptyHeading,
+    emptyDescription: section.emptyDescription || DEFAULT_CONTENT.emptyDescription,
+    missingLinkText: section.missingLinkText || DEFAULT_CONTENT.missingLinkText,
   };
 }
 
@@ -122,7 +137,7 @@ const LatestSermon = () => {
   useEffect(() => {
     let active = true;
 
-    fetch(`${API}/content/page?slug=home`, {
+    fetch(`${API}/content/public/page?slug=home`, {
       cache: "no-store",
     })
       .then((response) => {
@@ -219,10 +234,10 @@ const LatestSermon = () => {
             </div>
           ) : latestSermons.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-[#ddd] bg-[#fafafa] px-6 py-12 text-center">
-              <h3 className="font-semibold text-[#222]">Sermons coming soon</h3>
+              <h3 className="font-semibold text-[#222]">{content.emptyHeading}</h3>
 
               <p className="mt-2 text-sm text-[#777]">
-                Please check back soon for the latest messages.
+                {content.emptyDescription}
               </p>
             </div>
           ) : (
@@ -288,7 +303,7 @@ const LatestSermon = () => {
                           </a>
                         ) : (
                           <span className="text-sm text-[#999]">
-                            Sermon link will be available soon
+                            {content.missingLinkText}
                           </span>
                         )}
                       </div>

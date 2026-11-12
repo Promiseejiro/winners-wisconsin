@@ -8,24 +8,41 @@ import { usePathname, useRouter } from "next/navigation";
 import { useChurchSettings } from "@/providers/church-settings-provider";
 import { useCmsPageData } from "@/hooks/useCmsPageData";
 
+type HeaderNavChild = {
+  label: string;
+  href: string;
+};
+
+type HeaderNavLink = {
+  label: string;
+  href?: string;
+  children?: HeaderNavChild[];
+};
+
 const defaultHeaderContent = {
   logo: "/assets/images/logo.png",
   navigation: [
     { label: "Home", href: "/" },
     { label: "About Us", href: "/about-us" },
-    { label: "Ministries", children: [
-      { label: "Children's Ministry", href: "/ministries/children" },
-      { label: "Teens Ministry", href: "/ministries/teens" },
-      { label: "Youth Alive", href: "/ministries/youth-alive" },
-      { label: "Home Groups", href: "/ministries/home-groups" },
-      { label: "Bible Institute", href: "/ministries/wofbi" },
-    ]},
+    {
+      label: "Ministries",
+      children: [
+        { label: "Children's Ministry", href: "/ministries/children" },
+        { label: "Teens Ministry", href: "/ministries/teens" },
+        { label: "Youth Alive", href: "/ministries/youth-alive" },
+        { label: "Home Groups", href: "/ministries/home-groups" },
+        { label: "Bible Institute", href: "/ministries/wofbi" },
+      ],
+    },
     { label: "Get Involved", href: "/get-involved" },
-    { label: "Media Resources", children: [
-      { label: "Announcement", href: "/announcement" },
-      { label: "Watch Live", href: "/live" },
-      { label: "Archives", href: "/sermons/archive" },
-    ]},
+    {
+      label: "Media Resources",
+      children: [
+        { label: "Announcement", href: "/announcement" },
+        { label: "Watch Live", href: "/live" },
+        { label: "Archives", href: "/sermons/archive" },
+      ],
+    },
     { label: "Give", href: "/give" },
     { label: "Contact", href: "/contact" },
   ],
@@ -42,9 +59,14 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const { settings } = useChurchSettings();
-  const headerContent = useCmsPageData("header", defaultHeaderContent);
-  const churchLogo = headerContent.logo || settings.logo || "/assets/images/logo.png";
-  const navLinks: any[] = headerContent.navigation || defaultHeaderContent.navigation;
+  const headerContent = useCmsPageData(
+    "header",
+    defaultHeaderContent,
+  ) as typeof defaultHeaderContent & { navigation: HeaderNavLink[] };
+  const churchLogo =
+    headerContent.logo || settings.logo || "/assets/images/logo.png";
+  const navLinks: HeaderNavLink[] =
+    headerContent.navigation || defaultHeaderContent.navigation;
   const pathname = usePathname();
 
   useEffect(() => {
@@ -338,7 +360,8 @@ const Header = () => {
 
             {/* CONTACT INFO Heading */}
             <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-4">
-              {headerContent.contactHeading || defaultHeaderContent.contactHeading}
+              {headerContent.contactHeading ||
+                defaultHeaderContent.contactHeading}
             </h4>
 
             <div className="space-y-4 text-white/60 text-sm">
@@ -383,7 +406,10 @@ const Header = () => {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
-                <a className="break-all hover:text-white" href={`mailto:${settings.email}`}>
+                <a
+                  className="break-all hover:text-white"
+                  href={`mailto:${settings.email}`}
+                >
                   {settings.email}
                 </a>
               </div>
@@ -423,7 +449,11 @@ const Header = () => {
                 </svg>
                 <div className="flex flex-col gap-1">
                   {settings.phones.map((phone) => (
-                    <a key={phone} href={`tel:${phone.replace(/[^+\d]/g, "")}`} className="hover:text-white">
+                    <a
+                      key={phone}
+                      href={`tel:${phone.replace(/[^+\d]/g, "")}`}
+                      className="hover:text-white"
+                    >
                       {phone}
                     </a>
                   ))}

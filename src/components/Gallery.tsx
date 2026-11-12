@@ -130,7 +130,7 @@ const Gallery = () => {
               <FaImages className="mb-3 h-12 w-12 text-white/80" />
 
               <span className="text-lg font-bold text-white">
-                +{galleryImages.length - initialDisplayCount} More
+                +{galleryImages.length - initialDisplayCount} {gallery.moreText || "More"}
               </span>
 
               <span className="text-sm text-white/60">

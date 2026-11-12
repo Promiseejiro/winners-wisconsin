@@ -173,52 +173,38 @@ export default function WofbiPage() {
           >
             <motion.div variants={fadeInUp} className="text-center mb-12">
               <h2 className="font-cormorant text-3xl sm:text-4xl lg:text-[50px] font-bold text-[#111]">
-                "There is no mountain anywhere; every man's ignorance is his
-                mountain".
+                {pageContent.uiText?.quoteHeading || "There is no mountain anywhere; every man's ignorance is his mountain."}
               </h2>
               <h3 className="font-inter text-xl font-semibold text-primary mt-4">
-                – Dr. David Oyedepo
+                {pageContent.uiText?.quoteAttribution || '– Dr. David Oyedepo'}
               </h3>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="space-y-6">
               <p className="text-[#555] leading-relaxed text-base">
-                The Word of Faith Bible Institute [WOFBI] is a
-                Ministry/Leadership Training Centre, which serves as the
-                training arm of the Living Faith Church Worldwide. The Institute
-                runs periodical three weeks specialized courses.
+                {pageContent.uiText?.introDescription || pageContent.description}
               </p>
               <p className="text-[#555] leading-relaxed text-base italic">
                 <strong>
-                  The courses are designed to motivate participants positively
-                  towards distinction both in their secular as well as spiritual
-                  engagement.
+                  {pageContent.uiText?.courseDescription || pageContent.description}
                 </strong>
               </p>
 
               <div className="pt-6">
                 <h4 className="font-cormorant text-3xl font-bold text-[#111] mb-4">
-                  The Vision
+                  {pageContent.uiText?.visionHeading || 'The Vision'}
                 </h4>
                 <p className="text-[#555] leading-relaxed text-base">
-                  The Vision of the Institute is in line with the mandate given
-                  to Dr. David Oyedepo in May 1983 when the Holy Ghost said to
-                  him, "I will through THIS MINISTRY RAISE THE FOUNDATION OF
-                  MANY OTHER MINISTRIES". For this reason, the Institute's
-                  Curriculum is designed to teach excellence in Leadership,
-                  Ministry, Social, Economic and other areas of human endeavors.
+                  {pageContent.uiText?.visionDescription || pageContent.vision}
                 </p>
               </div>
 
               <div className="pt-6">
                 <h4 className="font-cormorant text-3xl font-bold text-[#111] mb-4">
-                  Historical Landmarks:
+                  {pageContent.uiText?.historyHeading || 'Historical Landmarks:'}
                 </h4>
                 <p className="text-[#555] leading-relaxed text-base">
-                  The Institute took off September 1, 1986 at Kaduna, Nigeria
-                  and has since graduated over 50,000 from the numerous campuses
-                  in Nigeria while hundreds have graduated from the Maryland
-                  campus.
+                  {pageContent.uiText?.historyDescription || pageContent.description}
                 </p>
               </div>
             </motion.div>
@@ -242,7 +228,7 @@ export default function WofbiPage() {
               className="bg-white p-8 rounded-lg shadow-md"
             >
               <h2 className="font-cormorant text-3xl sm:text-4xl font-bold text-[#111] mb-4">
-                Basic Certificate Course (BCC) Curriculum
+                {pageContent.uiText?.bccHeading || 'Basic Certificate Course (BCC) Curriculum'}
               </h2>
               <div className="w-16 h-1 bg-primary mb-6" />
               <ul className="space-y-2">
@@ -265,7 +251,7 @@ export default function WofbiPage() {
               className="bg-white p-8 rounded-lg shadow-md"
             >
               <h2 className="font-cormorant text-3xl sm:text-4xl font-bold text-[#111] mb-4">
-                Leader Certificate Course (LCC) Curriculum
+                {pageContent.uiText?.lccHeading || 'Leader Certificate Course (LCC) Curriculum'}
               </h2>
               <div className="w-16 h-1 bg-primary mb-6" />
               <ul className="space-y-2">
@@ -299,21 +285,20 @@ export default function WofbiPage() {
               variants={fadeInUp}
               className="font-inter text-xl font-semibold text-[#111] mb-2"
             >
-              You were meant to enjoy a life free in Christ.
+              {pageContent.uiText?.ctaHeading || "You were meant to enjoy a life free in Christ."}
             </motion.h4>
             <motion.h4
               variants={fadeInUp}
               className="font-inter text-xl font-semibold text-primary mb-6"
             >
-              Take your first step towards it.
+              {pageContent.uiText?.ctaSubheading || "Take your first step towards it."}
             </motion.h4>
             <motion.p
               variants={fadeInUp}
               className="text-[#555] text-base max-w-2xl mx-auto mb-8"
             >
               <strong>
-                We exist to bring God's freedom to everyone. We love to care for
-                people who have been hurt. This is our mandate.
+                {pageContent.uiText?.ctaDescription || "We exist to bring God's freedom to everyone. We love to care for people who have been hurt. This is our mandate."}
               </strong>
             </motion.p>
 
@@ -323,22 +308,22 @@ export default function WofbiPage() {
             >
               <div className="bg-[#f8f8f8] p-6 rounded-lg">
                 <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                  Sunday Morning Worship:
+                  {pageContent.uiText?.sundayHeading || 'Sunday Morning Worship:'}
                 </h5>
                 <p className="text-[#555] text-sm">
-                  <strong>First Service: 8:00 am</strong>
+                  <strong>{pageContent.uiText?.firstService || 'First Service: 8:00 am'}</strong>
                 </p>
                 <p className="text-[#555] text-sm">
-                  <strong>Second Service: 10:30 am</strong>
+                  <strong>{pageContent.uiText?.secondService || 'Second Service: 10:30 am'}</strong>
                 </p>
               </div>
 
               <div className="bg-[#f8f8f8] p-6 rounded-lg">
                 <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                  Communion Service:
+                  {pageContent.uiText?.communionHeading || 'Communion Service:'}
                 </h5>
                 <p className="text-[#555] text-sm">
-                  <strong>Wednesdays at 6:00 pm</strong>
+                  <strong>{pageContent.uiText?.midweekService || 'Wednesdays at 6:00 pm'}</strong>
                 </p>
               </div>
             </motion.div>
@@ -348,12 +333,10 @@ export default function WofbiPage() {
               className="mt-8 pt-8 border-t-2 border-[#ececec]"
             >
               <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                Main Location:
+                {pageContent.uiText?.locationLabel || 'Main Location:'}
               </h5>
               <p className="text-[#555] text-base mb-6">
-                <strong>
-                  8159 W Brown Deer Rd, Milwaukee, WI 53223, United States
-                </strong>
+                <strong>{pageContent.uiText?.address || '4825 Glenn Dale Rd, Bowie, MD 20720'}</strong>
               </p>
               <Button
                 variant="primary"
@@ -362,7 +345,7 @@ export default function WofbiPage() {
                   router.push("/contact");
                 }}
               >
-                Attend a Service
+                {pageContent.uiText?.attendButton || 'Attend a Service'}
               </Button>
             </motion.div>
           </motion.div>

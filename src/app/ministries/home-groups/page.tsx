@@ -115,7 +115,7 @@ export default function HomeGroupsPage() {
               variants={fadeInUp}
               className="text-center text-[#555] text-lg font-semibold mb-8"
             >
-              <strong>Care • Feed • Teach • Lead</strong>
+              <strong>{pageContent.tagline || 'Care • Feed • Teach • Lead'}</strong>
             </motion.p>
 
             <motion.h3
@@ -166,21 +166,20 @@ export default function HomeGroupsPage() {
               variants={fadeInUp}
               className="font-inter text-xl font-semibold text-[#111] mb-2"
             >
-              You were meant to enjoy a life free in Christ.
+              {pageContent.uiText?.ctaHeading || "You were meant to enjoy a life free in Christ."}
             </motion.h4>
             <motion.h4
               variants={fadeInUp}
               className="font-inter text-xl font-semibold text-primary mb-6"
             >
-              Take your first step towards it.
+              {pageContent.uiText?.ctaSubheading || "Take your first step towards it."}
             </motion.h4>
             <motion.p
               variants={fadeInUp}
               className="text-[#555] text-base max-w-2xl mx-auto mb-8"
             >
               <strong>
-                We exist to bring God's freedom to everyone. We love to care for
-                people who have been hurt. This is our mandate.
+                {pageContent.uiText?.ctaDescription || "We exist to bring God's freedom to everyone. We love to care for people who have been hurt. This is our mandate."}
               </strong>
             </motion.p>
 
@@ -190,22 +189,22 @@ export default function HomeGroupsPage() {
             >
               <div className="bg-[#f8f8f8] p-6 rounded-lg">
                 <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                  Sunday Morning Worship:
+                  {pageContent.uiText?.sundayHeading || 'Sunday Morning Worship:'}
                 </h5>
                 <p className="text-[#555] text-sm">
-                  <strong>First Service: 8:00 am</strong>
+                  <strong>{pageContent.uiText?.firstService || 'First Service: 8:00 am'}</strong>
                 </p>
                 <p className="text-[#555] text-sm">
-                  <strong>Second Service: 10:30 am</strong>
+                  <strong>{pageContent.uiText?.secondService || 'Second Service: 10:30 am'}</strong>
                 </p>
               </div>
 
               <div className="bg-[#f8f8f8] p-6 rounded-lg">
                 <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                  Communion Service:
+                  {pageContent.uiText?.communionHeading || 'Communion Service:'}
                 </h5>
                 <p className="text-[#555] text-sm">
-                  <strong>Wednesdays at 6:00 pm</strong>
+                  <strong>{pageContent.uiText?.midweekService || 'Wednesdays at 6:00 pm'}</strong>
                 </p>
               </div>
             </motion.div>
@@ -215,12 +214,10 @@ export default function HomeGroupsPage() {
               className="mt-8 pt-8 border-t-2 border-[#ececec]"
             >
               <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                Main Location:
+                {pageContent.uiText?.locationLabel || 'Main Location:'}
               </h5>
               <p className="text-[#555] text-base mb-6">
-                <strong>
-                  8159 W Brown Deer Rd, Milwaukee, WI 53223, United States
-                </strong>
+                <strong>{pageContent.uiText?.address || '4825 Glenn Dale Rd, Bowie, MD 20720'}</strong>
               </p>
               <Button
                 variant="primary"

@@ -44,5 +44,14 @@
       "content": "Members are encouraged to call the Pastoral Rescue Lines for matters requiring prayers and urgent attention. Phone Numbers: +1(414)-368-7753 ",
       "time": "Available for urgent attention"
     }
-  ]
+  ],
+  "sections": {
+    "pageTitle": "Announcements",
+    "latestLabel": "Live Updates",
+    "latestTitle": "Latest Church Announcements",
+    "loadingText": "Loading announcements...",
+    "emptyText": "No announcements are available right now.",
+    "updatesLabel": "Latest Updates",
+    "accordionTitle": "All Announcements"
+  }
 }

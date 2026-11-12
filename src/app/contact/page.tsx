@@ -254,11 +254,11 @@ export default function ContactPage() {
           <div className="border border-gray-200 bg-white p-6 shadow-sm sm:p-9">
             <div className="mb-8">
               <p className="text-xs font-bold uppercase tracking-[2px] text-primary">
-                Contact us
+                {content.uiText?.contactLabel || 'Contact us'}
               </p>
 
               <h2 className="mt-2 text-2xl font-bold text-[#111] sm:text-3xl">
-                Send us a message
+                {content.uiText?.formTitle || 'Send us a message'}
               </h2>
 
               <p className="mt-3 text-sm leading-6 text-gray-600">
@@ -273,7 +273,7 @@ export default function ContactPage() {
                 className="mb-6 border border-gray-200 bg-[#f8f8f8] p-4 text-sm leading-6 text-[#222]"
               >
                 <p className="font-bold text-[#111]">
-                  Message submitted successfully
+                  {content.uiText?.successMessage || 'Message submitted successfully'}
                 </p>
                 <p className="mt-1">{successMessage}</p>
               </div>
@@ -293,14 +293,14 @@ export default function ContactPage() {
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label htmlFor="firstName" className={labelClass}>
-                    First name *
+                    {content.uiText?.firstNameLabel || 'First name *'}
                   </label>
                   <input
                     id="firstName"
                     name="firstName"
                     type="text"
                     autoComplete="given-name"
-                    placeholder="Enter your first name"
+                    placeholder={content.uiText?.firstNamePlaceholder || "Enter your first name"}
                     value={formData.firstName}
                     onChange={handleChange}
                     maxLength={100}
@@ -312,14 +312,14 @@ export default function ContactPage() {
 
                 <div>
                   <label htmlFor="lastName" className={labelClass}>
-                    Last name *
+                    {content.uiText?.lastNameLabel || 'Last name *'}
                   </label>
                   <input
                     id="lastName"
                     name="lastName"
                     type="text"
                     autoComplete="family-name"
-                    placeholder="Enter your last name"
+                    placeholder={content.uiText?.lastNamePlaceholder || "Enter your last name"}
                     value={formData.lastName}
                     onChange={handleChange}
                     maxLength={100}
@@ -333,7 +333,7 @@ export default function ContactPage() {
               <div className="grid gap-5 sm:grid-cols-2">
                 <div>
                   <label htmlFor="email" className={labelClass}>
-                    Email address *
+                    {content.uiText?.emailLabel || 'Email address *'}
                   </label>
                   <input
                     id="email"
@@ -352,14 +352,14 @@ export default function ContactPage() {
 
                 <div>
                   <label htmlFor="phone" className={labelClass}>
-                    Phone number
+                    {content.uiText?.phoneLabel || 'Phone number'}
                   </label>
                   <input
                     id="phone"
                     name="phone"
                     type="tel"
                     autoComplete="tel"
-                    placeholder="Enter your phone number"
+                    placeholder={content.uiText?.phonePlaceholder || "Enter your phone number"}
                     value={formData.phone}
                     onChange={handleChange}
                     maxLength={40}
@@ -371,7 +371,7 @@ export default function ContactPage() {
 
               <div>
                 <label htmlFor="subject" className={labelClass}>
-                  Subject *
+                  {content.uiText?.subjectLabel || 'Subject *'}
                 </label>
                 <select
                   id="subject"
@@ -398,7 +398,7 @@ export default function ContactPage() {
 
               <div>
                 <label htmlFor="message" className={labelClass}>
-                  Your message *
+                  {content.uiText?.messageLabel || 'Your message *'}
                 </label>
                 <textarea
                   id="message"
@@ -429,18 +429,18 @@ export default function ContactPage() {
                       aria-hidden="true"
                       className="h-5 w-5 animate-spin rounded-full border-2 border-white/40 border-t-white"
                     />
-                    Sending your message...
+                    {content.uiText?.sendingText || 'Sending your message...'}
                   </>
                 ) : (
                   <>
-                    Send message
+                    {content.uiText?.sendButtonText || 'Send message'}
                     <span aria-hidden="true">→</span>
                   </>
                 )}
               </button>
 
               <p className="text-center text-xs leading-5 text-gray-500">
-                Your information will be used to respond to your enquiry.
+                {content.uiText?.privacyNote || 'Your information will be used to respond to your enquiry.'}
               </p>
             </form>
           </div>
@@ -455,7 +455,7 @@ export default function ContactPage() {
               {content.hero?.eyebrow || settings.churchName}
             </p>
             <h2 className="mt-2 text-2xl font-bold text-[#111]">
-              We look forward to connecting with you.
+              {content.uiText?.closingHeading || "We look forward to connecting with you."}
             </h2>
           </div>
 
@@ -463,7 +463,7 @@ export default function ContactPage() {
             href="/contact"
             className="inline-flex items-center justify-center border border-[#111] px-6 py-3 text-sm font-bold text-[#111] transition hover:bg-[#111] hover:text-white"
           >
-            Back to Home
+            {content.uiText?.backButtonText || "Back to Home"}
           </a>
         </div>
       </section>

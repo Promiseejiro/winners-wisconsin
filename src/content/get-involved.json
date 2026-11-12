@@ -4,5 +4,112 @@
     "title": "Get Involved"
   },
   "description": "Discover ways to connect, serve, and grow with our church community.",
-  "opportunities": []
+  "opportunities": [
+    {
+      "title": "Children's Ministry",
+      "image": "/images/g1.jpg",
+      "description": "It is not just a service group but also a ministry of its own: a colorful, energetic, entertaining and dynamic ministry focused on teaching the word of faith to children from age one month to 12 years."
+    },
+    {
+      "title": "Choir",
+      "image": "/images/g2.jpg",
+      "description": "The Music Ministry is made up of God-fearing men and women, who are talented music ministers and are committed to the work of God in music."
+    },
+    {
+      "title": "Decoration",
+      "image": "/images/g3.jpg",
+      "description": "The Decoration Ministry is made up of creative individuals who beautify the church environment for services and special events."
+    },
+    {
+      "title": "Drama Team",
+      "image": "/images/g6.jpg",
+      "description": "The mission of this team is to use theater as a ministry to encourage, instruct, and uplift the body of Christ."
+    },
+    {
+      "title": "Hospitality",
+      "image": "/images/g9.jpg",
+      "description": "This team loves to create a friendly and welcoming atmosphere in and around our church services."
+    },
+    {
+      "title": "Sanctuary Keepers",
+      "image": "/images/g8.jpg",
+      "description": "We have a team of committed men and women, devoted to making sure that the house of God is clean and tidy."
+    },
+    {
+      "title": "Security",
+      "image": "/images/g11.jpg",
+      "description": "The security, health and safety of all is the priority of this team."
+    },
+    {
+      "title": "Media Team",
+      "image": "/images/g12.jpg",
+      "description": "This team maintains and sets up musical instruments and microphones for all our services."
+    },
+    {
+      "title": "Medical Team (The Gilead Squad)",
+      "image": "/images/healthfair.jpg",
+      "description": "Our worship services are undeniably safe at all times, and by God's grace, we have had no incidence since inception."
+    },
+    {
+      "title": "Protocol Team",
+      "image": "/images/g5.jpg",
+      "description": "This team performs protocol duties during services, such as manning the church entrance, main sanctuary, and Pastor's office."
+    },
+    {
+      "title": "Transportation Team",
+      "image": "/images/g11.jpg",
+      "description": "The objective of this ministry is to provide transportation services and relieve our members who have no alternatives."
+    },
+    {
+      "title": "Usher Team",
+      "image": "/images/g13.jpg",
+      "description": "Members of this team create a friendly and welcoming atmosphere in the church services."
+    },
+    {
+      "title": "Follow-up Team",
+      "image": "/images/g7.jpg",
+      "description": "This team dedicates itself to connecting first time guests and new converts to the church."
+    },
+    {
+      "title": "Parking Team",
+      "image": "/images/g4.jpg",
+      "description": "This team ensures safety from the moment guests pull onto our property."
+    }
+  ],
+  "uiText": {
+    "introEyebrow": "A help to those who need it.",
+    "groupsHeading": "JOIN A GROUP",
+    "groupsDescription": "Thank you for your interest to join one of our amazing teams. Please fill out the form below and we will be in contact with you with your next step.",
+    "thankYouHeading": "Thank You!",
+    "thankYouDescription": "Your submission has been received. We will contact you soon!",
+    "teamLabel": "What Team are you interested in?",
+    "firstNameLabel": "First Name",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastNameLabel": "Last Name",
+    "lastNamePlaceholder": "Enter your last name",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "Enter your email",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "Enter your phone number",
+    "messageLabel": "Your Message",
+    "messagePlaceholder": "Tell us why you'd like to join this team...",
+    "submitButton": "Send",
+    "submitAnotherButton": "Submit Another Response"
+  },
+  "teamOptions": [
+    "Children's Ministry",
+    "Choir",
+    "Decoration",
+    "Drama Team",
+    "Hospitality",
+    "Sanctuary Keepers",
+    "Security",
+    "Media Team",
+    "Medical Team",
+    "Protocol Team",
+    "Transportation Team",
+    "Usher Team",
+    "Follow-up Team",
+    "Parking Team"
+  ]
 }

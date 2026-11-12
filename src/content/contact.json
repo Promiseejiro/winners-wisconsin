@@ -32,5 +32,27 @@
     "title": "Send us a message",
     "description": "Fields marked with an asterisk (*) are required.",
     "successTitle": "Message submitted successfully"
+  },
+  "uiText": {
+    "contactLabel": "Contact us",
+    "formTitle": "Send us a message",
+    "successMessage": "Message submitted successfully",
+    "firstNameLabel": "First name *",
+    "lastNameLabel": "Last name *",
+    "emailLabel": "Email address *",
+    "phoneLabel": "Phone number",
+    "subjectLabel": "Subject *",
+    "messageLabel": "Your message *",
+    "sendingText": "Sending your message...",
+    "sendButtonText": "Send message",
+    "privacyNote": "Your information will be used to respond to your enquiry.",
+    "closingHeading": "We look forward to connecting with you.",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastNamePlaceholder": "Enter your last name",
+    "emailPlaceholder": "Enter your email address",
+    "phonePlaceholder": "Enter your phone number",
+    "subjectPlaceholder": "How can we help?",
+    "messagePlaceholder": "Write your message here...",
+    "backButtonText": "Back to Home"
   }
 }

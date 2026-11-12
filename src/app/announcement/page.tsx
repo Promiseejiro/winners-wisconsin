@@ -8,9 +8,17 @@ import { Autoplay, EffectCreative, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-creative";
 import "swiper/css/pagination";
+import announcementFallback from "@/content/announcement.json";
+import { useCmsPageData } from "@/hooks/useCmsPageData";
 
-const API =
-  process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:4000/api/v1";
+const API = (() => {
+  const configured =
+    process.env.NEXT_PUBLIC_SERVER_URL ||
+    process.env.NEXT_PUBLIC_API_URL ||
+    "http://localhost:3000/api/v1";
+  const base = configured.replace(/\/+$/, "");
+  return base.endsWith("/api/v1") ? base : `${base}/api/v1`;
+})();
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 60 },
@@ -105,6 +113,7 @@ const announcementImages = [
 ];
 
 export default function AnnouncementPage() {
+  const pageCopy = useCmsPageData("announcement", announcementFallback);
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
   const [cmsContent, setCmsContent] = useState<AnnouncementContent | null>(
     null,
@@ -251,7 +260,7 @@ export default function AnnouncementPage() {
             variants={fadeInUp}
             className="font-cormorant text-4xl font-bold sm:text-5xl md:text-6xl lg:text-[70px]"
           >
-            Announcement
+            {pageCopy.sections?.pageTitle || pageCopy.header?.title || "Announcement"}
           </motion.h1>
         </div>
       </section>
@@ -267,17 +276,17 @@ export default function AnnouncementPage() {
           >
             <motion.div variants={fadeInUp} className="mb-10 text-center">
               <p className="text-sm font-semibold uppercase tracking-[1px] text-[#ef2b34]">
-                Live Updates
+                {pageCopy.sections?.latestLabel || "Live Updates"}
               </p>
 
               <h2 className="font-cormorant text-4xl font-bold text-[#111] sm:text-5xl">
-                Latest Church Announcements
+                {pageCopy.sections?.latestTitle || "Latest Church Announcements"}
               </h2>
             </motion.div>
 
             {loading && (
               <div className="rounded-xl bg-[#fafafa] p-8 text-center text-[#777]">
-                Loading announcements...
+                {pageCopy.sections?.loadingText || "Loading announcements..."}
               </div>
             )}
 
@@ -360,11 +369,11 @@ export default function AnnouncementPage() {
           >
             <motion.div variants={fadeInUp} className="mb-12 text-center">
               <div className="mb-4 inline-block rounded-full bg-primary px-4 py-1 text-sm font-semibold uppercase tracking-wider text-white">
-                {cmsContent?.header?.label || "Latest Updates"}
+                {cmsContent?.header?.label || pageCopy.sections?.updatesLabel || "Latest Updates"}
               </div>
 
               <h2 className="font-cormorant text-4xl font-bold text-[#111] sm:text-5xl">
-                {cmsContent?.header?.title || "Announcements"}
+                {cmsContent?.header?.title || pageCopy.sections?.pageTitle || "Announcements"}
               </h2>
             </motion.div>
 
@@ -433,17 +442,17 @@ export default function AnnouncementPage() {
           >
             <motion.div variants={fadeInUp} className="mb-10 text-center">
               <p className="text-sm font-semibold uppercase tracking-wider text-primary">
-                {cmsContent?.header?.label || "Latest Updates"}
+                {cmsContent?.header?.label || pageCopy.sections?.updatesLabel || "Latest Updates"}
               </p>
 
               <h2 className="mt-2 font-cormorant text-4xl font-bold text-[#111] sm:text-5xl">
-                {cmsContent?.header?.title || "Announcements"}
+                {cmsContent?.header?.title || pageCopy.sections?.pageTitle || "Announcements"}
               </h2>
             </motion.div>
 
             {loading && (
               <div className="rounded-xl bg-white p-8 text-center text-[#777]">
-                Loading announcements...
+                {pageCopy.sections?.loadingText || "Loading announcements..."}
               </div>
             )}
 

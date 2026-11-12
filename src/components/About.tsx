@@ -73,7 +73,7 @@ const About = () => {
 
             <div className="mb-6">
               <h3 className="mb-3 font-inter text-lg font-semibold text-[#111]">
-                Our Service Times
+                {pageContent.about.serviceTimesHeading || 'Our Service Times'}
               </h3>
 
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -106,7 +106,7 @@ const About = () => {
             </div>
 
             <p className="mb-6 text-sm text-[#555]">
-              <strong className="text-[#111]">Week of Emphasis:</strong>{" "}
+              <strong className="text-[#111]">{pageContent.about.weekOfEmphasisLabel || "Week of Emphasis:"}</strong>{" "}
               {pageContent.weekOfEmphasis}
             </p>
 

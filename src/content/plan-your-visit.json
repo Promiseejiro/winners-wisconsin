@@ -45,5 +45,30 @@
   "location": {
     "title": "Our Main Location",
     "address": "8159 W Brown Deer Road, Milwaukee, WI 53233"
+  },
+  "uiText": {
+    "childrenDescription": "We have a fully equipped children's ministry with passionate members ready to attend to your children while you enjoy an uninterrupted worship experience.",
+    "teensDescription": "Our teens ministry is a mini church where an awesome interactive worship experience holds, engaging and challenging young minds. Your teenagers will love it here.",
+    "sundayTimeHeading": "First Service: 8:00 am | Second Service: 10:30 am",
+    "saturdayPrayerHeading": "Every Saturday 9:00am – 10:00am",
+    "mapsLinkText": "View on Google Maps",
+    "sundayHeading": "Sunday Morning Worship:",
+    "firstService": "First Service: 8:00 am",
+    "secondService": "Second Service: 10:30 am",
+    "communionHeading": "Communion Service:",
+    "midweekService": "Wednesdays at 6:00 pm",
+    "locationLabel": "Main Location:",
+    "youthDescription": "This ministry caters for millennials. It is vibrant and kingdom focused. Millennials love it here and have a platform to show their giftings and talents at 12 Noon Sunday Worship Experience.",
+    "youthTitle": "YOUTH MINISTRY",
+    "expectHeading": "What to expect",
+    "parkingHeading": "Parking Information",
+    "parkingDescription": "Are you planning a visit to church? When you come in for the first time, drive towards the Main Lobby with your hazard lights on and a Parking Team member will be available to attend to you.",
+    "ministryServicesHeading": "Children, Teen, and Youth Services",
+    "childrenMinistryLabel": "CHILDRENS' MINISTRY",
+    "teensMinistryLabel": "TEENS MINISTRY",
+    "youthMinistryLabel": "YOUTH MINISTRY",
+    "ctaHeading": "You were meant to enjoy a life free in Christ.",
+    "ctaSubheading": "Take your first step towards it.",
+    "ctaDescription": "We exist to bring God's freedom to everyone. We love to care for people who have been hurt. This is our mandate."
   }
 }

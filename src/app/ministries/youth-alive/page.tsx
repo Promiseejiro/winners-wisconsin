@@ -82,15 +82,9 @@ export default function YouthAlivePage() {
     ? (pageContent as any).leaders
     : [];
 
-  const teamOptions = [
-    "Choir",
-    "Prayer Squad",
-    "Evangelism & Outreach",
-    "Hospitality & Follow up",
-    "Social Media",
-    "Technical",
-    "Mighty Acts",
-  ];
+  const teamOptions: string[] = Array.isArray(pageContent.serviceUnitOptions)
+    ? pageContent.serviceUnitOptions
+    : [];
 
   const handleServiceUnitSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -165,28 +159,19 @@ export default function YouthAlivePage() {
               className="bg-[#f8f8f8] p-8 md:p-10 rounded-lg"
             >
               <h2 className="font-cormorant text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#111] mb-6">
-                About Us
+                {pageContent.uiText?.aboutHeading || "About Us"}
               </h2>
               <p className="text-[#555] leading-relaxed mb-4 text-base">
-                The Youth Alive Fellowship (Y.A.F.) is the Young Adult arm of
-                the Winners Chapel International Church Worldwide. We are driven
-                to Raise a Generation Alive in Spirit, Soul and Body through
-                Spiritual, Social and total development of our young adults,
-                empowering and equipping them to impact the World.
+                {pageContent.uiText?.aboutDescription || pageContent.about}
               </p>
               <div className="mt-6">
                 <p className="text-[#555] leading-relaxed mb-3 text-base font-semibold">
-                  Our Core Values are:
+                  {pageContent.uiText?.coreValuesHeading || "Our Core Values are:"}
                 </p>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li className="text-[#555] text-base">Spirituality</li>
-                  <li className="text-[#555] text-base">Purpose</li>
-                  <li className="text-[#555] text-base">Leadership</li>
-                  <li className="text-[#555] text-base">Service</li>
-                  <li className="text-[#555] text-base">Responsibility</li>
-                  <li className="text-[#555] text-base">
-                    Integrity & Discipline
-                  </li>
+                  {(pageContent.coreValues || []).map((value: string, index: number) => (
+                    <li key={`${value}-${index}`} className="text-[#555] text-base">{value}</li>
+                  ))}
                 </ul>
               </div>
             </motion.div>
@@ -221,11 +206,11 @@ export default function YouthAlivePage() {
               className="bg-[#1a1a1a] p-8 rounded-lg text-center"
             >
               <h2 className="font-cormorant text-3xl sm:text-4xl text-white mb-4">
-                Our Vision
+                {pageContent.uiText?.visionHeading || "Our Vision"}
               </h2>
               <div className="w-20 h-1 bg-primary mx-auto mb-6" />
               <p className="text-[#ddd] text-lg leading-relaxed">
-                Raising a Generation Alive in Spirit, Soul & Body.
+                {pageContent.uiText?.visionDescription || pageContent.vision}
               </p>
             </motion.div>
 
@@ -234,12 +219,11 @@ export default function YouthAlivePage() {
               className="bg-[#1a1a1a] p-8 rounded-lg text-center"
             >
               <h2 className="font-cormorant text-3xl sm:text-4xl text-white mb-4">
-                Our Mission
+                {pageContent.uiText?.missionHeading || "Our Mission"}
               </h2>
               <div className="w-20 h-1 bg-primary mx-auto mb-6" />
               <p className="text-[#ddd] text-lg leading-relaxed">
-                Upgrade and Update our Youth on Total Development in the Spirit,
-                Soul, and Body.
+                {pageContent.uiText?.missionDescription || pageContent.mission}
               </p>
             </motion.div>
           </motion.div>
@@ -257,7 +241,7 @@ export default function YouthAlivePage() {
             className="text-center mb-12"
           >
             <h3 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111] mb-3">
-              Our Leaders
+              {pageContent.uiText?.leadersHeading || "Our Leaders"}
             </h3>
             <div className="w-20 h-1 bg-primary mx-auto" />
           </motion.div>
@@ -294,7 +278,7 @@ export default function YouthAlivePage() {
             ))}
           </motion.div>
           {leaders.length === 0 && (
-            <p className="mt-6 text-center text-gray-500">Our Youth Alive leadership team will be announced soon.</p>
+            <p className="mt-6 text-center text-gray-500">{pageContent.uiText?.leadersEmpty || "Our Youth Alive leadership team will be announced soon."}</p>
           )}
         </div>
       </section>
@@ -310,7 +294,7 @@ export default function YouthAlivePage() {
             className="text-center mb-12"
           >
             <h4 className="font-inter text-2xl font-semibold text-[#111] mb-3">
-              Event Calendar
+              {pageContent.uiText?.calendarHeading || "Event Calendar"}
             </h4>
             <div className="w-20 h-1 bg-primary mx-auto" />
           </motion.div>
@@ -321,8 +305,7 @@ export default function YouthAlivePage() {
           >
             <div className="bg-white p-8 rounded-lg shadow-md">
               <p className="text-[#555] text-lg mb-6">
-                Join a generation of young adults on fire for God. Take your
-                first step towards it.
+                {pageContent.uiText?.calendarDescription || "Join a generation of young adults on fire for God. Take your first step towards it."}
               </p>
               <Button variant="primary" size="lg" className="rounded-full">
                 Join Now
@@ -344,7 +327,7 @@ export default function YouthAlivePage() {
           >
             <motion.div variants={fadeInUp} className="text-center mb-8">
               <h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111] mb-3">
-                Sign up for YAF Service Unit
+                {pageContent.uiText?.signupHeading || "Sign up for YAF Service Unit"}
               </h2>
               <div className="w-20 h-1 bg-primary mx-auto" />
             </motion.div>
@@ -368,10 +351,10 @@ export default function YouthAlivePage() {
                 <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
                   <div className="text-4xl mb-3">✅</div>
                   <h3 className="text-xl font-semibold text-green-700 mb-2">
-                    Thank You!
+                    {pageContent.uiText?.thankYouHeading || "Thank You!"}
                   </h3>
                   <p className="text-green-600">
-                    Your submission has been received. We will contact you soon!
+                    {pageContent.uiText?.thankYouDescription || "Your submission has been received. We will contact you soon!"}
                   </p>
                 </div>
               ) : (
@@ -379,14 +362,14 @@ export default function YouthAlivePage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Input
                       id="firstName"
-                      label="First Name"
-                      placeholder="Enter your first name"
+                      label={pageContent.uiText?.firstNameLabel || "First Name"}
+                      placeholder={pageContent.uiText?.firstNamePlaceholder || "Enter your first name"}
                       required
                     />
                     <Input
                       id="lastName"
-                      label="Last Name"
-                      placeholder="Enter your last name"
+                      label={pageContent.uiText?.lastNameLabel || "Last Name"}
+                      placeholder={pageContent.uiText?.lastNamePlaceholder || "Enter your last name"}
                       required
                     />
                   </div>
@@ -394,23 +377,23 @@ export default function YouthAlivePage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Input
                       id="email"
-                      label="Email Address"
+                      label={pageContent.uiText?.emailLabel || "Email Address"}
                       type="email"
-                      placeholder="Enter your email"
+                      placeholder={pageContent.uiText?.emailPlaceholder || "Enter your email"}
                       required
                     />
                     <Input
                       id="phone"
-                      label="Phone"
+                      label={pageContent.uiText?.phoneLabel || "Phone"}
                       type="tel"
-                      placeholder="Enter your phone number"
+                      placeholder={pageContent.uiText?.phonePlaceholder || "Enter your phone number"}
                       required
                     />
                   </div>
 
                   <div>
                     <label className="input-label">
-                      What Team are you interested in?
+                      {pageContent.uiText?.teamLabel || "What Team are you interested in?"}
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-2">
                       {teamOptions.map((team) => (
@@ -430,9 +413,9 @@ export default function YouthAlivePage() {
 
                   <Input
                     id="message"
-                    label="Your Message"
+                    label={pageContent.uiText?.messageLabel || "Your Message"}
                     type="textarea"
-                    placeholder="Tell us why you'd like to join this team..."
+                    placeholder={pageContent.uiText?.messagePlaceholder || "Tell us why you'd like to join this team..."}
                     rows={4}
                   />
 
@@ -442,7 +425,7 @@ export default function YouthAlivePage() {
                     size="lg"
                     className="w-full"
                   >
-                    Send
+                    {pageContent.uiText?.submitButton || "Send"}
                   </Button>
                 </form>
               )}
@@ -463,7 +446,7 @@ export default function YouthAlivePage() {
           >
             <motion.div variants={fadeInUp} className="text-center mb-8">
               <h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111] mb-3">
-                Contact Us
+                {pageContent.uiText?.contactHeading || "Contact Us"}
               </h2>
               <div className="w-20 h-1 bg-primary mx-auto" />
             </motion.div>
@@ -486,14 +469,14 @@ export default function YouthAlivePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Input
                     id="contactFirstName"
-                    label="First Name"
-                    placeholder="Enter your first name"
+                    label={pageContent.uiText?.firstNameLabel || "First Name"}
+                    placeholder={pageContent.uiText?.firstNamePlaceholder || "Enter your first name"}
                     required
                   />
                   <Input
                     id="contactLastName"
-                    label="Last Name"
-                    placeholder="Enter your last name"
+                    label={pageContent.uiText?.lastNameLabel || "Last Name"}
+                    placeholder={pageContent.uiText?.lastNamePlaceholder || "Enter your last name"}
                     required
                   />
                 </div>
@@ -501,16 +484,16 @@ export default function YouthAlivePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Input
                     id="contactEmail"
-                    label="Email Address"
+                    label={pageContent.uiText?.emailLabel || "Email Address"}
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder={pageContent.uiText?.emailPlaceholder || "Enter your email"}
                     required
                   />
                   <Input
                     id="contactPhone"
-                    label="Phone"
+                    label={pageContent.uiText?.phoneLabel || "Phone"}
                     type="tel"
-                    placeholder="Enter your phone number"
+                    placeholder={pageContent.uiText?.phonePlaceholder || "Enter your phone number"}
                   />
                 </div>
 
@@ -523,7 +506,7 @@ export default function YouthAlivePage() {
 
                 <Input
                   id="contactMessage"
-                  label="Your Message"
+                  label={pageContent.uiText?.messageLabel || "Your Message"}
                   type="textarea"
                   placeholder="Write your message here..."
                   rows={4}
@@ -557,21 +540,20 @@ export default function YouthAlivePage() {
               variants={fadeInUp}
               className="font-inter text-xl font-semibold text-[#111] mb-2"
             >
-              You were meant to enjoy a life free in Christ.
+              {pageContent.uiText?.ctaHeading || "You were meant to enjoy a life free in Christ."}
             </motion.h4>
             <motion.h4
               variants={fadeInUp}
               className="font-inter text-xl font-semibold text-primary mb-6"
             >
-              Take your first step towards it.
+              {pageContent.uiText?.ctaSubheading || "Take your first step towards it."}
             </motion.h4>
             <motion.p
               variants={fadeInUp}
               className="text-[#555] text-base max-w-2xl mx-auto mb-8"
             >
               <strong>
-                We exist to bring God's freedom to everyone. We love to care for
-                people who have been hurt. This is our mandate.
+                {pageContent.uiText?.ctaDescription || "We exist to bring God's freedom to everyone. We love to care for people who have been hurt. This is our mandate."}
               </strong>
             </motion.p>
 
@@ -581,22 +563,22 @@ export default function YouthAlivePage() {
             >
               <div className="bg-[#f8f8f8] p-6 rounded-lg">
                 <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                  Sunday Morning Worship:
+                  {pageContent.uiText?.sundayHeading || 'Sunday Morning Worship:'}
                 </h5>
                 <p className="text-[#555] text-sm">
-                  <strong>First Service: 8:00 am</strong>
+                  <strong>{pageContent.uiText?.firstService || 'First Service: 8:00 am'}</strong>
                 </p>
                 <p className="text-[#555] text-sm">
-                  <strong>Second Service: 10:30 am</strong>
+                  <strong>{pageContent.uiText?.secondService || 'Second Service: 10:30 am'}</strong>
                 </p>
               </div>
 
               <div className="bg-[#f8f8f8] p-6 rounded-lg">
                 <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                  Communion Service:
+                  {pageContent.uiText?.communionHeading || 'Communion Service:'}
                 </h5>
                 <p className="text-[#555] text-sm">
-                  <strong>Wednesdays at 6:00 pm</strong>
+                  <strong>{pageContent.uiText?.midweekService || 'Wednesdays at 6:00 pm'}</strong>
                 </p>
               </div>
             </motion.div>
@@ -606,7 +588,7 @@ export default function YouthAlivePage() {
               className="mt-8 pt-8 border-t-2 border-[#ececec]"
             >
               <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                Main Location:
+                {pageContent.uiText?.locationLabel || 'Main Location:'}
               </h5>
               <p className="text-[#555] text-base mb-6">
                 <strong>{settings.address}</strong>
@@ -618,7 +600,7 @@ export default function YouthAlivePage() {
                   router.push("/contact");
                 }}
               >
-                Attend a Service
+                {pageContent.uiText?.attendButton || 'Attend a Service'}
               </Button>
             </motion.div>
           </motion.div>

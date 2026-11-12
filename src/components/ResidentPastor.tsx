@@ -78,7 +78,7 @@ export default function ResidentPastor() {
                     <p className="text-lg font-semibold">{pastorName}</p>
 
                     <p className="mt-2 text-sm">
-                      Pastor photograph will appear here.
+                      {pageContent.pastor.photoPlaceholder || 'Pastor photograph will appear here.'}
                     </p>
                   </div>
                 </div>

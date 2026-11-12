@@ -1,175 +1,184 @@
 {
-"hero": {
-  "slides": [
-    {
-      "id": 1,
-      "tagline": "Wisconsin",
-      "title": "Building Lives",
-      "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793604538/winners-chapel/qna86pco2smvz53bliit.jpg",
-      "subtitle": "Through Faith",
-      "description": "Join us as we grow together in Christ through worship, prayer, and community.",
-      "buttonText": "Attend Service",
-      "buttonHref": "/plan-your-visit"
-    },
-    {
-      "id": 2,
-      "badge": "Monthly Prophetic Focus",
-      "title": "I AM REDEEMED A WONDER TO MY WORLD",
-      "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793604573/winners-chapel/dg4vncieaxo0hen7ox1s.jpg",
-      "subtitle": "I AM REDEEMED A WONDER TO MY WORLD",
-      "verse": "Isaiah 8:18",
-      "description": "NOVEMBER 2026 PROPHETIC THEME",
-      "buttonText": "Attend Service",
-      "buttonHref": "/plan-your-visit"
-    }
-  ],
-  "backgroundImage": "https://images.unsplash.com/photo-1438032005730-c779502df39b?q=80&w=1920&auto=format&fit=crop"
-},
-"welcome": {
-  "eyebrow": "Where God Lives...",
-  "title": "Welcome to Winners Chapel International Milwaukee, Wisconsin",
-  "description": "Welcome to the Home of Signs & Wonders! At Winners Chapel International Milwaukee, Wisconsin, we are committed to providing a place of spiritual growth, empowerment, and community. We believe in a life of abundance, guided by the Word of God. Whether you are visiting for the first time or looking for a place to call home, we are here to support you on your faith journey."
-},
-"services": {
-  "items": [
-    {
-      "id": 1794432553403,
-      "title": "Sunday Worship Service",
-      "description": "Join us every Sunday for a time of heartfelt worship, practical teaching from God's Word, prayer, and fellowship. Come expectant and experience the joy of growing in faith together.",
-      "image": "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200&auto=format&fit=crop",
-      "link": "/plan-your-visit",
-      "buttonText": "Plan Your Visit"
-    },
-    {
-      "id": 1794433265448,
-      "title": "Wednesday service",
-      "description": "Join us every Sunday for a time of heartfelt worship, practical teaching from God's Word, prayer, and fellowship. Come expectant and experience the joy of growing in faith together.",
-      "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794433306/winners-chapel/kjftmsmamlf6qmkb4eey.jpg",
-      "link": "",
-      "buttonText": "Plan visit"
-    }
-  ]
-},
-"about": {
-  "eyebrow": "Where God Lives...",
-  "title": "Welcome to Winners Chapel International Milwaukee, Wisconsin",
-  "description": "Welcome to the Home of Signs & Wonders! At Winners Chapel International Milwaukee, Wisconsin, we are committed to providing a place of spiritual growth, empowerment, and community. We believe in a life of abundance, guided by the Word of God. Whether you are visiting for the first time or looking for a place to call home, we are here to support you on your faith journey.",
-  "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
-  "buttonText": "More About Us",
-  "buttonHref": "/about-us"
-},
-"serviceTimes": [
-  {
-    "day": "Sunday",
-    "service": "First Service",
-    "time": "9:00 AM"
+  "hero": {
+    "slides": [
+      {
+        "id": 1,
+        "tagline": "Wisconsin",
+        "title": "Building Lives",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793604538/winners-chapel/qna86pco2smvz53bliit.jpg",
+        "subtitle": "Through Faith",
+        "description": "Join us as we grow together in Christ through worship, prayer, and community.",
+        "buttonText": "Attend Service",
+        "buttonHref": "/plan-your-visit"
+      },
+      {
+        "id": 2,
+        "badge": "Monthly Prophetic Focus",
+        "title": "I AM REDEEMED A WONDER TO MY WORLD",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793604573/winners-chapel/dg4vncieaxo0hen7ox1s.jpg",
+        "subtitle": "I AM REDEEMED A WONDER TO MY WORLD",
+        "verse": "Isaiah 8:18",
+        "description": "NOVEMBER 2026 PROPHETIC THEME",
+        "buttonText": "Attend Service",
+        "buttonHref": "/plan-your-visit"
+      }
+    ],
+    "backgroundImage": "https://images.unsplash.com/photo-1438032005730-c779502df39b?q=80&w=1920&auto=format&fit=crop"
   },
-  {
-    "day": "Wednesday",
-    "service": "Midweek Communion Service",
-    "time": "6:00 PM"
-  }
-],
-"weekOfEmphasis": "1st Wednesday, Thursday & Friday of each month – 6:00pm",
-"pastor": {
-  "label": "Resident Pastor",
-  "name": "Pastor Ajibola Alaka",
-  "description": "Pastor Ajibola Alaka is the current serving Resident Pastor, WCI Milwaukee Wisconsin, United States of America. He is committed to passionately carrying out, and pursuing his God-given assignment and the delivery of the Liberation Mandate.",
-  "buttonText": "Book Appointment with Pastor",
-  "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793949224/winners-chapel/ua92kwb8jjpsq2cp7at1.jpg"
-},
-"churchUpdates": {
-  "label": "Church Updates",
-  "title": "Stay informed with our special services and programs",
-  "description": "We provide weekly updates about all our recent special services, events and programs to ensure that you are current with the latest faith news.",
-  "tabs": [
+  "welcome": {
+    "eyebrow": "Where God Lives...",
+    "title": "Welcome to Winners Chapel International Milwaukee, Wisconsin",
+    "description": "Welcome to the Home of Signs & Wonders! At Winners Chapel International Milwaukee, Wisconsin, we are committed to providing a place of spiritual growth, empowerment, and community. We believe in a life of abundance, guided by the Word of God. Whether you are visiting for the first time or looking for a place to call home, we are here to support you on your faith journey."
+  },
+  "services": {
+    "items": [
+      {
+        "id": 1794432553403,
+        "title": "Sunday Worship Service",
+        "description": "Join us every Sunday for a time of heartfelt worship, practical teaching from God's Word, prayer, and fellowship. Come expectant and experience the joy of growing in faith together.",
+        "image": "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1200&auto=format&fit=crop",
+        "link": "/plan-your-visit",
+        "buttonText": "Plan Your Visit"
+      },
+      {
+        "id": 1794433265448,
+        "title": "Wednesday service",
+        "description": "Join us every Sunday for a time of heartfelt worship, practical teaching from God's Word, prayer, and fellowship. Come expectant and experience the joy of growing in faith together.",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794433306/winners-chapel/kjftmsmamlf6qmkb4eey.jpg",
+        "link": "",
+        "buttonText": "Plan visit"
+      }
+    ]
+  },
+  "about": {
+    "eyebrow": "Where God Lives...",
+    "title": "Welcome to Winners Chapel International Milwaukee, Wisconsin",
+    "description": "Welcome to the Home of Signs & Wonders! At Winners Chapel International Milwaukee, Wisconsin, we are committed to providing a place of spiritual growth, empowerment, and community. We believe in a life of abundance, guided by the Word of God. Whether you are visiting for the first time or looking for a place to call home, we are here to support you on your faith journey.",
+    "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
+    "buttonText": "More About Us",
+    "buttonHref": "/about-us",
+    "serviceTimesHeading": "Our Service Times",
+    "weekOfEmphasisLabel": "Week of Emphasis:"
+  },
+  "serviceTimes": [
     {
-      "id": "weekly-gatherings",
-      "label": "Weekly Gatherings",
-      "title": "Make Room for Worship, Prayer and the Word",
-      "description": "There is a place for you at Winners Chapel International Milwaukee. Join our church family for worship, biblical teaching, prayer and meaningful fellowship throughout the week.",
-      "details": [
-        "Sunday First Service – 9:00 AM",
-        "Wednesday Midweek Communion Service – 6:00 PM",
-        "Come early, invite someone and worship with us."
-      ],
-      "image": "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=1200&auto=format&fit=crop"
-    }
-  ]
-},
-"latestSermon": {
-  "label": "Watch and Be Inspired",
-  "title": "Grow Your Faith Through the Word",
-  "description": "Be encouraged and strengthened through biblical messages that build faith, inspire purposeful living and point you to the promises of God. Check back for our latest sermon recording.",
-  "buttonText": "Explore Sermons",
-  "buttonHref": "/sermons",
-  "image": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1200&auto=format&fit=crop",
-  "videoUrl": ""
-},
-"csr": {
-  "label": "CSR",
-  "title": "Making a Difference Through Love in Action",
-  "description": "We believe the love of Christ should be visible in the way we serve others. Through compassion, generosity and community engagement, we seek to encourage our neighbors and make a positive difference in the Milwaukee community.",
-  "items": [],
-  "buttonText": "Learn About Our Outreach",
-  "buttonHref": "/csr",
-  "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193224/winners-chapel/vh4a0mndstgny1qeihcs.jpg"
-},
-"ministries": {
-  "items": [
-    {
-      "id": 1794193130237,
-      "title": "TEENS",
-      "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193146/winners-chapel/pqczwvobb6mnkjmwrqoz.jpg",
-      "link": "/ministries"
+      "day": "Sunday",
+      "service": "First Service",
+      "time": "9:00 AM"
     },
     {
-      "id": 1794433625010,
-      "title": "YOUTH",
-      "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794433644/winners-chapel/nztq2sexe2krnmdp7ule.jpg",
-      "link": "/ministries"
+      "day": "Wednesday",
+      "service": "Midweek Communion Service",
+      "time": "6:00 PM"
     }
-  ]
-},
-"quote": {
-  "text": "Nothing dies in my hands",
-  "quote": "Nothing dies in my hands. By faith, I walk in the life and victory God has made available to me.",
-  "author": "A Declaration of Faith",
-  "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193266/winners-chapel/vfyuhkkfwfceyf24xavm.jpg"
-},
-"contact": {
-  "title": "We Would Love to Hear From You",
-  "contactButton": "Contact Us",
-  "contactLink": "/contact-us",
-  "prayerButton": "Request Prayer",
-  "prayerLink": "/prayer-request"
-},
-"gallery": {
-  "label": "Church Gallery",
-  "title": "Life at Winners Chapel Milwaukee",
-  "description": "A glimpse into our worship, fellowship and moments together as a church family. We look forward to sharing more memories with you.",
-  "images": [
-    "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431274/winners-chapel/retoqvcab8yfpdwhoyaj.jpg",
-    "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431271/winners-chapel/zq56z8nqsvnzaiow9qpo.png",
-    "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431271/winners-chapel/wrtsverxrwzszanxcu01.png",
-    "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431270/winners-chapel/mytukef5ziwr60jgojzq.png"
   ],
-  "initialDisplayCount": 5,
-  "viewButtonText": "View Image",
-  "viewAllText": "View All",
-  "showLessText": "Show Less",
-  "collapseText": "Collapse Gallery"
-},
-"footer": {
-  "address": "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
-  "emails": [
-    "info@winnerschapelwi.org"
-  ],
-  "phones": [
-    "414-368-7753",
-    "708-769-7141",
-    "414-255-4387"
-  ],
-  "copyright": "© 2026 Winners Chapel International Milwaukee Wisconsin. All Rights Reserved."
-}
+  "weekOfEmphasis": "1st Wednesday, Thursday & Friday of each month – 6:00pm",
+  "pastor": {
+    "label": "Resident Pastor",
+    "name": "Pastor Ajibola Alaka",
+    "description": "Pastor Ajibola Alaka is the current serving Resident Pastor, WCI Milwaukee Wisconsin, United States of America. He is committed to passionately carrying out, and pursuing his God-given assignment and the delivery of the Liberation Mandate.",
+    "buttonText": "Book Appointment with Pastor",
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793949224/winners-chapel/ua92kwb8jjpsq2cp7at1.jpg",
+    "photoPlaceholder": "Pastor photograph will appear here."
+  },
+  "churchUpdates": {
+    "label": "Church Updates",
+    "title": "Stay informed with our special services and programs",
+    "description": "We provide weekly updates about all our recent special services, events and programs to ensure that you are current with the latest faith news.",
+    "tabs": [
+      {
+        "id": "weekly-gatherings",
+        "label": "Weekly Gatherings",
+        "title": "Make Room for Worship, Prayer and the Word",
+        "description": "There is a place for you at Winners Chapel International Milwaukee. Join our church family for worship, biblical teaching, prayer and meaningful fellowship throughout the week.",
+        "details": [
+          "Sunday First Service – 9:00 AM",
+          "Wednesday Midweek Communion Service – 6:00 PM",
+          "Come early, invite someone and worship with us."
+        ],
+        "image": "https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=1200&auto=format&fit=crop"
+      }
+    ]
+  },
+  "latestSermon": {
+    "label": "Watch and Be Inspired",
+    "title": "Grow Your Faith Through the Word",
+    "description": "Be encouraged and strengthened through biblical messages that build faith, inspire purposeful living and point you to the promises of God. Check back for our latest sermon recording.",
+    "buttonText": "Explore Sermons",
+    "buttonHref": "/sermons",
+    "image": "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1200&auto=format&fit=crop",
+    "videoUrl": "",
+    "emptyHeading": "Sermons coming soon",
+    "emptyDescription": "Please check back soon for the latest messages.",
+    "missingLinkText": "Sermon link will be available soon"
+  },
+  "csr": {
+    "label": "CSR",
+    "title": "Making a Difference Through Love in Action",
+    "description": "We believe the love of Christ should be visible in the way we serve others. Through compassion, generosity and community engagement, we seek to encourage our neighbors and make a positive difference in the Milwaukee community.",
+    "items": [],
+    "buttonText": "Learn About Our Outreach",
+    "buttonHref": "/csr",
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193224/winners-chapel/vh4a0mndstgny1qeihcs.jpg"
+  },
+  "ministries": {
+    "items": [
+      {
+        "id": 1794193130237,
+        "title": "TEENS",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193146/winners-chapel/pqczwvobb6mnkjmwrqoz.jpg",
+        "link": "/ministries"
+      },
+      {
+        "id": 1794433625010,
+        "title": "YOUTH",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794433644/winners-chapel/nztq2sexe2krnmdp7ule.jpg",
+        "link": "/ministries"
+      }
+    ],
+    "label": "Our Ministries",
+    "title": "Find Your Place to Grow"
+  },
+  "quote": {
+    "text": "Nothing dies in my hands",
+    "quote": "Nothing dies in my hands. By faith, I walk in the life and victory God has made available to me.",
+    "author": "A Declaration of Faith",
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193266/winners-chapel/vfyuhkkfwfceyf24xavm.jpg"
+  },
+  "contact": {
+    "title": "We Would Love to Hear From You",
+    "contactButton": "Contact Us",
+    "contactLink": "/contact-us",
+    "prayerButton": "Request Prayer",
+    "prayerLink": "/prayer-request"
+  },
+  "gallery": {
+    "label": "Church Gallery",
+    "title": "Life at Winners Chapel Milwaukee",
+    "description": "A glimpse into our worship, fellowship and moments together as a church family. We look forward to sharing more memories with you.",
+    "images": [
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431274/winners-chapel/retoqvcab8yfpdwhoyaj.jpg",
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431271/winners-chapel/zq56z8nqsvnzaiow9qpo.png",
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431271/winners-chapel/wrtsverxrwzszanxcu01.png",
+      "https://res.cloudinary.com/dxqg5hify/image/upload/v1794431270/winners-chapel/mytukef5ziwr60jgojzq.png"
+    ],
+    "initialDisplayCount": 5,
+    "viewButtonText": "View Image",
+    "viewAllText": "View All",
+    "showLessText": "Show Less",
+    "collapseText": "Collapse Gallery",
+    "moreText": "More"
+  },
+  "footer": {
+    "address": "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
+    "emails": [
+      "info@winnerschapelwi.org"
+    ],
+    "phones": [
+      "414-368-7753",
+      "708-769-7141",
+      "414-255-4387"
+    ],
+    "copyright": "© 2026 Winners Chapel International Milwaukee Wisconsin. All Rights Reserved."
+  }
 }

@@ -58,6 +58,11 @@ const staggerContainer: Variants = {
 export default function TeensMinistryPage() {
   const pageCopy = useCmsPageData("sermons/children", {
     title: "Children Ministry",
+    focusAreas: [
+      { title: "Secure their future" },
+      { title: "Impart Godly values" },
+      { title: "Help them find their purpose" },
+    ],
     subtitle: "Helping children grow in faith and discover God’s purpose.",
     sectionTitle: "Growing in the Word",
     sectionDescription:
@@ -84,7 +89,7 @@ export default function TeensMinistryPage() {
     secondService: "Second Service: 10:30 am",
     midweekService: "Wednesdays at 6:00 pm",
     locationHeading: "Our Location",
-    address: "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
+    address: "4825 Glenn Dale Rd, Bowie, MD 20720",
   });
   const router = useRouter();
 
@@ -129,7 +134,7 @@ export default function TeensMinistryPage() {
             variants={fadeInUp}
             className="flex flex-wrap justify-center gap-8 md:gap-12 mt-10"
           >
-            {focusAreas.map((area, index) => (
+            {focusAreas.map((area: any, index: any) => (
               <motion.div
                 key={index}
                 variants={slideInUp}

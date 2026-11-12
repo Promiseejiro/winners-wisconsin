@@ -58,40 +58,34 @@ export default function PlanYourVisitPage() {
 
   const accordionItems = [
     {
-      title: "What to expect",
+      title: pageContent.uiText?.expectHeading || "What to expect",
       content: pageContent.sunday?.whatToExpect || "Our services are packaged with intense worship and inspirational teachings from the Word of God. You should expect a transformation as you attend.",
     },
     {
-      title: "Parking Information",
+      title: pageContent.uiText?.parkingHeading || "Parking Information",
       content:
-        "Are you planning a visit to church? When you come in for the first time, drive towards the Main Lobby with your hazard lights on and a Parking Team member will be available to attend to you.",
+        pageContent.uiText?.parkingDescription || "Are you planning a visit to church? When you come in for the first time, drive towards the Main Lobby with your hazard lights on and a Parking Team member will be available to attend to you.",
     },
     {
-      title: "Children, Teen, and Youth Services",
+      title: pageContent.uiText?.ministryServicesHeading || "Children, Teen, and Youth Services",
       content: (
         <div className="space-y-4">
           <div>
-            <strong>CHILDRENS' MINISTRY</strong>
+            <strong>{pageContent.uiText?.childrenMinistryLabel || "CHILDRENS' MINISTRY"}</strong>
             <p className="text-[#555] mt-1">
-              We have a fully equipped children's ministry with passionate
-              members ready to attend to your children while you enjoy an
-              uninterrupted worship experience.
+              {pageContent.uiText?.childrenDescription || pageContent.ministries?.[0]?.description}
             </p>
           </div>
           <div>
-            <strong>TEENS MINISTRY</strong>
+            <strong>{pageContent.uiText?.teensMinistryLabel || 'TEENS MINISTRY'}</strong>
             <p className="text-[#555] mt-1">
-              Our teens ministry is a mini church where an awesome interactive
-              worship experience holds, engaging and challenging young minds.
-              Your teenagers will love it here.
+              {pageContent.uiText?.teensDescription || pageContent.ministries?.[1]?.description}
             </p>
           </div>
           <div>
-            <strong>YOUTH MINISTRY</strong>
+            <strong>{pageContent.uiText?.youthTitle || 'YOUTH MINISTRY'}</strong>
             <p className="text-[#555] mt-1">
-              This ministry caters for millennials. It is vibrant and kingdom
-              focused. Millennials love it here and have a platform to show
-              their giftings and talents at 12 Noon Sunday Worship Experience.
+              {pageContent.uiText?.youthDescription || pageContent.ministries?.[2]?.description}
             </p>
           </div>
         </div>
@@ -189,7 +183,7 @@ export default function PlanYourVisitPage() {
                 {pageContent.sunday?.subtitle || "Every Sunday"}
               </h3>
               <h3 className="font-inter text-xl font-semibold text-[#111] mb-4">
-                First Service: 8:00 am | Second Service: 10:30 am
+                {pageContent.uiText?.sundayTimeHeading || "First Service: 8:00 am | Second Service: 10:30 am"}
               </h3>
               <p className="text-[#555] text-base mb-6">
                 {pageContent.location?.address || settings.address}
@@ -309,7 +303,7 @@ export default function PlanYourVisitPage() {
                 {(pageContent.prayer?.schedule || [])[0] || "Everyday from 6:00am – 7:00am"}
               </h3>
               <h3 className="font-inter text-xl font-semibold text-[#111] mb-4">
-                Every Saturday 9:00am – 10:00am
+                {pageContent.uiText?.saturdayPrayerHeading || 'Every Saturday 9:00am – 10:00am'}
               </h3>
               <p className="text-[#555] text-base">
                 {pageContent.location?.address || settings.address}
@@ -386,7 +380,7 @@ export default function PlanYourVisitPage() {
                       d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                     />
                   </svg>
-                  <p className="text-lg">View on Google Maps</p>
+                  <p className="text-lg">{pageContent.uiText?.mapsLinkText || 'View on Google Maps'}</p>
                   <p className="text-sm text-white/40">
                     {pageContent.location?.address || settings.address}
                   </p>
@@ -411,21 +405,20 @@ export default function PlanYourVisitPage() {
               variants={fadeInUp}
               className="font-inter text-xl font-semibold text-[#111] mb-2"
             >
-              You were meant to enjoy a life free in Christ.
+              {pageContent.uiText?.ctaHeading || "You were meant to enjoy a life free in Christ."}
             </motion.h4>
             <motion.h4
               variants={fadeInUp}
               className="font-inter text-xl font-semibold text-primary mb-6"
             >
-              Take your first step towards it.
+              {pageContent.uiText?.ctaSubheading || "Take your first step towards it."}
             </motion.h4>
             <motion.p
               variants={fadeInUp}
               className="text-[#555] text-base max-w-2xl mx-auto mb-8"
             >
               <strong>
-                We exist to bring God's freedom to everyone. We love to care for
-                people who have been hurt. This is our mandate.
+                {pageContent.uiText?.ctaDescription || "We exist to bring God's freedom to everyone. We love to care for people who have been hurt. This is our mandate."}
               </strong>
             </motion.p>
 
@@ -435,22 +428,22 @@ export default function PlanYourVisitPage() {
             >
               <div className="bg-[#f8f8f8] p-6 rounded-lg">
                 <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                  Sunday Morning Worship:
+                  {pageContent.uiText?.sundayHeading || 'Sunday Morning Worship:'}
                 </h5>
                 <p className="text-[#555] text-sm">
-                  <strong>First Service: 8:00 am</strong>
+                  <strong>{pageContent.uiText?.firstService || 'First Service: 8:00 am'}</strong>
                 </p>
                 <p className="text-[#555] text-sm">
-                  <strong>Second Service: 10:30 am</strong>
+                  <strong>{pageContent.uiText?.secondService || 'Second Service: 10:30 am'}</strong>
                 </p>
               </div>
 
               <div className="bg-[#f8f8f8] p-6 rounded-lg">
                 <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                  Communion Service:
+                  {pageContent.uiText?.communionHeading || 'Communion Service:'}
                 </h5>
                 <p className="text-[#555] text-sm">
-                  <strong>Wednesdays at 6:00 pm</strong>
+                  <strong>{pageContent.uiText?.midweekService || 'Wednesdays at 6:00 pm'}</strong>
                 </p>
               </div>
             </motion.div>
@@ -460,7 +453,7 @@ export default function PlanYourVisitPage() {
               className="mt-8 pt-8 border-t-2 border-[#ececec]"
             >
               <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                Main Location:
+                {pageContent.uiText?.locationLabel || 'Main Location:'}
               </h5>
               <p className="text-[#555] text-base mb-6">
                 <strong>{pageContent.location?.address || settings.address}</strong>

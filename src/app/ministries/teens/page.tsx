@@ -60,9 +60,7 @@ export default function TeensMinistryPage() {
   const pageContent = useCmsPageData("ministries/teens", content);
   const router = useRouter();
 
-  const focusAreas = (pageContent.focusAreas || []).map((title: string) => ({
-    title,
-  }));
+  const focusAreas = (pageContent.focusAreas || []).map((title: string) => ({ title }));
 
   return (
     <>
@@ -129,24 +127,17 @@ export default function TeensMinistryPage() {
               className="bg-[#f8f8f8] p-8 md:p-10 rounded-lg"
             >
               <h2 className="font-cormorant text-3xl sm:text-4xl lg:text-[42px] font-bold text-[#111] mb-6">
-                Today's youth face new challenges.
+                {pageContent.uiText?.introHeading || "Today's youth face new challenges."}
                 <br />
                 <span className="text-primary">
-                  We believe God's eternal truths solve them.
+                  {pageContent.uiText?.introHighlight || "We believe God's eternal truths solve them."}
                 </span>
               </h2>
               <p className="text-[#555] leading-relaxed mb-4 text-base">
-                Our youth should experience God's freedom – both spiritually and
-                physically. That's why we are committed to bring the truth of
-                the Word of God to this generation in ways that apply to them.
-                Armed with the powerful truths of God's promises, our next
-                generation can rise to the challenge and conquer their world for
-                Christ.
+                {pageContent.uiText?.introParagraph || pageContent.description}
               </p>
               <p className="text-[#555] leading-relaxed text-base">
-                Our mission is to raise responsible citizens and visionary
-                leaders that contribute to society and change their world for
-                Christ.
+                {pageContent.uiText?.missionParagraph || pageContent.mission}
               </p>
             </motion.div>
 
@@ -189,15 +180,10 @@ export default function TeensMinistryPage() {
 
             <motion.div variants={slideInRight} className="text-white">
               <h2 className="font-cormorant text-3xl sm:text-4xl lg:text-[44px] text-white mb-6">
-                Meeting every Sunday and Wednesday.
+                {pageContent.uiText?.meetingHeading || "Meeting every Sunday and Wednesday."}
               </h2>
               <p className="text-[#ddd] text-[17px] leading-relaxed">
-                This is a camp for raising giants. A group of vibrant teenagers
-                who let the fear of the Lord be their guide and are not afraid
-                to talk about Jesus everywhere they go. Using media and latest
-                technologies, they are better exposed and positioned to affect
-                their world and bring many to Christ. Guiding our teens is such
-                a great privilege.
+                {pageContent.uiText?.meetingDescription || pageContent.description}
               </p>
             </motion.div>
           </motion.div>
@@ -218,21 +204,20 @@ export default function TeensMinistryPage() {
               variants={fadeInUp}
               className="font-inter text-xl font-semibold text-[#111] mb-2"
             >
-              You were meant to enjoy a life free in Christ.
+              {pageContent.uiText?.ctaHeading || "You were meant to enjoy a life free in Christ."}
             </motion.h4>
             <motion.h4
               variants={fadeInUp}
               className="font-inter text-xl font-semibold text-primary mb-6"
             >
-              Take your first step towards it.
+              {pageContent.uiText?.ctaSubheading || "Take your first step towards it."}
             </motion.h4>
             <motion.p
               variants={fadeInUp}
               className="text-[#555] text-base max-w-2xl mx-auto mb-8"
             >
               <strong>
-                We exist to bring God's freedom to everyone. We love to care for
-                people who have been hurt. This is our mandate.
+                {pageContent.uiText?.ctaDescription || "We exist to bring God's freedom to everyone. We love to care for people who have been hurt. This is our mandate."}
               </strong>
             </motion.p>
 
@@ -242,22 +227,22 @@ export default function TeensMinistryPage() {
             >
               <div className="bg-[#f8f8f8] p-6 rounded-lg">
                 <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                  Sunday Morning Worship:
+                  {pageContent.uiText?.sundayHeading || 'Sunday Morning Worship:'}
                 </h5>
                 <p className="text-[#555] text-sm">
-                  <strong>First Service: 8:00 am</strong>
+                  <strong>{pageContent.uiText?.firstService || 'First Service: 8:00 am'}</strong>
                 </p>
                 <p className="text-[#555] text-sm">
-                  <strong>Second Service: 10:30 am</strong>
+                  <strong>{pageContent.uiText?.secondService || 'Second Service: 10:30 am'}</strong>
                 </p>
               </div>
 
               <div className="bg-[#f8f8f8] p-6 rounded-lg">
                 <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                  Communion Service:
+                  {pageContent.uiText?.communionHeading || 'Communion Service:'}
                 </h5>
                 <p className="text-[#555] text-sm">
-                  <strong>Wednesdays at 6:00 pm</strong>
+                  <strong>{pageContent.uiText?.midweekService || 'Wednesdays at 6:00 pm'}</strong>
                 </p>
               </div>
             </motion.div>
@@ -267,12 +252,10 @@ export default function TeensMinistryPage() {
               className="mt-8 pt-8 border-t-2 border-[#ececec]"
             >
               <h5 className="font-inter font-semibold text-[#111] text-base mb-3">
-                Main Location:
+                {pageContent.uiText?.locationLabel || 'Main Location:'}
               </h5>
               <p className="text-[#555] text-base mb-6">
-                <strong>
-                  8159 W Brown Deer Rd, Milwaukee, WI 53223, United States
-                </strong>
+                <strong>{pageContent.uiText?.address || '4825 Glenn Dale Rd, Bowie, MD 20720'}</strong>
               </p>
               <Button
                 variant="primary"
@@ -281,7 +264,7 @@ export default function TeensMinistryPage() {
                   router.push("/contact");
                 }}
               >
-                Attend a Service
+                {pageContent.uiText?.attendButton || 'Attend a Service'}
               </Button>
             </motion.div>
           </motion.div>

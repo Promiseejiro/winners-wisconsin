@@ -44,7 +44,12 @@ const floatAnimation = {
 };
 
 export default function ComingSoonPage() {
-  const pageCopy = useCmsPageData("sermons/teens", { badge: "Under development", title: "Teens Ministry", subtitle: "Our Teens Ministry resources are coming soon.", description: "Check back soon for updates and resources." });
+  const pageCopy = useCmsPageData("sermons/teens", {
+    badge: "Under development",
+    title: "Teens Ministry",
+    subtitle: "Our Teens Ministry resources are coming soon.",
+    description: "Check back soon for updates and resources.",
+  });
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -114,6 +119,24 @@ export default function ComingSoonPage() {
           >
             {pageCopy.badge}
           </motion.div>
+          <motion.h1
+            variants={fadeInUp}
+            className="mt-6 font-cormorant text-4xl font-bold text-white sm:text-5xl md:text-6xl"
+          >
+            {pageCopy.title}
+          </motion.h1>
+          <motion.h2
+            variants={fadeInUp}
+            className="mt-4 text-xl font-semibold text-white/90 sm:text-2xl"
+          >
+            {pageCopy.subtitle}
+          </motion.h2>
+          <motion.p
+            variants={fadeInUp}
+            className="mx-auto mt-4 max-w-2xl text-base leading-7 text-white/70"
+          >
+            {pageCopy.description}
+          </motion.p>
         </motion.div>
       </div>
     </div>

@@ -55,22 +55,9 @@ export default function GetInvolvedPage() {
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
-  const teamOptions = [
-    "Children's Ministry",
-    "Choir",
-    "Decoration",
-    "Drama Team",
-    "Hospitality",
-    "Sanctuary Keepers",
-    "Security",
-    "Media Team",
-    "Medical Team",
-    "Protocol Team",
-    "Transportation Team",
-    "Usher Team",
-    "Follow-up Team",
-    "Parking Team",
-  ];
+  const teamOptions: string[] = Array.isArray(pageContent.teamOptions)
+    ? pageContent.teamOptions
+    : [];
 
   const handleCheckboxChange = (team: string) => {
     setFormData((prev) => {
@@ -174,12 +161,12 @@ export default function GetInvolvedPage() {
         "This team ensures safety from the moment guests pull onto our property.",
     },
   ];
-  const ministryCards = pageContent.opportunities?.length
+  const ministryCards = Array.isArray(pageContent.opportunities)
     ? pageContent.opportunities
     : ministryCardsFallback;
-  const editableTeamOptions = pageContent.opportunities?.length
-    ? pageContent.opportunities.map((item: any) => item.title).filter(Boolean)
-    : teamOptions;
+  const editableTeamOptions = teamOptions.length
+    ? teamOptions
+    : ministryCards.map((item: any) => item.title).filter(Boolean);
 
   return (
     <>
@@ -253,7 +240,7 @@ export default function GetInvolvedPage() {
             variants={fadeInUp}
           >
             <p className="text-primary font-medium text-sm uppercase tracking-wider mb-4">
-              A help to those who need it.
+              {pageContent.uiText?.introEyebrow || "A help to those who need it."}
             </p>
             <h2 className="font-cormorant text-4xl sm:text-5xl lg:text-[52px] font-bold text-[#111]">
               {pageContent.description || "Help Change a Life Ministry Opportunities at WCIMD"}
@@ -310,12 +297,10 @@ export default function GetInvolvedPage() {
           >
             <motion.div variants={fadeInUp} className="text-center mb-12">
               <h2 className="font-cormorant text-4xl sm:text-5xl font-bold text-[#111] mb-4">
-                JOIN A GROUP
+                {pageContent.uiText?.groupsHeading || "JOIN A GROUP"}
               </h2>
               <p className="text-[#555] max-w-2xl mx-auto">
-                Thank you for your interest to join one of our amazing teams.
-                Please fill out the form below and we will be in contact with
-                you with your next step.
+                {pageContent.uiText?.groupsDescription || "Thank you for your interest to join one of our amazing teams. Please fill out the form below and we will be in contact with you with your next step."}
               </p>
             </motion.div>
 
@@ -327,10 +312,10 @@ export default function GetInvolvedPage() {
                 <div className="text-center py-12">
                   <div className="text-6xl mb-4">🎉</div>
                   <h3 className="text-2xl font-bold text-[#111] mb-2">
-                    Thank You!
+                    {pageContent.uiText?.thankYouHeading || "Thank You!"}
                   </h3>
                   <p className="text-[#555]">
-                    Your submission has been received. We will contact you soon!
+                    {pageContent.uiText?.thankYouDescription || "Your submission has been received. We will contact you soon!"}
                   </p>
                   <Button
                     variant="primary"
@@ -338,7 +323,7 @@ export default function GetInvolvedPage() {
                     className="mt-6"
                     onClick={() => setFormSubmitted(false)}
                   >
-                    Submit Another Response
+                    {pageContent.uiText?.submitAnotherButton || "Submit Another Response"}
                   </Button>
                 </div>
               ) : (
@@ -346,8 +331,8 @@ export default function GetInvolvedPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Input
                       id="firstName"
-                      label="First Name"
-                      placeholder="Enter your first name"
+                      label={pageContent.uiText?.firstNameLabel || "First Name"}
+                      placeholder={pageContent.uiText?.firstNamePlaceholder || "Enter your first name"}
                       value={formData.firstName}
                       onChange={(
                         e: React.ChangeEvent<
@@ -360,8 +345,8 @@ export default function GetInvolvedPage() {
                     />
                     <Input
                       id="lastName"
-                      label="Last Name"
-                      placeholder="Enter your last name"
+                      label={pageContent.uiText?.lastNameLabel || "Last Name"}
+                      placeholder={pageContent.uiText?.lastNamePlaceholder || "Enter your last name"}
                       value={formData.lastName}
                       onChange={(
                         e: React.ChangeEvent<
@@ -377,9 +362,9 @@ export default function GetInvolvedPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Input
                       id="email"
-                      label="Email Address"
+                      label={pageContent.uiText?.emailLabel || "Email Address"}
                       type="email"
-                      placeholder="Enter your email"
+                      placeholder={pageContent.uiText?.emailPlaceholder || "Enter your email"}
                       value={formData.email}
                       onChange={(
                         e: React.ChangeEvent<
@@ -390,9 +375,9 @@ export default function GetInvolvedPage() {
                     />
                     <Input
                       id="phone"
-                      label="Phone"
+                      label={pageContent.uiText?.phoneLabel || "Phone"}
                       type="tel"
-                      placeholder="Enter your phone number"
+                      placeholder={pageContent.uiText?.phonePlaceholder || "Enter your phone number"}
                       value={formData.phone}
                       onChange={(
                         e: React.ChangeEvent<
@@ -405,7 +390,7 @@ export default function GetInvolvedPage() {
 
                   <div>
                     <label className="input-label">
-                      What Team are you interested in?
+                      {pageContent.uiText?.teamLabel || "What Team are you interested in?"}
                     </label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-2">
                       {editableTeamOptions.map((team: string) => (
@@ -427,9 +412,9 @@ export default function GetInvolvedPage() {
 
                   <Input
                     id="message"
-                    label="Your Message"
+                    label={pageContent.uiText?.messageLabel || "Your Message"}
                     type="textarea"
-                    placeholder="Tell us why you'd like to join this team..."
+                    placeholder={pageContent.uiText?.messagePlaceholder || "Tell us why you'd like to join this team..."}
                     rows={4}
                     value={formData.message}
                     onChange={(
@@ -445,7 +430,7 @@ export default function GetInvolvedPage() {
                     size="lg"
                     className="w-full"
                   >
-                    Send
+                    {pageContent.uiText?.submitButton || "Send"}
                   </Button>
                 </form>
               )}

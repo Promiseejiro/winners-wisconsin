@@ -2,5 +2,12 @@
   "badge": "Under development",
   "title": "Teens Ministry",
   "subtitle": "Our Teens Ministry resources are coming soon.",
-  "description": "Check back soon for updates and resources."
+  "description": "Check back soon for updates and resources.",
+  "uiText": {
+    "badge": "Under development",
+    "subscribeHeading": "Be the first to know when resources are available.",
+    "subscribeDescription": "Subscribe for updates and new resources.",
+    "emailPlaceholder": "Enter your email address",
+    "subscribeButton": "Notify me"
+  }
 }

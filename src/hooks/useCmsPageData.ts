@@ -11,6 +11,35 @@ function apiBase() {
   return base.endsWith("/api/v1") ? base : `${base}/api/v1`;
 }
 
+/** Deep-merges remote CMS values over the bundled page defaults. */
+function mergeCmsData<T>(fallback: T, incoming: unknown): T {
+  if (Array.isArray(fallback)) {
+    return (Array.isArray(incoming) ? incoming : fallback) as T;
+  }
+
+  if (fallback && typeof fallback === "object") {
+    const source =
+      incoming && typeof incoming === "object" && !Array.isArray(incoming)
+        ? (incoming as Record<string, unknown>)
+        : {};
+    const result: Record<string, unknown> = {
+      ...(fallback as Record<string, unknown>),
+    };
+
+    for (const [key, value] of Object.entries(source)) {
+      const defaultValue = (fallback as Record<string, unknown>)[key];
+      result[key] =
+        defaultValue && value && typeof defaultValue === "object" && typeof value === "object"
+          ? mergeCmsData(defaultValue, value)
+          : value;
+    }
+
+    return result as T;
+  }
+
+  return (incoming === undefined || incoming === null ? fallback : incoming) as T;
+}
+
 /** Loads a GitHub-backed public CMS page and keeps bundled JSON as an offline fallback. */
 export function useCmsPageData<T extends Record<string, any>>(
   slug: string,
@@ -30,7 +59,7 @@ export function useCmsPageData<T extends Record<string, any>>(
       .then((result) => {
         const incoming = result?.data?.data ?? result?.data;
         if (!cancelled && incoming && typeof incoming === "object") {
-          setData({ ...fallback, ...incoming });
+          setData(mergeCmsData(fallback, incoming));
         }
       })
       .catch((error) => {
