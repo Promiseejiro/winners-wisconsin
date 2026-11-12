@@ -78,7 +78,7 @@
     "name": "Pastor Ajibola Alaka",
     "description": "Pastor Ajibola Alaka is the current serving Resident Pastor, WCI Milwaukee Wisconsin, United States of America. He is committed to passionately carrying out, and pursuing his God-given assignment and the delivery of the Liberation Mandate.",
     "buttonText": "Book Appointment with Pastor",
-    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1793949224/winners-chapel/ua92kwb8jjpsq2cp7at1.jpg",
+    "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794462775/winners-chapel/frehm2om2r3qyg6zms3n.jpg",
     "photoPlaceholder": "Pastor photograph will appear here."
   },
   "churchUpdates": {
@@ -122,6 +122,8 @@
     "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794193224/winners-chapel/vh4a0mndstgny1qeihcs.jpg"
   },
   "ministries": {
+    "label": "Our Ministries",
+    "title": "Find Your Place to Grow",
     "items": [
       {
         "id": 1794193130237,
@@ -135,9 +137,7 @@
         "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794433644/winners-chapel/nztq2sexe2krnmdp7ule.jpg",
         "link": "/ministries"
       }
-    ],
-    "label": "Our Ministries",
-    "title": "Find Your Place to Grow"
+    ]
   },
   "quote": {
     "text": "Nothing dies in my hands",
@@ -168,17 +168,5 @@
     "showLessText": "Show Less",
     "collapseText": "Collapse Gallery",
     "moreText": "More"
-  },
-  "footer": {
-    "address": "8159 W Brown Deer Rd, Milwaukee, WI 53223, United States",
-    "emails": [
-      "info@winnerschapelwi.org"
-    ],
-    "phones": [
-      "414-368-7753",
-      "708-769-7141",
-      "414-255-4387"
-    ],
-    "copyright": "© 2026 Winners Chapel International Milwaukee Wisconsin. All Rights Reserved."
   }
 }
