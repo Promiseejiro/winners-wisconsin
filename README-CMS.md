@@ -2,7 +2,7 @@
 
 This frontend keeps editable static page content in `src/content/*.json` files. The Winners NestJS backend updates those files through the GitHub Contents API after an authenticated admin submits a form.
 
-## 
+
 
 - Public site: Next
 - Admin: separate Next.js app
