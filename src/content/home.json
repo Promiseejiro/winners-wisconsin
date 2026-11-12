@@ -1,3 +1,4 @@
+
 {
   "hero": {
     "slides": [
@@ -51,28 +52,28 @@
     ]
   },
   "about": {
+    "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
     "eyebrow": "Where God Lives...",
     "title": "Welcome to Winners Chapel International Milwaukee, Wisconsin",
     "description": "Welcome to the Home of Signs & Wonders! At Winners Chapel International Milwaukee, Wisconsin, we are committed to providing a place of spiritual growth, empowerment, and community. We believe in a life of abundance, guided by the Word of God. Whether you are visiting for the first time or looking for a place to call home, we are here to support you on your faith journey.",
-    "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop",
-    "buttonText": "More About Us",
-    "buttonHref": "/about-us",
     "serviceTimesHeading": "Our Service Times",
-    "weekOfEmphasisLabel": "Week of Emphasis: Testing"
+    "serviceTimes": [
+      {
+        "day": "Sunday",
+        "service": "First Service",
+        "time": "9:00 AM"
+      },
+      {
+        "day": "Wednesday",
+        "service": "Midweek Communion Service",
+        "time": "6:00 PM"
+      }
+    ],
+    "weekOfEmphasisLabel": "Week of Emphasis:",
+    "weekOfEmphasis": "1st Wednesday, Thursday & Friday of each month – 6:00pm",
+    "buttonText": "More About Us",
+    "buttonHref": "/about-us"
   },
-  "serviceTimes": [
-    {
-      "day": "Sunday",
-      "service": "First Service",
-      "time": "9:00 AM"
-    },
-    {
-      "day": "Wednesday",
-      "service": "Midweek Communion Service",
-      "time": "6:00 PM"
-    }
-  ],
-  "weekOfEmphasis": "1st Wednesday, Thursday & Friday of each month – 6:00pm",
   "pastor": {
     "label": "Resident Pastor",
     "name": "Pastor Ajibola Alaka",

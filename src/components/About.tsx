@@ -36,7 +36,12 @@ const staggerContainer: Variants = {
 
 const About = () => {
   const pageContent = useCmsPageData("home", content);
-  const serviceTimes = pageContent.serviceTimes;
+
+  const about = pageContent.about;
+
+  const serviceTimes = about.serviceTimes;
+
+  const weekOfEmphasis = about.weekOfEmphasis;
 
   return (
     <section className="bg-white py-[80px]">
@@ -50,7 +55,7 @@ const About = () => {
         >
           <motion.div variants={fadeInLeft}>
             <Image
-              src={pageContent.about.image}
+              src={about.image}
               alt="Winners Chapel Milwaukee"
               width={600}
               height={550}
@@ -60,24 +65,24 @@ const About = () => {
 
           <motion.div variants={fadeInRight}>
             <div className="mb-2 text-sm font-semibold uppercase tracking-[1px] text-[#ef2b34]">
-              {pageContent.about.eyebrow}
+              {about.eyebrow}
             </div>
 
             <h2 className="mb-6 font-cormorant text-4xl font-bold text-[#111] sm:text-5xl lg:text-6xl">
-              {pageContent.about.title}
+              {about.title}
             </h2>
 
             <p className="mb-6 leading-relaxed text-[#555]">
-              {pageContent.about.description}
+              {about.description}
             </p>
 
             <div className="mb-6">
               <h3 className="mb-3 font-inter text-lg font-semibold text-[#111]">
-                {pageContent.about.serviceTimesHeading || 'Our Service Times'}
+                {about.serviceTimesHeading || "Our Service Times"}
               </h3>
 
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                {serviceTimes.map((item, index) => (
+                {serviceTimes.map((item: any, index: number) => (
                   <div
                     key={`${item.day}-${index}`}
                     className="flex items-center gap-2 text-sm text-[#555]"
@@ -106,12 +111,14 @@ const About = () => {
             </div>
 
             <p className="mb-6 text-sm text-[#555]">
-              <strong className="text-[#111]">{pageContent.about.weekOfEmphasisLabel || "Week of Emphasis:"}</strong>{" "}
-              {pageContent.weekOfEmphasis}
+              <strong className="text-[#111]">
+                {about.weekOfEmphasisLabel || "Week of Emphasis:"}
+              </strong>{" "}
+              {weekOfEmphasis}
             </p>
 
-            <Button variant="primary" size="md" href={pageContent.about.buttonHref}>
-              {pageContent.about.buttonText}
+            <Button variant="primary" size="md" href={about.buttonHref}>
+              {about.buttonText}
             </Button>
           </motion.div>
         </motion.div>
