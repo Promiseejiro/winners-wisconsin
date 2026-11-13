@@ -8,6 +8,7 @@ import { Autoplay, EffectCreative, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-creative";
 import "swiper/css/pagination";
+
 import announcementFallback from "@/content/announcement.json";
 import { useCmsPageData } from "@/hooks/useCmsPageData";
 
@@ -16,24 +17,31 @@ const API = (() => {
     process.env.NEXT_PUBLIC_SERVER_URL ||
     process.env.NEXT_PUBLIC_API_URL ||
     "http://localhost:3000/api/v1";
+
   const base = configured.replace(/\/+$/, "");
+
   return base.endsWith("/api/v1") ? base : `${base}/api/v1`;
 })();
 
 const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 60 },
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: "easeOut" },
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
   },
 };
 
 const staggerContainer: Variants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 1 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.2 },
+    transition: {
+      staggerChildren: 0.15,
+    },
   },
 };
 
@@ -63,13 +71,20 @@ interface LiveAnnouncement {
   id?: string | number;
   title: string;
   content: string;
+  time?: string;
   image?: string;
   imageUrl?: string;
   images?: string[];
   published?: boolean;
 }
 
-const announcementImages = [
+interface SliderImage {
+  id: string | number;
+  src: string;
+  alt: string;
+}
+
+const announcementImages: SliderImage[] = [
   {
     id: 1,
     src: "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/07/WhatsApp-Image-2026-07-19-at-7.02.25-AM-scaled.jpeg",
@@ -114,13 +129,17 @@ const announcementImages = [
 
 export default function AnnouncementPage() {
   const pageCopy = useCmsPageData("announcement", announcementFallback);
+
   const [openAccordion, setOpenAccordion] = useState<number | null>(0);
+
   const [cmsContent, setCmsContent] = useState<AnnouncementContent | null>(
     null,
   );
+
   const [liveAnnouncements, setLiveAnnouncements] = useState<
     LiveAnnouncement[]
   >([]);
+
   const [loading, setLoading] = useState(true);
   const [contentError, setContentError] = useState(false);
 
@@ -128,54 +147,79 @@ export default function AnnouncementPage() {
     let cancelled = false;
 
     const loadContent = async () => {
-      try {
-        const baseUrl = API.replace(/\/+$/, "");
+      setLoading(true);
 
-        const [cmsResponse, liveResponse] = await Promise.all([
-          fetch(`${baseUrl}/content/public/page?slug=announcement`, {
+      try {
+        const [cmsResponse, liveResponse] = await Promise.allSettled([
+          fetch(`${API}/content/public/page?slug=announcement`, {
             cache: "no-store",
           }),
-          fetch(`${baseUrl}/announcements`, {
+
+          fetch(`${API}/announcements`, {
             cache: "no-store",
-          }).catch(() => null),
+          }),
         ]);
 
-        if (!cmsResponse.ok) {
-          throw new Error("Unable to load CMS announcement content.");
+        let cmsLoaded = false;
+        let liveLoaded = false;
+
+        // LOAD CMS CONTENT INDEPENDENTLY
+
+        if (cmsResponse.status === "fulfilled" && cmsResponse.value.ok) {
+          try {
+            const cmsResult = await cmsResponse.value.json();
+
+            const pageContent =
+              cmsResult?.data?.data ?? cmsResult?.data ?? cmsResult;
+
+            if (pageContent && typeof pageContent === "object") {
+              if (!cancelled) {
+                setCmsContent(pageContent);
+              }
+
+              cmsLoaded = true;
+            }
+          } catch (error) {
+            console.error("CMS content parsing failed:", error);
+          }
         }
 
-        const cmsResult = await cmsResponse.json();
+        // LOAD LIVE ANNOUNCEMENTS INDEPENDENTLY
 
-        const pageContent =
-          cmsResult?.data?.data ?? cmsResult?.data ?? cmsResult;
+        if (liveResponse.status === "fulfilled" && liveResponse.value.ok) {
+          try {
+            const liveResult = await liveResponse.value.json();
 
-        if (!pageContent || typeof pageContent !== "object") {
-          throw new Error("Invalid announcement content.");
+            const records = Array.isArray(liveResult)
+              ? liveResult
+              : Array.isArray(liveResult?.data)
+                ? liveResult.data
+                : Array.isArray(liveResult?.items)
+                  ? liveResult.items
+                  : Array.isArray(liveResult?.data?.items)
+                    ? liveResult.data.items
+                    : [];
+
+            const publishedRecords = records.filter(
+              (item: LiveAnnouncement) =>
+                item && item.title && item.published !== false,
+            );
+
+            if (!cancelled) {
+              setLiveAnnouncements(publishedRecords);
+            }
+
+            liveLoaded = true;
+          } catch (error) {
+            console.error("Live announcement parsing failed:", error);
+          }
         }
 
-        if (cancelled) return;
-
-        setCmsContent(pageContent);
-
-        if (liveResponse?.ok) {
-          const liveResult = await liveResponse.json();
-
-          const records = Array.isArray(liveResult)
-            ? liveResult
-            : Array.isArray(liveResult?.data)
-              ? liveResult.data
-              : Array.isArray(liveResult?.items)
-                ? liveResult.items
-                : [];
-
-          setLiveAnnouncements(
-            records.filter(
-              (item: LiveAnnouncement) => item && item.published !== false,
-            ),
-          );
+        if (!cancelled) {
+          setContentError(!cmsLoaded && !liveLoaded);
         }
       } catch (error) {
-        console.error("Announcement content loading failed:", error);
+        console.error("Announcement loading failed:", error);
 
         if (!cancelled) {
           setContentError(true);
@@ -194,47 +238,61 @@ export default function AnnouncementPage() {
     };
   }, []);
 
+  // CMS ANNOUNCEMENTS
+
   const announcements = (cmsContent?.items || []).filter(
     (item) => item && item.title && item.published !== false,
   );
 
+  // GET ANNOUNCEMENT IMAGE
+
   const getAnnouncementImage = (
     item: LiveAnnouncement | AnnouncementItem,
   ): string | null => {
-    const candidate = (item as LiveAnnouncement).imageUrl || item.image;
+    const liveItem = item as LiveAnnouncement;
+
+    const candidate = liveItem.imageUrl || item.image;
 
     if (typeof candidate === "string" && candidate.trim()) {
       return candidate.trim();
     }
 
-    const images = (item as LiveAnnouncement).images;
+    const images = liveItem.images;
 
-    if (Array.isArray(images) && images.length) {
+    if (Array.isArray(images) && images.length > 0) {
       return images[0];
     }
 
     return null;
   };
 
-  const uploadedAnnouncementImages = liveAnnouncements.flatMap((item) => {
-    const images = Array.isArray(item.images) ? item.images : [];
-    const legacy = getAnnouncementImage(item);
+  // UPLOADED ANNOUNCEMENT IMAGES
 
-    const urls = images.length ? images : legacy ? [legacy] : [];
+  const uploadedAnnouncementImages: SliderImage[] = liveAnnouncements.flatMap(
+    (item, itemIndex) => {
+      const images = Array.isArray(item.images) ? item.images : [];
 
-    return urls.map((src, index) => ({
-      id: `${item._id || item.id}-${index}`,
-      src,
-      alt: item.title || "Church announcement",
-    }));
-  });
+      const legacy = getAnnouncementImage(item);
 
-  const sliderImages = uploadedAnnouncementImages.length
-    ? uploadedAnnouncementImages
-    : announcementImages;
+      const urls = images.length ? images : legacy ? [legacy] : [];
 
-  // Prefer MongoDB announcements when available.
-  // Otherwise, restore the cards using the CMS announcement items.
+      return urls
+        .filter((src) => typeof src === "string" && src.trim().length > 0)
+        .map((src, index) => ({
+          id: `${item._id || item.id || itemIndex}-${index}`,
+          src,
+          alt: item.title || "Church announcement",
+        }));
+    },
+  );
+
+  const sliderImages =
+    uploadedAnnouncementImages.length > 0
+      ? uploadedAnnouncementImages
+      : announcementImages;
+
+  // PREFER LIVE ANNOUNCEMENTS, OTHERWISE USE CMS
+
   const announcementCards: AnnouncementItem[] =
     liveAnnouncements.length > 0
       ? liveAnnouncements.map((item) => ({
@@ -242,16 +300,18 @@ export default function AnnouncementPage() {
           title: item.title,
           content: item.content,
           image: getAnnouncementImage(item) || "",
+          time: item.time,
         }))
       : announcements;
 
   const toggleAccordion = (index: number) => {
-    setOpenAccordion(openAccordion === index ? null : index);
+    setOpenAccordion((previous) => (previous === index ? null : index));
   };
 
   return (
     <>
       {/* PAGE HEADER */}
+
       <section className="relative w-full py-20 text-white">
         <div className="container text-center">
           <motion.h1
@@ -260,195 +320,188 @@ export default function AnnouncementPage() {
             variants={fadeInUp}
             className="font-cormorant text-4xl font-bold sm:text-5xl md:text-6xl lg:text-[70px]"
           >
-            {pageCopy.sections?.pageTitle || pageCopy.header?.title || "Announcement"}
+            {pageCopy.sections?.pageTitle ||
+              pageCopy.header?.title ||
+              "Announcement"}
           </motion.h1>
         </div>
       </section>
 
-      {/* LATEST CHURCH ANNOUNCEMENTS - ALWAYS VISIBLE */}
+      {/* LATEST CHURCH ANNOUNCEMENTS */}
+
       <section className="bg-white py-[70px]">
         <div className="container">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp} className="mb-10 text-center">
-              <p className="text-sm font-semibold uppercase tracking-[1px] text-[#ef2b34]">
-                {pageCopy.sections?.latestLabel || "Live Updates"}
-              </p>
+          <div className="mb-10 text-center">
+            <p className="text-sm font-semibold uppercase tracking-[1px] text-[#ef2b34]">
+              {pageCopy.sections?.latestLabel || "Live Updates"}
+            </p>
 
-              <h2 className="font-cormorant text-4xl font-bold text-[#111] sm:text-5xl">
-                {pageCopy.sections?.latestTitle || "Latest Church Announcements"}
-              </h2>
-            </motion.div>
+            <h2 className="font-cormorant text-4xl font-bold text-[#111] sm:text-5xl">
+              {pageCopy.sections?.latestTitle || "Latest Church Announcements"}
+            </h2>
+          </div>
 
-            {loading && (
-              <div className="rounded-xl bg-[#fafafa] p-8 text-center text-[#777]">
-                {pageCopy.sections?.loadingText || "Loading announcements..."}
-              </div>
-            )}
+          {loading && (
+            <div className="rounded-xl bg-[#fafafa] p-8 text-center text-[#777]">
+              {pageCopy.sections?.loadingText || "Loading announcements..."}
+            </div>
+          )}
 
-            {!loading && contentError && announcementCards.length === 0 && (
-              <div className="rounded-xl bg-[#fafafa] p-8 text-center text-[#777]">
-                Unable to load announcement content at the moment.
-              </div>
-            )}
+          {!loading && contentError && announcementCards.length === 0 && (
+            <div className="rounded-xl bg-[#fafafa] p-8 text-center text-[#777]">
+              Unable to load announcement content at the moment.
+            </div>
+          )}
 
-            {!loading && !contentError && announcementCards.length === 0 && (
-              <div className="rounded-xl bg-[#fafafa] p-8 text-center text-[#777]">
-                No announcements are currently available.
-              </div>
-            )}
+          {!loading && !contentError && announcementCards.length === 0 && (
+            <div className="rounded-xl bg-[#fafafa] p-8 text-center text-[#777]">
+              No announcements are currently available.
+            </div>
+          )}
 
-            {!loading && announcementCards.length > 0 && (
-              <div className="grid gap-6 md:grid-cols-2">
-                {announcementCards.map((item, index) => {
-                  const image = getAnnouncementImage(item);
+          {!loading && announcementCards.length > 0 && (
+            <div className="grid gap-6 md:grid-cols-2">
+              {announcementCards.map((item, index) => {
+                const image = getAnnouncementImage(item);
 
-                  return (
-                    <motion.article
-                      key={item.id || item._id || index}
-                      variants={fadeInUp}
-                      className="overflow-hidden rounded-xl border border-[#eee] bg-[#fafafa] shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
-                    >
-                      {image && (
-                        <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100">
-                          <img
-                            src={image}
-                            alt={item.title}
-                            className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                            loading="lazy"
-                          />
-                        </div>
+                return (
+                  <article
+                    key={item.id || item._id || index}
+                    className="overflow-hidden rounded-xl border border-[#eee] bg-[#fafafa] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  >
+                    {image && (
+                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100">
+                        <img
+                          src={image}
+                          alt={item.title}
+                          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+
+                    <div className="p-6">
+                      {item.time && (
+                        <p className="mb-3 text-sm font-semibold text-[#ef2b34]">
+                          {item.time}
+                        </p>
                       )}
 
-                      <div className="p-6">
-                        {item.time && (
-                          <p className="mb-3 text-sm font-semibold text-[#ef2b34]">
-                            {item.time}
-                          </p>
-                        )}
+                      <h3 className="font-cormorant text-2xl font-bold text-[#111]">
+                        {item.title}
+                      </h3>
 
-                        <h3 className="font-cormorant text-2xl font-bold text-[#111]">
-                          {item.title}
-                        </h3>
+                      <p className="mt-3 whitespace-pre-line leading-relaxed text-[#555]">
+                        {item.content}
+                      </p>
 
-                        <p className="mt-3 whitespace-pre-line leading-relaxed text-[#555]">
-                          {item.content}
-                        </p>
-
-                        {item.href && (
-                          <a
-                            href={item.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="mt-5 inline-block font-bold text-primary hover:underline"
-                          >
-                            {item.linkText || "Learn More"}
-                          </a>
-                        )}
-                      </div>
-                    </motion.article>
-                  );
-                })}
-              </div>
-            )}
-          </motion.div>
+                      {item.href && (
+                        <a
+                          href={item.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-5 inline-block font-bold text-primary hover:underline"
+                        >
+                          {item.linkText || "Learn More"}
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
       {/* IMAGE SLIDER */}
+
       <section className="py-[70px]">
         <div className="w-full px-0">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp} className="mb-12 text-center">
-              <div className="mb-4 inline-block rounded-full bg-primary px-4 py-1 text-sm font-semibold uppercase tracking-wider text-white">
-                {cmsContent?.header?.label || pageCopy.sections?.updatesLabel || "Latest Updates"}
-              </div>
+          <div className="mb-12 text-center">
+            <div className="mb-4 inline-block rounded-full bg-primary px-4 py-1 text-sm font-semibold uppercase tracking-wider text-white">
+              {cmsContent?.header?.label ||
+                pageCopy.sections?.updatesLabel ||
+                "Latest Updates"}
+            </div>
 
-              <h2 className="font-cormorant text-4xl font-bold text-[#111] sm:text-5xl">
-                {cmsContent?.header?.title || pageCopy.sections?.pageTitle || "Announcements"}
-              </h2>
-            </motion.div>
+            <h2 className="font-cormorant text-4xl font-bold text-[#111] sm:text-5xl">
+              {cmsContent?.header?.title ||
+                pageCopy.sections?.pageTitle ||
+                "Announcements"}
+            </h2>
+          </div>
 
-            <motion.div variants={fadeInUp} className="mx-auto max-w-[1000px]">
-              <Swiper
-                modules={[Autoplay, EffectCreative, Pagination]}
-                effect="creative"
-                creativeEffect={{
-                  prev: {
-                    shadow: true,
-                    translate: [0, 0, -400],
-                  },
-                  next: {
-                    translate: ["100%", 0, 0],
-                  },
-                }}
-                autoplay={{
-                  delay: 3000,
-                  disableOnInteraction: false,
-                }}
-                speed={1000}
-                grabCursor
-                loop={sliderImages.length > 1}
-                pagination={{
-                  el: ".announcement-pagination",
-                  clickable: true,
-                  bulletClass: "announcement-bullet",
-                  bulletActiveClass: "announcement-bullet-active",
-                }}
-                className="w-full"
-                slidesPerView={1}
-                spaceBetween={0}
-              >
-                {sliderImages.map((image) => (
-                  <SwiperSlide
-                    key={image.id}
-                    className="flex items-center bg-white"
-                  >
-                    <div className="relative h-[250px] w-full overflow-hidden bg-white sm:h-[350px] md:h-[500px] lg:h-[600px]">
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="h-full w-full rounded-2xl object-cover transition-transform duration-500"
-                        loading="lazy"
-                      />
-                    </div>
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+          <div className="mx-auto max-w-[1000px]">
+            <Swiper
+              modules={[Autoplay, EffectCreative, Pagination]}
+              effect="creative"
+              creativeEffect={{
+                prev: {
+                  shadow: true,
+                  translate: [0, 0, -400],
+                },
+                next: {
+                  translate: ["100%", 0, 0],
+                },
+              }}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              speed={1000}
+              grabCursor
+              loop={sliderImages.length > 1}
+              pagination={{
+                el: ".announcement-pagination",
+                clickable: true,
+                bulletClass: "announcement-bullet",
+                bulletActiveClass: "announcement-bullet-active",
+              }}
+              className="w-full"
+              slidesPerView={1}
+              spaceBetween={0}
+            >
+              {sliderImages.map((image) => (
+                <SwiperSlide
+                  key={image.id}
+                  className="flex items-center bg-white"
+                >
+                  <div className="relative h-[250px] w-full overflow-hidden bg-white sm:h-[350px] md:h-[500px] lg:h-[600px]">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="h-full w-full rounded-2xl object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
 
-              <div className="announcement-pagination mt-8 flex justify-center gap-2" />
-            </motion.div>
-          </motion.div>
+            <div className="announcement-pagination mt-8 flex justify-center gap-2" />
+          </div>
         </div>
       </section>
 
       {/* CMS CONTROLLED ANNOUNCEMENTS ACCORDION */}
+
       <section className="bg-[#f8f8f8] py-[70px]">
         <div className="w-full px-4">
-          <motion.div
-            className="mx-auto max-w-4xl"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeInUp} className="mb-10 text-center">
+          <div className="mx-auto max-w-4xl">
+            <div className="mb-10 text-center">
               <p className="text-sm font-semibold uppercase tracking-wider text-primary">
-                {cmsContent?.header?.label || pageCopy.sections?.updatesLabel || "Latest Updates"}
+                {cmsContent?.header?.label ||
+                  pageCopy.sections?.updatesLabel ||
+                  "Latest Updates"}
               </p>
 
               <h2 className="mt-2 font-cormorant text-4xl font-bold text-[#111] sm:text-5xl">
-                {cmsContent?.header?.title || pageCopy.sections?.pageTitle || "Announcements"}
+                {cmsContent?.header?.title ||
+                  pageCopy.sections?.pageTitle ||
+                  "Announcements"}
               </h2>
-            </motion.div>
+            </div>
 
             {loading && (
               <div className="rounded-xl bg-white p-8 text-center text-[#777]">
@@ -456,7 +509,7 @@ export default function AnnouncementPage() {
               </div>
             )}
 
-            {!loading && contentError && (
+            {!loading && contentError && announcements.length === 0 && (
               <div className="rounded-xl bg-white p-8 text-center text-red-500">
                 Unable to load announcements. Please try again later.
               </div>
@@ -469,7 +522,6 @@ export default function AnnouncementPage() {
             )}
 
             {!loading &&
-              !contentError &&
               announcements.map((item, index) => (
                 <div
                   key={item.id || item._id || index}
@@ -517,9 +569,11 @@ export default function AnnouncementPage() {
                   </div>
                 </div>
               ))}
-          </motion.div>
+          </div>
         </div>
       </section>
+
+      {/* SLIDER PAGINATION STYLES */}
 
       <style jsx>{`
         .announcement-bullet {
