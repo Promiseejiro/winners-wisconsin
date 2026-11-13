@@ -21,6 +21,30 @@
         "description": "NOVEMBER 2026 PROPHETIC THEME",
         "buttonText": "Attend Service",
         "buttonHref": "/plan-your-visit"
+      },
+      {
+        "id": 1794556936462,
+        "tagline": "Shiloh 2026",
+        "badge": "Shiloh 2026",
+        "title": "Shiloh 2026",
+        "subtitle": "FAR ABOVE",
+        "description": "Shiloh 2026! Far Above",
+        "image": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794557155/winners-chapel/mbwwm18r28ra1q43cjij.jpg",
+        "verse": "Eph. 2:6-8",
+        "buttonText": "",
+        "buttonHref": ""
+      },
+      {
+        "id": 1794556940217,
+        "tagline": "",
+        "badge": "",
+        "title": "",
+        "subtitle": "",
+        "description": "",
+        "image": "",
+        "verse": "",
+        "buttonText": "",
+        "buttonHref": ""
       }
     ],
     "backgroundImage": "https://res.cloudinary.com/dxqg5hify/image/upload/v1794549748/winners-chapel/aoyejdtvx0je0yaitqsk.jpg"
