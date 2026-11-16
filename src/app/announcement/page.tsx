@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectCreative, Pagination } from "swiper/modules";
+import type { Swiper as SwiperInstance } from "swiper";
 
 import "swiper/css";
 import "swiper/css/effect-creative";
@@ -11,6 +12,7 @@ import "swiper/css/pagination";
 
 import announcementFallback from "@/content/announcement.json";
 import { useCmsPageData } from "@/hooks/useCmsPageData";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const API = (() => {
   const configured =
@@ -53,6 +55,7 @@ interface AnnouncementItem {
   time?: string;
   date?: string;
   image?: string;
+  youtubeUrl?: string;
   href?: string;
   linkText?: string;
   published?: boolean;
@@ -75,57 +78,146 @@ interface LiveAnnouncement {
   image?: string;
   imageUrl?: string;
   images?: string[];
+  youtubeUrl?: string;
+  videoUrl?: string;
   published?: boolean;
 }
 
-interface SliderImage {
+interface SliderMedia {
   id: string | number;
+  type: "image" | "video";
   src: string;
   alt: string;
 }
 
-const announcementImages: SliderImage[] = [
-  {
-    id: 1,
-    src: "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/07/WhatsApp-Image-2026-07-19-at-7.02.25-AM-scaled.jpeg",
-    alt: "Church announcement",
-  },
-  {
-    id: 2,
-    src: "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/07/WhatsApp-Image-2026-07-19-at-6.54.03-AM-scaled.jpeg",
-    alt: "Church announcement",
-  },
-  {
-    id: 3,
-    src: "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/02/chop-new-scaled.jpeg",
-    alt: "Covenant Hour of Prayer",
-  },
-  {
-    id: 4,
-    src: "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/07/WhatsApp-Image-2026-07-19-at-6.53.47-AM.jpeg",
-    alt: "Church announcement",
-  },
-  {
-    id: 5,
-    src: "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-12-at-8.00.31-AM.jpeg",
-    alt: "Church announcement",
-  },
-  {
-    id: 6,
-    src: "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/07/WhatsApp-Image-2026-07-05-at-8.01.45-AM.jpeg",
-    alt: "Church announcement",
-  },
-  {
-    id: 7,
-    src: "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/07/WhatsApp-Image-2026-07-12-at-8.53.30-AM-1.jpeg",
-    alt: "Church announcement",
-  },
-  {
-    id: 8,
-    src: "https://www.winnerschapelmanchester.org.uk/wp-content/uploads/2026/06/WhatsApp-Image-2026-06-28-at-7.47.02-AM-scaled.jpeg",
-    alt: "Church announcement",
-  },
-];
+function getYouTubeId(value?: string): string | null {
+  if (!value) return null;
+
+  try {
+    const url = new URL(value.trim());
+    const host = url.hostname.replace(/^www\./, "").toLowerCase();
+
+    if (host === "youtu.be") {
+      return url.pathname.split("/").filter(Boolean)[0] || null;
+    }
+
+    if (host.endsWith("youtube.com")) {
+      if (url.pathname === "/watch") {
+        return url.searchParams.get("v");
+      }
+
+      const parts = url.pathname.split("/").filter(Boolean);
+
+      if (["embed", "shorts", "live"].includes(parts[0])) {
+        return parts[1] || null;
+      }
+    }
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+function YouTubeAnnouncementVideo({
+  url,
+  title,
+  onPlaybackChange,
+}: {
+  url: string;
+  title: string;
+  onPlaybackChange?: (playing: boolean) => void;
+}) {
+  const frameRef = useRef<HTMLIFrameElement>(null);
+  const videoId = getYouTubeId(url);
+
+  const iframeId = `youtube-${videoId}`;
+
+  useEffect(() => {
+    if (!videoId || !onPlaybackChange) return;
+
+    const sendCommand = (func: string, args: unknown[] = []) => {
+      frameRef.current?.contentWindow?.postMessage(
+        JSON.stringify({
+          event: "command",
+          func,
+          args,
+          id: iframeId,
+        }),
+        "*",
+      );
+    };
+
+    const handleMessage = (event: MessageEvent) => {
+      if (event.source !== frameRef.current?.contentWindow) return;
+
+      let data: any;
+
+      try {
+        data =
+          typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+      } catch {
+        return;
+      }
+
+      if (data?.event === "onReady") {
+        sendCommand("addEventListener", ["onStateChange"]);
+      }
+
+      let playerState: number | undefined;
+
+      if (data?.event === "onStateChange") {
+        playerState = Number(data.info);
+      } else if (data?.event === "infoDelivery") {
+        playerState = Number(data.info?.playerState);
+      }
+
+      if (playerState !== undefined && !Number.isNaN(playerState)) {
+        onPlaybackChange(playerState === 1);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+
+    return () => {
+      window.removeEventListener("message", handleMessage);
+      onPlaybackChange(false);
+    };
+  }, [videoId, iframeId, onPlaybackChange]);
+
+  if (!videoId) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-black text-sm text-white">
+        Invalid YouTube URL
+      </div>
+    );
+  }
+
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+
+  return (
+    <iframe
+      ref={frameRef}
+      id={iframeId}
+      src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&enablejsapi=1&origin=${encodeURIComponent(
+        origin,
+      )}&playsinline=1&rel=0&controls=1`}
+      title={title}
+      className="h-full w-full"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+      onLoad={() => {
+        frameRef.current?.contentWindow?.postMessage(
+          JSON.stringify({
+            event: "listening",
+            id: iframeId,
+          }),
+          "*",
+        );
+      }}
+    />
+  );
+}
 
 export default function AnnouncementPage() {
   const pageCopy = useCmsPageData("announcement", announcementFallback);
@@ -142,6 +234,36 @@ export default function AnnouncementPage() {
 
   const [loading, setLoading] = useState(true);
   const [contentError, setContentError] = useState(false);
+
+  const announcementSwiper = useRef<SwiperInstance | null>(null);
+
+  // PAUSE SLIDER WHEN VIDEO IS PLAYING
+
+  const handleAnnouncementPlayback = (playing: boolean) => {
+    const swiper = announcementSwiper.current;
+
+    if (!swiper || swiper.destroyed) return;
+
+    if (playing) {
+      swiper.autoplay.stop();
+    } else {
+      swiper.autoplay.start();
+    }
+  };
+
+  // PREVIOUS SLIDE
+
+  const goToPreviousSlide = () => {
+    announcementSwiper.current?.slidePrev();
+  };
+
+  // NEXT SLIDE
+
+  const goToNextSlide = () => {
+    announcementSwiper.current?.slideNext();
+  };
+
+  // LOAD ANNOUNCEMENT CONTENT
 
   useEffect(() => {
     let cancelled = false;
@@ -266,30 +388,49 @@ export default function AnnouncementPage() {
     return null;
   };
 
-  // UPLOADED ANNOUNCEMENT IMAGES
+  // ANNOUNCEMENT CAROUSEL IMAGES
 
-  const uploadedAnnouncementImages: SliderImage[] = liveAnnouncements.flatMap(
+  const uploadedAnnouncementImages: SliderMedia[] = liveAnnouncements.flatMap(
     (item, itemIndex) => {
       const images = Array.isArray(item.images) ? item.images : [];
-
       const legacy = getAnnouncementImage(item);
-
       const urls = images.length ? images : legacy ? [legacy] : [];
 
       return urls
         .filter((src) => typeof src === "string" && src.trim().length > 0)
         .map((src, index) => ({
           id: `${item._id || item.id || itemIndex}-${index}`,
+          type: "image" as const,
           src,
           alt: item.title || "Church announcement",
         }));
     },
   );
 
-  const sliderImages =
-    uploadedAnnouncementImages.length > 0
-      ? uploadedAnnouncementImages
-      : announcementImages;
+  // ANNOUNCEMENT VIDEOS
+
+  const announcementVideos: SliderMedia[] = [
+    ...liveAnnouncements.map((item, index) => ({
+      id: `live-video-${item._id || item.id || index}`,
+      type: "video" as const,
+      src: item.youtubeUrl || item.videoUrl || "",
+      alt: item.title || "Church announcement video",
+    })),
+
+    ...announcements.map((item, index) => ({
+      id: `cms-video-${item.id || item._id || index}`,
+      type: "video" as const,
+      src: item.youtubeUrl || "",
+      alt: item.title || "Church announcement video",
+    })),
+  ].filter((item) => getYouTubeId(item.src));
+
+  // COMBINE SLIDER MEDIA
+
+  const sliderImages: SliderMedia[] =
+    uploadedAnnouncementImages.length || announcementVideos.length
+      ? [...uploadedAnnouncementImages, ...announcementVideos]
+      : [];
 
   // PREFER LIVE ANNOUNCEMENTS, OTHERWISE USE CMS
 
@@ -300,9 +441,12 @@ export default function AnnouncementPage() {
           title: item.title,
           content: item.content,
           image: getAnnouncementImage(item) || "",
+          youtubeUrl: item.youtubeUrl || item.videoUrl || "",
           time: item.time,
         }))
       : announcements;
+
+  // TOGGLE ACCORDION
 
   const toggleAccordion = (index: number) => {
     setOpenAccordion((previous) => (previous === index ? null : index));
@@ -329,7 +473,7 @@ export default function AnnouncementPage() {
 
       {/* LATEST CHURCH ANNOUNCEMENTS */}
 
-      <section className="bg-white py-[70px]">
+      <section className="bg-white">
         <div className="container">
           <div className="mb-10 text-center">
             <p className="text-sm font-semibold uppercase tracking-[1px] text-[#ef2b34]">
@@ -369,7 +513,14 @@ export default function AnnouncementPage() {
                     key={item.id || item._id || index}
                     className="overflow-hidden rounded-xl border border-[#eee] bg-[#fafafa] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                   >
-                    {image && (
+                    {item.youtubeUrl && getYouTubeId(item.youtubeUrl) ? (
+                      <div className="aspect-video w-full overflow-hidden bg-black">
+                        <YouTubeAnnouncementVideo
+                          url={item.youtubeUrl}
+                          title={item.title}
+                        />
+                      </div>
+                    ) : image ? (
                       <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100">
                         <img
                           src={image}
@@ -378,7 +529,7 @@ export default function AnnouncementPage() {
                           loading="lazy"
                         />
                       </div>
-                    )}
+                    ) : null}
 
                     <div className="p-6">
                       {item.time && (
@@ -414,7 +565,7 @@ export default function AnnouncementPage() {
         </div>
       </section>
 
-      {/* IMAGE SLIDER */}
+      {/* IMAGE AND VIDEO SLIDER */}
 
       <section className="py-[70px]">
         <div className="w-full px-0">
@@ -432,9 +583,12 @@ export default function AnnouncementPage() {
             </h2>
           </div>
 
-          <div className="mx-auto max-w-[1000px]">
+          <div className="relative mx-auto max-w-[1000px] px-2 sm:px-12">
             <Swiper
               modules={[Autoplay, EffectCreative, Pagination]}
+              onSwiper={(swiper) => {
+                announcementSwiper.current = swiper;
+              }}
               effect="creative"
               creativeEffect={{
                 prev: {
@@ -462,25 +616,57 @@ export default function AnnouncementPage() {
               slidesPerView={1}
               spaceBetween={0}
             >
-              {sliderImages.map((image) => (
+              {sliderImages.map((media) => (
                 <SwiperSlide
-                  key={image.id}
+                  key={media.id}
                   className="flex items-center bg-white"
                 >
-                  <div className="relative h-[250px] w-full overflow-hidden bg-white sm:h-[350px] md:h-[500px] lg:h-[600px]">
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      className="h-full w-full rounded-2xl object-cover"
-                      loading="lazy"
-                    />
+                  <div className="relative h-[250px] w-full overflow-hidden rounded-2xl bg-black sm:h-[350px] md:h-[500px] lg:h-[600px]">
+                    {media.type === "video" ? (
+                      <YouTubeAnnouncementVideo
+                        url={media.src}
+                        title={media.alt}
+                        onPlaybackChange={handleAnnouncementPlayback}
+                      />
+                    ) : (
+                      <img
+                        src={media.src}
+                        alt={media.alt}
+                        className="h-full w-full rounded-2xl object-cover"
+                        loading="lazy"
+                      />
+                    )}
                   </div>
                 </SwiperSlide>
               ))}
             </Swiper>
 
-            <div className="announcement-pagination mt-8 flex justify-center gap-2" />
+            {/* PREVIOUS BUTTON */}
+            {sliderImages.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  onClick={goToPreviousSlide}
+                  aria-label="Previous slide"
+                  className="absolute left-4 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#111] shadow-lg transition-all duration-300 hover:scale-110 hover:bg-primary hover:text-white sm:left-0 sm:h-12 sm:w-12"
+                >
+                  <ChevronLeft size={26} strokeWidth={2.5} />
+                </button>
+
+                {/* NEXT BUTTON */}
+                <button
+                  type="button"
+                  onClick={goToNextSlide}
+                  aria-label="Next slide"
+                  className="absolute right-0 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#111] shadow-lg transition-all duration-300 hover:scale-110 hover:bg-primary hover:text-white sm:right-0 sm:h-12 sm:w-12"
+                >
+                  <ChevronRight size={26} strokeWidth={2.5} />
+                </button>
+              </>
+            )}
           </div>
+
+          <div className="announcement-pagination mt-8 flex justify-center gap-2" />
         </div>
       </section>
 

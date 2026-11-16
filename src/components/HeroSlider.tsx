@@ -1,6 +1,8 @@
 "use client";
 
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperInstance } from "swiper";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import Image from "next/image";
 import content from "@/content/home.json";
@@ -11,15 +13,179 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+type HeroSlide = {
+  id: string | number;
+  image?: string;
+  videoUrl?: string;
+  title?: string;
+  tagline?: string;
+  badge?: string;
+  subtitle?: string;
+  verse?: string;
+  description?: string;
+  buttonText?: string;
+  buttonHref?: string;
+};
+
+function getYouTubeId(value?: string): string | null {
+  if (!value) return null;
+  try {
+    const url = new URL(value.trim());
+    const host = url.hostname.replace(/^www\./, "").toLowerCase();
+    if (host === "youtu.be")
+      return url.pathname.split("/").filter(Boolean)[0] || null;
+    if (host.endsWith("youtube.com")) {
+      if (url.pathname === "/watch") return url.searchParams.get("v");
+      const parts = url.pathname.split("/").filter(Boolean);
+      if (["embed", "shorts", "live"].includes(parts[0]))
+        return parts[1] || null;
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function YouTubeSlide({
+  url,
+  title,
+  isActive,
+  onPlaybackChange,
+}: {
+  url: string;
+  title: string;
+  isActive: boolean;
+  onPlaybackChange: (playing: boolean) => void;
+}) {
+  const frameRef = useRef<HTMLIFrameElement>(null);
+  const videoId = useMemo(() => getYouTubeId(url), [url]);
+
+  useEffect(() => {
+    if (!videoId) return;
+
+    const handleMessage = (event: MessageEvent) => {
+      if (event.source !== frameRef.current?.contentWindow) return;
+      let data: any;
+      try {
+        data =
+          typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+      } catch {
+        return;
+      }
+
+      let playerState: number | undefined;
+      if (data?.event === "onStateChange") playerState = data.info;
+      if (
+        data?.event === "infoDelivery" &&
+        typeof data.info?.playerState === "number"
+      ) {
+        playerState = data.info.playerState;
+      }
+
+      // Only the visible slide may control Swiper autoplay.
+      if (isActive && typeof playerState === "number") {
+        onPlaybackChange(playerState === 1);
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [videoId, isActive, onPlaybackChange]);
+
+  useEffect(() => {
+    const player = frameRef.current?.contentWindow;
+    if (!player || !videoId) return;
+
+    if (!isActive) {
+      player.postMessage(
+        JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+        "*",
+      );
+      onPlaybackChange(false);
+    }
+  }, [isActive, videoId, onPlaybackChange]);
+
+  if (!videoId) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-black text-white">
+        Invalid YouTube URL
+      </div>
+    );
+  }
+
+  const origin = typeof window !== "undefined" ? window.location.origin : "";
+  const src = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${encodeURIComponent(origin)}&playsinline=1&rel=0`;
+
+  return (
+    <iframe
+      ref={frameRef}
+      src={src}
+      title={title || "Church video"}
+      className="h-full w-full"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowFullScreen
+      onLoad={() => {
+        const player = frameRef.current?.contentWindow;
+        if (!player) return;
+        player.postMessage(
+          JSON.stringify({ event: "listening", id: videoId }),
+          "*",
+        );
+        player.postMessage(
+          JSON.stringify({
+            event: "command",
+            func: "addEventListener",
+            args: ["onStateChange"],
+          }),
+          "*",
+        );
+        if (!isActive) {
+          player.postMessage(
+            JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+            "*",
+          );
+        }
+      }}
+    />
+  );
+}
+
 const HeroSlider = () => {
   const pageContent = useCmsPageData("home", content);
-  const slides = pageContent.hero.slides;
+  const slides: HeroSlide[] = Array.isArray(pageContent?.hero?.slides)
+    ? pageContent.hero.slides
+    : [];
+  const swiperRef = useRef<SwiperInstance | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handlePlaybackChange = useCallback((playing: boolean) => {
+    const swiper = swiperRef.current;
+    if (!swiper || swiper.destroyed) return;
+    if (playing) swiper.autoplay.stop();
+    else swiper.autoplay.start();
+  }, []);
+
+  const handleSlideChange = useCallback((swiper: SwiperInstance) => {
+    setActiveIndex(swiper.realIndex);
+    // A deliberate Previous/Next/pagination action changes slides even if
+    // the current video was playing; autoplay then resumes on the new slide.
+    swiper.autoplay.start();
+  }, []);
+
+  useEffect(
+    () => () => {
+      swiperRef.current = null;
+    },
+    [],
+  );
+
+  if (!slides.length) return null;
 
   return (
     <section
       className="relative flex h-[60vh] w-full items-center justify-center overflow-hidden lg:h-screen"
       style={{
-        backgroundImage: pageContent.hero.backgroundImage
+        backgroundImage: pageContent?.hero?.backgroundImage
           ? `url("${pageContent.hero.backgroundImage}")`
           : undefined,
         backgroundSize: "cover",
@@ -29,14 +195,20 @@ const HeroSlider = () => {
     >
       <Swiper
         modules={[Autoplay, EffectFade, Navigation, Pagination]}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+          setActiveIndex(swiper.realIndex);
+        }}
+        onSlideChange={handleSlideChange}
         effect="fade"
         fadeEffect={{ crossFade: true }}
         autoplay={{
           delay: 6000,
           disableOnInteraction: false,
+          pauseOnMouseEnter: false,
         }}
         speed={800}
-        loop
+        loop={slides.length > 1}
         navigation={{
           prevEl: ".swiper-button-prev-custom",
           nextEl: ".swiper-button-next-custom",
@@ -49,74 +221,44 @@ const HeroSlider = () => {
         }}
         className="absolute inset-0 h-full w-full"
       >
-        {slides.map((slide) => (
-          <SwiperSlide
-            key={slide.id}
-            className="relative flex! h-full w-full items-center justify-center lg:mt-24"
-          >
-            <div className="relative flex h-full w-full items-center justify-center p-4">
-              <Image
-                src={slide.image}
-                alt={slide.title || "Winners Chapel Wisconsin"}
-                width={1920}
-                height={1080}
-                priority={slide.id === 1}
-                unoptimized
-                className="max-h-full max-w-full object-contain object-center"
-              />
-            </div>
-
-            <div className="pointer-events-none absolute inset-0 z-1 bg-black/20" />
-
-            {/*
-            Uncomment this block whenever you want to display
-            text and buttons over the hero images.
-
-            <div className="absolute inset-0 z-2 flex items-center justify-center px-8 text-center">
-              <div className="max-w-4xl text-white drop-shadow-lg">
-                {slide.badge && (
-                  <p className="mb-3 text-sm font-bold uppercase tracking-[3px]">
-                    {slide.badge}
-                  </p>
-                )}
-
-                {slide.tagline && (
-                  <p className="mb-2 text-sm font-semibold uppercase tracking-[3px]">
-                    {slide.tagline}
-                  </p>
-                )}
-
-                {slide.title && (
-                  <h1 className="font-cormorant text-5xl font-bold sm:text-6xl lg:text-8xl">
-                    {slide.title}
-                  </h1>
-                )}
-
-                {slide.subtitle && (
-                  <h2 className="mt-2 text-2xl font-semibold sm:text-3xl">
-                    {slide.subtitle}
-                  </h2>
-                )}
-
-                {slide.description && (
-                  <p className="mx-auto mt-4 max-w-2xl text-base text-white/90 sm:text-lg">
-                    {slide.description}
-                  </p>
-                )}
-
-                {slide.buttonText && (
-                  <a
-                    href="/contact"
-                    className="pointer-events-auto mt-7 inline-flex rounded-full bg-[#ef2b34] px-7 py-3 font-semibold text-white"
-                  >
-                    {slide.buttonText}
-                  </a>
+        {slides.map((slide, index) => {
+          const videoId = getYouTubeId(slide.videoUrl);
+          const isActive = activeIndex === index;
+          return (
+            <SwiperSlide
+              key={slide.id ?? index}
+              className="relative flex! h-full w-full items-center justify-center lg:mt-24"
+            >
+              <div className="relative flex h-full w-full items-center justify-center p-4">
+                {videoId ? (
+                  <div className="h-full w-full overflow-hidden bg-black">
+                    <YouTubeSlide
+                      url={slide.videoUrl || ""}
+                      title={slide.title || "Winners Chapel Wisconsin"}
+                      isActive={isActive}
+                      onPlaybackChange={handlePlaybackChange}
+                    />
+                  </div>
+                ) : slide.image ? (
+                  <Image
+                    src={slide.image}
+                    alt={slide.title || "Winners Chapel Wisconsin"}
+                    width={1920}
+                    height={1080}
+                    priority={index === 0}
+                    unoptimized
+                    className="max-h-full max-w-full object-contain object-center"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-black text-white">
+                    No image or video has been added to this slide.
+                  </div>
                 )}
               </div>
-            </div>
-            */}
-          </SwiperSlide>
-        ))}
+              <div className="pointer-events-none absolute inset-0 z-[1] bg-black/20" />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
 
       <button
@@ -138,7 +280,6 @@ const HeroSlider = () => {
           />
         </svg>
       </button>
-
       <button
         type="button"
         aria-label="Next slide"
@@ -158,7 +299,6 @@ const HeroSlider = () => {
           />
         </svg>
       </button>
-
       <div className="swiper-pagination-custom absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-3 sm:bottom-8" />
     </section>
   );
