@@ -9,6 +9,15 @@ import { useChurchSettings } from "@/providers/church-settings-provider";
 import { useCmsPageData } from "@/hooks/useCmsPageData";
 import headerJson from "@/content/header.json";
 
+const configuredApi =
+  process.env.NEXT_PUBLIC_SERVER_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:3000/api/v1";
+const normalizedApi = configuredApi.replace(/\/+$/, "");
+const PUBLIC_API = normalizedApi.endsWith("/api/v1")
+  ? normalizedApi
+  : `${normalizedApi}/api/v1`;
+
 type HeaderNavChild = {
   label: string;
   href: string;
@@ -35,6 +44,7 @@ const defaultHeaderContent: HeaderContent = {
   navigation: [
     { label: "Home", href: "/" },
     { label: "About Us", href: "/about-us" },
+    { label: "Leadership", href: "/leadership" },
     {
       label: "Ministries",
       children: [
@@ -79,6 +89,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [customPageLinks, setCustomPageLinks] = useState<HeaderNavChild[]>([]);
 
   const { settings } = useChurchSettings();
 
@@ -91,14 +102,56 @@ const Header = () => {
   const churchLogo =
     headerContent.logo || settings.logo || defaultHeaderContent.logo;
 
-  const navLinks: HeaderNavLink[] = Array.isArray(headerContent.navigation)
+  const configuredNavLinks: HeaderNavLink[] = Array.isArray(
+    headerContent.navigation,
+  )
     ? headerContent.navigation
     : localHeaderContent.navigation;
+  const withLeadership: HeaderNavLink[] = configuredNavLinks.some(
+    (item) =>
+      item.href === "/leadership" ||
+      item.children?.some((child) => child.href === "/leadership"),
+  )
+    ? configuredNavLinks
+    : [...configuredNavLinks, { label: "Leadership", href: "/leadership" }];
+  const navLinks: HeaderNavLink[] =
+    customPageLinks.length > 0 &&
+    !withLeadership.some((item) => item.label === "Special Pages")
+      ? [
+          ...withLeadership,
+          { label: "Special Pages", children: customPageLinks },
+        ]
+      : withLeadership;
 
   const churchName = settings.churchName || "Church";
   const churchAddress = settings.address || "";
   const churchEmail = settings.email || "";
   const churchPhones = Array.isArray(settings.phones) ? settings.phones : [];
+
+  useEffect(() => {
+    let active = true;
+    fetch(`${PUBLIC_API}/custom-pages/public`, { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Unable to load custom pages");
+        return response.json();
+      })
+      .then((result) => {
+        if (!active) return;
+        const pages = Array.isArray(result?.data) ? result.data : [];
+        setCustomPageLinks(
+          pages.map((page: { title: string; slug: string }) => ({
+            label: page.title,
+            href: `/pages/${page.slug}`,
+          })),
+        );
+      })
+      .catch(() => {
+        if (active) setCustomPageLinks([]);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
