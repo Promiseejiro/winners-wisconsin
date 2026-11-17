@@ -10,7 +10,8 @@
       "time": "9:00 AM",
       "href": "",
       "linkText": "",
-      "published": true
+      "published": true,
+      "youtubeUrl": ""
     },
     {
       "title": "Covenant Hour of Prayer",
@@ -18,7 +19,8 @@
       "time": "Monday–Friday: 6:00 AM – 7:00 AM; Saturday: 8:00 AM",
       "href": "",
       "linkText": "",
-      "published": true
+      "published": true,
+      "youtubeUrl": ""
     },
     {
       "title": "Midweek Communion Service",
@@ -26,7 +28,8 @@
       "time": "6:00 PM",
       "href": "",
       "linkText": "",
-      "published": true
+      "published": true,
+      "youtubeUrl": ""
     },
     {
       "title": "AYAC 2026",
@@ -34,7 +37,8 @@
       "time": "18–22 August 2026",
       "href": "",
       "linkText": "",
-      "published": true
+      "published": true,
+      "youtubeUrl": ""
     },
     {
       "title": "Winners Satellite Fellowship",
@@ -42,7 +46,8 @@
       "time": "5:00 PM – 6:00 PM",
       "href": "",
       "linkText": "",
-      "published": true
+      "published": true,
+      "youtubeUrl": ""
     },
     {
       "title": "Believers Foundation Class",
@@ -50,7 +55,8 @@
       "time": "After every service",
       "href": "",
       "linkText": "",
-      "published": true
+      "published": true,
+      "youtubeUrl": ""
     },
     {
       "title": "Free Transport",
@@ -58,7 +64,8 @@
       "time": "Contact Transport Ministry",
       "href": "",
       "linkText": "",
-      "published": true
+      "published": true,
+      "youtubeUrl": ""
     },
     {
       "title": "Pastoral Rescue Line",
@@ -66,7 +73,8 @@
       "time": "Available for urgent attention",
       "href": "",
       "linkText": "",
-      "published": true
+      "published": true,
+      "youtubeUrl": ""
     }
   ],
   "sections": {
