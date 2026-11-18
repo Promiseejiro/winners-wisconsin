@@ -1,9 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import {
+ 
+  MessageCircle,
+  Music2,
+  Globe,
+  Link as LinkIcon,
+} from "lucide-react";
+import type { ElementType } from "react";
+
 import { useChurchSettings } from "@/providers/church-settings-provider";
 import { useCmsPageData } from "@/hooks/useCmsPageData";
 import footerJson from "@/content/footer.json";
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaTwitterSquare, FaYoutube } from "react-icons/fa";
 
 type FooterLink = {
   label: string;
@@ -61,10 +71,25 @@ const localFooterContent: FooterContent = {
   ...(footerJson as Partial<FooterContent>),
 };
 
+const socialIcons: Record<string, ElementType> = {
+  facebook: FaFacebook,
+  instagram: FaInstagram,
+  youtube: FaYoutube,
+  linkedin: FaLinkedin,
+  twitter: FaTwitter,
+  x: FaTwitterSquare,
+  whatsapp: MessageCircle,
+  tiktok: Music2,
+  website: Globe,
+};
+
+const getSocialIcon = (name: string) => {
+  return socialIcons[name.toLowerCase()] || LinkIcon;
+};
+
 export default function Footer() {
   const { settings } = useChurchSettings();
 
-  // Load local footer.json first, then override with published CMS content.
   const footer = useCmsPageData("footer", localFooterContent) as FooterContent;
 
   const emails = Array.isArray(footer.emails) ? footer.emails : [];
@@ -105,7 +130,6 @@ export default function Footer() {
       typeof href === "string" && href.trim() !== "" && href !== "#",
   );
 
-  // Use church settings when no social links are configured in the CMS.
   const fallbackSocialLinks = [
     { name: "facebook", href: settings.facebook },
     { name: "instagram", href: settings.instagram },
@@ -120,6 +144,10 @@ export default function Footer() {
   const copyright =
     footer.copyright ||
     `© ${new Date().getFullYear()} ${settings.churchName || "Winners Chapel International Milwaukee Wisconsin"}. All Rights Reserved.`;
+
+  const displayedSocialLinks = hasCmsSocialLinks
+    ? socialLinks.map(([name, href]) => ({ name, href }))
+    : fallbackSocialLinks;
 
   return (
     <footer
@@ -228,32 +256,25 @@ export default function Footer() {
               {footer.socialHeading || defaultFooterContent.socialHeading}
             </h4>
 
-            <ul className="space-y-2">
-              {hasCmsSocialLinks
-                ? socialLinks.map(([name, href]) => (
-                    <li key={name}>
-                      <a
-                        href={String(href)}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-white text-sm hover:text-primary"
-                      >
-                        {name.charAt(0).toUpperCase() + name.slice(1)}
-                      </a>
-                    </li>
-                  ))
-                : fallbackSocialLinks.map((item) => (
-                    <li key={item.name}>
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-white text-sm hover:text-primary"
-                      >
-                        {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
-                      </a>
-                    </li>
-                  ))}
+            <ul className="flex items-center gap-3 flex-wrap">
+              {displayedSocialLinks.map((item) => {
+                const Icon = getSocialIcon(item.name);
+
+                return (
+                  <li key={item.name}>
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={item.name}
+                      title={item.name}
+                      className="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 text-white transition-all duration-200 hover:bg-primary hover:border-primary hover:text-white"
+                    >
+                      <Icon size={19} strokeWidth={1.8} />
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>

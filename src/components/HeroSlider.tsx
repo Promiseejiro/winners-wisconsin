@@ -29,20 +29,30 @@ type HeroSlide = {
 
 function getYouTubeId(value?: string): string | null {
   if (!value) return null;
+
   try {
     const url = new URL(value.trim());
     const host = url.hostname.replace(/^www\./, "").toLowerCase();
-    if (host === "youtu.be")
+
+    if (host === "youtu.be") {
       return url.pathname.split("/").filter(Boolean)[0] || null;
+    }
+
     if (host.endsWith("youtube.com")) {
-      if (url.pathname === "/watch") return url.searchParams.get("v");
+      if (url.pathname === "/watch") {
+        return url.searchParams.get("v");
+      }
+
       const parts = url.pathname.split("/").filter(Boolean);
-      if (["embed", "shorts", "live"].includes(parts[0]))
+
+      if (["embed", "shorts", "live"].includes(parts[0])) {
         return parts[1] || null;
+      }
     }
   } catch {
     return null;
   }
+
   return null;
 }
 
@@ -65,7 +75,9 @@ function YouTubeSlide({
 
     const handleMessage = (event: MessageEvent) => {
       if (event.source !== frameRef.current?.contentWindow) return;
+
       let data: any;
+
       try {
         data =
           typeof event.data === "string" ? JSON.parse(event.data) : event.data;
@@ -74,7 +86,11 @@ function YouTubeSlide({
       }
 
       let playerState: number | undefined;
-      if (data?.event === "onStateChange") playerState = data.info;
+
+      if (data?.event === "onStateChange") {
+        playerState = data.info;
+      }
+
       if (
         data?.event === "infoDelivery" &&
         typeof data.info?.playerState === "number"
@@ -82,25 +98,31 @@ function YouTubeSlide({
         playerState = data.info.playerState;
       }
 
-      // Only the visible slide may control Swiper autoplay.
       if (isActive && typeof playerState === "number") {
         onPlaybackChange(playerState === 1);
       }
     };
 
     window.addEventListener("message", handleMessage);
+
     return () => window.removeEventListener("message", handleMessage);
   }, [videoId, isActive, onPlaybackChange]);
 
   useEffect(() => {
     const player = frameRef.current?.contentWindow;
+
     if (!player || !videoId) return;
 
     if (!isActive) {
       player.postMessage(
-        JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+        JSON.stringify({
+          event: "command",
+          func: "pauseVideo",
+          args: [],
+        }),
         "*",
       );
+
       onPlaybackChange(false);
     }
   }, [isActive, videoId, onPlaybackChange]);
@@ -114,6 +136,7 @@ function YouTubeSlide({
   }
 
   const origin = typeof window !== "undefined" ? window.location.origin : "";
+
   const src = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${encodeURIComponent(origin)}&playsinline=1&rel=0`;
 
   return (
@@ -126,11 +149,17 @@ function YouTubeSlide({
       allowFullScreen
       onLoad={() => {
         const player = frameRef.current?.contentWindow;
+
         if (!player) return;
+
         player.postMessage(
-          JSON.stringify({ event: "listening", id: videoId }),
+          JSON.stringify({
+            event: "listening",
+            id: videoId,
+          }),
           "*",
         );
+
         player.postMessage(
           JSON.stringify({
             event: "command",
@@ -139,9 +168,14 @@ function YouTubeSlide({
           }),
           "*",
         );
+
         if (!isActive) {
           player.postMessage(
-            JSON.stringify({ event: "command", func: "pauseVideo", args: [] }),
+            JSON.stringify({
+              event: "command",
+              func: "pauseVideo",
+              args: [],
+            }),
             "*",
           );
         }
@@ -152,23 +186,28 @@ function YouTubeSlide({
 
 const HeroSlider = () => {
   const pageContent = useCmsPageData("home", content);
+
   const slides: HeroSlide[] = Array.isArray(pageContent?.hero?.slides)
     ? pageContent.hero.slides
     : [];
+
   const swiperRef = useRef<SwiperInstance | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handlePlaybackChange = useCallback((playing: boolean) => {
     const swiper = swiperRef.current;
+
     if (!swiper || swiper.destroyed) return;
-    if (playing) swiper.autoplay.stop();
-    else swiper.autoplay.start();
+
+    if (playing) {
+      swiper.autoplay.stop();
+    } else {
+      swiper.autoplay.start();
+    }
   }, []);
 
   const handleSlideChange = useCallback((swiper: SwiperInstance) => {
     setActiveIndex(swiper.realIndex);
-    // A deliberate Previous/Next/pagination action changes slides even if
-    // the current video was playing; autoplay then resumes on the new slide.
     swiper.autoplay.start();
   }, []);
 
@@ -183,7 +222,7 @@ const HeroSlider = () => {
 
   return (
     <section
-      className="relative flex h-[60vh] w-full items-center justify-center overflow-hidden lg:h-screen"
+      className="relative flex h-[60vh] w-full items-center justify-center overflow-hidden lg:h-[120vh]"
       style={{
         backgroundImage: pageContent?.hero?.backgroundImage
           ? `url("${pageContent.hero.backgroundImage}")`
@@ -224,12 +263,13 @@ const HeroSlider = () => {
         {slides.map((slide, index) => {
           const videoId = getYouTubeId(slide.videoUrl);
           const isActive = activeIndex === index;
+
           return (
             <SwiperSlide
               key={slide.id ?? index}
-              className="relative flex! h-full w-full items-center justify-center lg:mt-24"
+              className="relative flex! h-full w-full items-center justify-center !mt-0"
             >
-              <div className="relative flex h-full w-full items-center justify-center p-4">
+              <div className="relative flex h-full w-full items-center justify-center">
                 {videoId ? (
                   <div className="h-full w-full overflow-hidden bg-black">
                     <YouTubeSlide
@@ -247,7 +287,7 @@ const HeroSlider = () => {
                     height={1080}
                     priority={index === 0}
                     unoptimized
-                    className="max-h-full max-w-full object-contain object-center"
+                    className="h-full w-full object-contain object-center"
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-black text-white">
@@ -255,6 +295,7 @@ const HeroSlider = () => {
                   </div>
                 )}
               </div>
+
               <div className="pointer-events-none absolute inset-0 z-[1] bg-black/20" />
             </SwiperSlide>
           );
@@ -280,6 +321,7 @@ const HeroSlider = () => {
           />
         </svg>
       </button>
+
       <button
         type="button"
         aria-label="Next slide"
@@ -299,6 +341,7 @@ const HeroSlider = () => {
           />
         </svg>
       </button>
+
       <div className="swiper-pagination-custom absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 gap-3 sm:bottom-8" />
     </section>
   );
