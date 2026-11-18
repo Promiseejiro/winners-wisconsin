@@ -5,7 +5,7 @@ This frontend keeps editable static page content in `src/content/*.json` files. 
 - Admin: separate Next.js 
 - API: NestJS
 - 
-- MongoDB: dynamic records (admins, sermons, announcements, contact messas
+- MongoDB: dynamic records (admins, sermons, announcements, contact messa
 - Cloudinary: uploaded images
 - GitHub: source of truth for static page JSON
 - Vercel: deploys the frontend automatically when the GitHub repository changes
