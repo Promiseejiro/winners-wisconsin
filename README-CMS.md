@@ -7,7 +7,7 @@ This frontend keeps editable static page content in `src/content/*.json` files. 
 - 
 - MongoDB: dynamic records (admins, sermons, announcements, contact messa
 - Cloudinary: uploaded images
-- GitHub: source of truth for static page JSON
+- GitHub: source of truth for static page JSON.
 - Vercel: deploys the frontend automatically when the GitHub repository changes
 
 The public site keeps styling/components in React/Tailwind. JSON contains content only
