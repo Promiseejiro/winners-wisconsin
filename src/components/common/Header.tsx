@@ -116,10 +116,10 @@ const Header = () => {
     : [...configuredNavLinks, { label: "Leadership", href: "/leadership" }];
   const navLinks: HeaderNavLink[] =
     customPageLinks.length > 0 &&
-    !withLeadership.some((item) => item.label === "Special Pages")
+    !withLeadership.some((item) => item.label === "Special Events")
       ? [
           ...withLeadership,
-          { label: "Special Pages", children: customPageLinks },
+          { label: "Special Events", children: customPageLinks },
         ]
       : withLeadership;
 
@@ -141,7 +141,7 @@ const Header = () => {
         setCustomPageLinks(
           pages.map((page: { title: string; slug: string }) => ({
             label: page.title,
-            href: `/pages/${page.slug}`,
+            href: `/${page.slug}`,
           })),
         );
       })
@@ -218,7 +218,8 @@ const Header = () => {
 
   // Announcement page always has a black header.
   // Homepage and other pages turn black when scrolling.
-  const shouldBeWhite = pathname === "/announcement" || isMobile || isScrolled;
+  const shouldBeWhite =
+    pathname === "/announcement" || pathname === "/leadership" || isMobile || isScrolled;
 
   return (
     <>
