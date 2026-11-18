@@ -10,4 +10,4 @@ This frontend keeps editable static page content in `src/content/*.json` files. 
 - GitHub: source of truth for static page JSON
 - Vercel: deploys the frontend automatically when the GitHub repository changes
 
-The public site keeps styling/components in React/Tailwind. JSON contains content only.
+The public site keeps styling/components in React/Tailwind. JSON contains content only
