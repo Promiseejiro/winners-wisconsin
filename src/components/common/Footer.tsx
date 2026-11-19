@@ -1,19 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import {
- 
-  MessageCircle,
-  Music2,
-  Globe,
-  Link as LinkIcon,
-} from "lucide-react";
+import { MessageCircle, Music2, Globe, Link as LinkIcon } from "lucide-react";
 import type { ElementType } from "react";
 
 import { useChurchSettings } from "@/providers/church-settings-provider";
 import { useCmsPageData } from "@/hooks/useCmsPageData";
 import footerJson from "@/content/footer.json";
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaTwitterSquare, FaYoutube } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaTwitter,
+  FaTwitterSquare,
+  FaYoutube,
+} from "react-icons/fa";
 
 type FooterLink = {
   label: string;
@@ -270,7 +271,7 @@ export default function Footer() {
                       title={item.name}
                       className="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 text-white transition-all duration-200 hover:bg-primary hover:border-primary hover:text-white"
                     >
-                      <Icon size={19} strokeWidth={1.8} />
+                      <Icon size={30} strokeWidth={1.8} />
                     </a>
                   </li>
                 );
