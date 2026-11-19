@@ -1,7 +1,7 @@
 # Winners Chapel Wisconsin CMS integration
 
 This frontend keeps editable static page content in `src/content/*.json` files. The Winners NestJS backend updates those files through the GitHub Contents API after an authenticated admin submits a form.
-- Public site: Next.jx
+- Public site: Next.j
 - Admin: separate Next.js 
 - API: NestJS
 - 
